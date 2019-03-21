@@ -1,0 +1,4 @@
+Bug:
+When the operation requires permission however not granted by the user previous, SecurityException can be thrown.
+Fix:
+As shown in https://developer.android.com/training/permissions/requesting?hl=en, calling requestPermission explicity before app carries sensitive action.

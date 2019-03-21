@@ -1,0 +1,5 @@
+Bug:
+When calling integer.parseInt(string), if the string is empty, NumberFormatException will be thrown. This is common when developer expects user to type something bug user clicks send/confirm without input.
+Fix:
+Check string.isEmpty() before parse to int.
+

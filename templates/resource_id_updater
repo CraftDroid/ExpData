@@ -1,0 +1,4 @@
+Bug:
+When calling get resources, e.g., getString(int id), if the id does not exist or the id corresponds to another resource type, Resources$NotFoundException will be thrown. The correlation between ids and resources are stored in the xml files in Android package.
+Fix:
+Examine the xml file, replace the id with a new id.

@@ -1,0 +1,4 @@
+Bug:
+In the updated verion of jdk, calling stop() on thread is no longer supported, thus UnsupportedOperationException will be thrown.
+Fix:
+Replace the call to stop() with interrupt().

@@ -1,0 +1,4 @@
+Bug:
+When trying to open a database, if the database exists, it shall be opened given that permission is granted, if database does not exist, system will create one and return the cursor. However, if the targeted folder (which should contain the database file) does not exist, SQLiteCantOpenDatabaseException will be thrown. This is common when developer tries to open/create database in sdCard, bug for some phone models, sdCard is not presence (hence folder does not exist).
+Fix:
+Check file.exists() before open/create database, where file is the containing folder.

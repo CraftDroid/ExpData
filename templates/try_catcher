@@ -1,0 +1,4 @@
+Bug:
+All crash-inducing bugs.
+Fix:
+Some developers in some cases, tend to walk around the bug by surrounding with try-catch clause. Mainly becase the crash triggering test case is too rare and they do not want to devote time for debugging.

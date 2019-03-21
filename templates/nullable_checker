@@ -1,0 +1,4 @@
+Bug:
+Passing null as parameter to some methods may crash the app. Sometimes developer is not aware of the value of the instance. e.g., passing null instance to constructor of File.
+Fix:
+Check the parameter value before passing to methods.

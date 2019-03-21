@@ -1,0 +1,4 @@
+Bug:
+When constructing an intent to bind to a service, it is important to also call intent.setPackage(String servicePackageName), before the binding process. Otherwise IllegalArgumentException will be thrown.
+Fix:
+See bug description.

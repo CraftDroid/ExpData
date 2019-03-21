@@ -1,0 +1,4 @@
+Bug: 
+When trying to call show() on dialog or instances of subclasses like alertDialog in the destroyed state of the containing activity, WindowManager$BadTokenException will be thrown. 
+Fix:
+Check activty.isFinished(), if the value is true, show() should not be called.

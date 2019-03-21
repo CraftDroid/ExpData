@@ -1,0 +1,4 @@
+Bug:
+When an app tries to start a new activity with an implicit intent, and on the current system, no activity intent filters accepts the action. An ActivityNotFoundException will be thrown. 
+Fix:
+Call packageManager.resolve(intent). If the value is true, calling startActivity(intent) or startActivityForResult(intent) will be safe.

@@ -1,0 +1,4 @@
+Bug:
+Calling prepare() in the thread that is to run the looper more than once will make the system throw RuntimeException. Developers tend to make such mistake unintentionally, especially in while/for loops.
+Fix:
+Trims redundant call to prepare().

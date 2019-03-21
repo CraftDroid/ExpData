@@ -1,0 +1,4 @@
+Bug:
+When using hardware functions, if the hardware is not installed/online, RuntimeException will be thrown. e.g., when using camera, firstly open() is called, then startPreview() is called, but if open() returns null, it could mean that a camera is not read, and calling startPreview() crashes the app.
+Fix:
+Check if hardware is installed/online.

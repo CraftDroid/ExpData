@@ -1,0 +1,4 @@
+Bug:
+Typical java exception (String)/(Array)IndexOutOfBoundsException caused by illegal referencing.
+Fix:
+Check list range before referencing.

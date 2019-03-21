@@ -1,0 +1,4 @@
+Bug:
+Calling start() on thread unaware of the state of the thread is dangerous, IllegalThreadStateException could be thrown.
+Fix:
+Check the thread state by calling thread.isAlive(), if true, it will be safe to call thread.start().

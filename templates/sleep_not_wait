@@ -1,0 +1,5 @@
+Bug:
+In the updated multi-thread management nature of Android systems, calling wait() on the thread is not allowd. IllegalMonitorStateException will be thrown.
+Fix:
+Replace wait() with sleep() to put the thread on hold.
+

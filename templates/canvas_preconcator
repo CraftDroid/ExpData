@@ -1,0 +1,4 @@
+Bug:
+When calling surfaceHolder.unlockCanvasAndPost(Canvas canvas), IllegalArgumentException could be thrown.
+Fix:
+Translate canvas by calling canvas.translate(0.0F, -20.0F) before calling unlockCanvasAndPost.

@@ -1,0 +1,4 @@
+Bug: 
+There are mutiple providers to check device location: GPS, network, etc.. If the provider is not enabled, calling requestLocationUpdate triggers IllegalStateException.
+Fix:
+Check the return value of isProviderEnabled("network") before calling requestLocationUpdate("network"), and likewise for other providers.
