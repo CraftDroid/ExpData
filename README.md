@@ -1,7 +1,7 @@
-# ExpData
+# Experimental Data
 Experimental data for submitted paper.
 
-Fix Templates:
+Fix_Templates:
 There are in total 17 templates.
 
 Validated Patches for Crashed Android Apps:
