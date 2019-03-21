@@ -1,0 +1,139 @@
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.widget.Toast;
+import cn.hiyou.util.ToolCwSetting;
+import java.lang.CharSequence;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.SecurityException;
+
+public class cn.hiyou.util.ToolCwSetting extends Object
+{
+  public static final Uri PREFERRED_APN_URI;
+
+  public static String APNNET_CM;
+
+  public static final String APNNET_CMWAP = "cmwap";
+
+  public static final String APNNET_PROXY = "proxy";
+
+  public static boolean isCNWAP(Context $param0)
+  {
+    Object $Object_Method_getSystemService;
+    ConnectivityManager $ConnectivityManager;
+    NetworkInfo $NetworkInfo_Method_getActiveNetworkInfo;
+    int $int_Method_getType;
+    String $String_Method_getApnType;
+    boolean $z0;
+    
+      $Object_Method_getSystemService = virtualinvoke $param0.getSystemService("connectivity");
+      $ConnectivityManager = (ConnectivityManager) $Object_Method_getSystemService;
+      $NetworkInfo_Method_getActiveNetworkInfo = virtualinvoke $ConnectivityManager.getActiveNetworkInfo();
+      if $NetworkInfo_Method_getActiveNetworkInfo == null goto label1;
+      $int_Method_getType = virtualinvoke $NetworkInfo_Method_getActiveNetworkInfo.getType();
+      if $int_Method_getType != 0 goto label0;
+      $String_Method_getApnType = staticinvoke ToolCwSetting.getApnType($param0);
+      $z0 = virtualinvoke $String_Method_getApnType.<String: boolean equals(Object)>("cmwap");
+      if $z0 == 0 goto label0;
+      return true;
+
+  label0:
+      return false;
+
+  label1:
+      staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($param0, "\u65e0\u8bbe\u7f6e\u7f51\u7edc\u63a5\u5165", 1);
+      return false;
+  }
+
+  public static boolean isMobile(Context $param0)
+  {
+    String $String_Method_getMNC;
+    boolean $z0;
+    
+      $String_Method_getMNC = staticinvoke ToolCwSetting.getMNC($param0);
+      $z0 = virtualinvoke $String_Method_getMNC.<String: boolean equals(Object)>("00");
+      if $z0 != 0 goto label0;
+      $z0 = virtualinvoke $String_Method_getMNC.<String: boolean equals(Object)>("02");
+      if $z0 == 0 goto label1;
+
+  label0:
+      return true;
+
+  label1:
+      return false;
+  }
+
+  public static String getApnType(Context $param0)
+  {
+    ContentResolver $ContentResolver;
+    Uri $Uri;
+    Cursor $Cursor_Method_query, $Cursor_Method_query_1;
+    String[] $arrString;
+    boolean $z0;
+    String $String;
+    SecurityException $se;
+    
+      $ContentResolver = virtualinvoke $param0.getContentResolver();
+      $Uri = <ToolCwSetting: Uri PREFERRED_APN_URI>;
+      
+      $Cursor_Method_query = virtualinvoke $ContentResolver.<ContentResolver: Cursor query(Uri, String[], String, String[], String)>($Uri, null, null, null, null);
+      $ContentResolver = virtualinvoke $param0.getContentResolver();
+      $Uri = <ToolCwSetting: Uri PREFERRED_APN_URI>;
+      $arrString = { "_id", "apn", "type" };
+      $Cursor_Method_query_1 = virtualinvoke $ContentResolver.<ContentResolver: Cursor query(Uri, String[], String, String[], String)>($Uri, $arrString, null, null, null);
+      interfaceinvoke $Cursor_Method_query_1.<Cursor: boolean moveToFirst()>();
+      $z0 = interfaceinvoke $Cursor_Method_query_1.isAfterLast();
+      if $z0 == 0 goto label1;
+      $String = "";
+
+  label0:
+      interfaceinvoke $Cursor_Method_query.close();
+      return $String;
+      
+  label1:
+      $String = interfaceinvoke $Cursor_Method_query_1.getString(1);
+      goto label0;
+  }
+
+  public static String getMNC(Context $param0)
+  {
+    Object $Object_Method_getSystemService;
+    TelephonyManager $TelephonyManager;
+    String $String;
+    int $int_Method_length;
+    
+      $Object_Method_getSystemService = virtualinvoke $param0.getSystemService("phone");
+      $TelephonyManager = (TelephonyManager) $Object_Method_getSystemService;
+      if $TelephonyManager == null goto label0;
+      $String = virtualinvoke $TelephonyManager.getSimOperator();
+      $int_Method_length = virtualinvoke $String.length();
+      $String = virtualinvoke $String.substring(3, $int_Method_length);
+      staticinvoke <Log: int i(String, String)>("MNC  is", $String);
+      return $String;
+
+  label0:
+      return "";
+  }
+
+  static void <clinit>()
+  {
+    Uri $Uri_Method_parse;
+    
+      $Uri_Method_parse = staticinvoke Uri.parse("content://telephony/carriers/preferapn");
+      <ToolCwSetting: Uri PREFERRED_APN_URI> = $Uri_Method_parse;
+      <ToolCwSetting: String APNNET_CM> = "";
+  }
+
+  public void <init>()
+  {
+    
+      specialinvoke this.<Object: void <init>()>();
+  }
+
+}
