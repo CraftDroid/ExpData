@@ -1,0 +1,446 @@
+import android.app.AlertDialog;
+import android.app.AlertDialog$Builder;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface$OnClickListener;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.IntentSender$SendIntentException;
+import android.content.ServiceConnection;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.RemoteException;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.g;
+import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+import ch.btcfx.activities.SubscriptionActivity;
+import ch.btcfx.activities.SubscriptionActivity$1;
+import ch.btcfx.activities.SubscriptionActivity$2;
+import ch.btcfx.activities.SubscriptionActivity$3;
+import ch.btcfx.activities.SubscriptionActivity$4;
+import ch.btcfx.activities.SubscriptionActivity$5;
+import ch.btcfx.activities.SubscriptionActivity$6;
+import ch.btcfx.activities.a;
+import ch.btcfx.dialogs.SubscriptionHelpDialog;
+import com.android.vending.billing.IInAppBillingService;
+import java.lang.CharSequence;
+import java.lang.Class;
+import java.lang.Integer;
+import java.lang.NullPointerException;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.StringBuilder;
+import java.lang.Void;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class ch.btcfx.activities.SubscriptionActivity extends FragmentActivity implements android.view.View$OnClickListener
+{
+  private AlertDialog u;
+
+  ServiceConnection n;
+
+  @Signature(Value="Landroid/os/AsyncTask<Ljava/lang/Void;Ljava/lang/Void;Ljava/lang/String;>;")
+  private AsyncTask w;
+
+  @Signature(Value="Landroid/os/AsyncTask<Ljava/lang/Void;Ljava/lang/Void;Ljava/lang/Integer;>;")
+  private AsyncTask x;
+
+  private Button s;
+
+  private ImageButton t;
+
+  private TextView r;
+
+  private a v;
+
+  private IInAppBillingService q;
+
+  private final String o;
+
+  private final String p;
+
+  static AlertDialog g(SubscriptionActivity $param0)
+  {
+    AlertDialog r1;
+    
+      r1 = $param0.<SubscriptionActivity: AlertDialog u>;
+      return r1;
+  }
+
+  static AsyncTask f(SubscriptionActivity $param0)
+  {
+    AsyncTask r1;
+    
+      r1 = $param0.<SubscriptionActivity: AsyncTask w>;
+      return r1;
+  }
+
+  static Button a(SubscriptionActivity $param0, Button $param1)
+  {
+    
+      $param0.<SubscriptionActivity: Button s> = $param1;
+      return $param1;
+  }
+
+  static Button d(SubscriptionActivity $param0)
+  {
+    Button r1;
+    
+      r1 = $param0.<SubscriptionActivity: Button s>;
+      return r1;
+  }
+
+  static ImageButton a(SubscriptionActivity $param0, ImageButton $param1)
+  {
+    
+      $param0.<SubscriptionActivity: ImageButton t> = $param1;
+      return $param1;
+  }
+
+  static ImageButton e(SubscriptionActivity $param0)
+  {
+    ImageButton r1;
+    
+      r1 = $param0.<SubscriptionActivity: ImageButton t>;
+      return r1;
+  }
+
+  static TextView a(SubscriptionActivity $param0, TextView $param1)
+  {
+    
+      $param0.<SubscriptionActivity: TextView r> = $param1;
+      return $param1;
+  }
+
+  static TextView c(SubscriptionActivity $param0)
+  {
+    TextView r1;
+    
+      r1 = $param0.<SubscriptionActivity: TextView r>;
+      return r1;
+  }
+
+  static a a(SubscriptionActivity $param0)
+  {
+    a r1;
+    
+      r1 = $param0.<SubscriptionActivity: a v>;
+      return r1;
+  }
+
+  static IInAppBillingService a(SubscriptionActivity $param0, IInAppBillingService $param1)
+  {
+    
+      $param0.<SubscriptionActivity: IInAppBillingService q> = $param1;
+      return $param1;
+  }
+
+  static IInAppBillingService b(SubscriptionActivity $param0)
+  {
+    IInAppBillingService r1;
+    
+      r1 = $param0.<SubscriptionActivity: IInAppBillingService q>;
+      return r1;
+  }
+
+  public void <init>()
+  {
+    SubscriptionActivity$1 $SubscriptionActivity_1;
+    SubscriptionActivity$4 $SubscriptionActivity_4;
+    SubscriptionActivity$5 $SubscriptionActivity_5;
+    SubscriptionActivity$6 $SubscriptionActivity_6;
+    
+      specialinvoke this.<FragmentActivity: void <init>()>();
+      this.<SubscriptionActivity: String o> = "SubscriptionActivity";
+      this.<SubscriptionActivity: String p> = "btcfx_subscription";
+      $SubscriptionActivity_1 = new SubscriptionActivity$1;
+      specialinvoke $SubscriptionActivity_1.<SubscriptionActivity$1: void <init>(SubscriptionActivity)>(this);
+      this.<SubscriptionActivity: a v> = $SubscriptionActivity_1;
+      $SubscriptionActivity_4 = new SubscriptionActivity$4;
+      specialinvoke $SubscriptionActivity_4.<SubscriptionActivity$4: void <init>(SubscriptionActivity)>(this);
+      this.<SubscriptionActivity: ServiceConnection n> = $SubscriptionActivity_4;
+      $SubscriptionActivity_5 = new SubscriptionActivity$5;
+      specialinvoke $SubscriptionActivity_5.<SubscriptionActivity$5: void <init>(SubscriptionActivity)>(this);
+      this.<SubscriptionActivity: AsyncTask w> = $SubscriptionActivity_5;
+      $SubscriptionActivity_6 = new SubscriptionActivity$6;
+      specialinvoke $SubscriptionActivity_6.<SubscriptionActivity$6: void <init>(SubscriptionActivity)>(this);
+      this.<SubscriptionActivity: AsyncTask x> = $SubscriptionActivity_6;
+  }
+
+  static void a(SubscriptionActivity $param0, Context $param1)
+  {
+    AlertDialog$Builder $AlertDialog_Builder;
+    AlertDialog $AlertDialog;
+    SubscriptionActivity$2 $SubscriptionActivity_2;
+    SubscriptionActivity$3 $SubscriptionActivity_3;
+    
+      $AlertDialog_Builder = new AlertDialog$Builder;
+      specialinvoke $AlertDialog_Builder.<AlertDialog$Builder: void <init>(Context)>($param1);
+      $AlertDialog = virtualinvoke $AlertDialog_Builder.create();
+      $param0.<SubscriptionActivity: AlertDialog u> = $AlertDialog;
+      $AlertDialog = $param0.<SubscriptionActivity: AlertDialog u>;
+      virtualinvoke $AlertDialog.<AlertDialog: void setTitle(CharSequence)>("Subscription Verification Failed");
+      $AlertDialog = $param0.<SubscriptionActivity: AlertDialog u>;
+      virtualinvoke $AlertDialog.<AlertDialog: void setCancelable(boolean)>(false);
+      $AlertDialog = $param0.<SubscriptionActivity: AlertDialog u>;
+      virtualinvoke $AlertDialog.<AlertDialog: void setMessage(CharSequence)>("There was an unexpected error during the subscription verification. Try again?");
+      $AlertDialog = $param0.<SubscriptionActivity: AlertDialog u>;
+      $SubscriptionActivity_2 = new SubscriptionActivity$2;
+      specialinvoke $SubscriptionActivity_2.<SubscriptionActivity$2: void <init>(SubscriptionActivity)>($param0);
+      virtualinvoke $AlertDialog.<AlertDialog: void setButton(int, CharSequence, DialogInterface$OnClickListener)>(-1, "Yes", $SubscriptionActivity_2);
+      $AlertDialog = $param0.<SubscriptionActivity: AlertDialog u>;
+      $SubscriptionActivity_3 = new SubscriptionActivity$3;
+      specialinvoke $SubscriptionActivity_3.<SubscriptionActivity$3: void <init>(SubscriptionActivity)>($param0);
+      virtualinvoke $AlertDialog.<AlertDialog: void setButton(int, CharSequence, DialogInterface$OnClickListener)>(-2, "No", $SubscriptionActivity_3);
+      $AlertDialog = $param0.<SubscriptionActivity: AlertDialog u>;
+      virtualinvoke $AlertDialog.setIcon(17301543);
+  }
+
+  @Override
+  protected void onActivityResult(int $param0, int $param1, Intent $param2)
+  {
+    int $int;
+    String $String;
+    JSONObject $JSONObject;
+    Intent $Intent;
+    Context $Context;
+    NullPointerException $NullPointerException;
+    JSONException $JSONException;
+    Toast $Toast;
+    StringBuilder $StringBuilder;
+    SparseArray $SparseArray_Field_c;
+    Object $Object_Method_get;
+    
+      if $param0 != 2323 goto label6;
+
+  label0:
+      $int = virtualinvoke $param2.getIntExtra("RESPONSE_CODE", 6);
+
+  label1:
+      $String = virtualinvoke $param2.getStringExtra("INAPP_PURCHASE_DATA");
+
+  label2:
+      if $param1 != -1 goto label9;
+      $JSONObject = new JSONObject;
+
+  label3:
+      specialinvoke $JSONObject.<JSONObject: void <init>(String)>($String);
+      virtualinvoke $JSONObject.<JSONObject: String getString(String)>("productId");
+
+  label4:
+      $Intent = new Intent;
+
+  label5:
+      $Context = virtualinvoke this.getApplicationContext();
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>($Context, class "Lch/btcfx/activities/BtcfxActivity;");
+      virtualinvoke $Intent.<Intent: Intent setFlags(int)>(67108864);
+      virtualinvoke this.startActivity($Intent);
+      virtualinvoke this.finish();
+
+  label6:
+      specialinvoke this.<FragmentActivity: void onActivityResult(int, int, Intent)>($param0, $param1, $param2);
+      return;
+
+  label7:
+      $NullPointerException := @caughtexception;
+      $String = "";
+      $int = 6;
+      goto label2;
+
+  label8:
+      $JSONException := @caughtexception;
+      $Context = virtualinvoke this.getApplicationContext();
+      $Toast = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context, "Failed to parse purchase data.", 0);
+      virtualinvoke $Toast.show();
+      virtualinvoke $JSONException.printStackTrace();
+      goto label6;
+
+  label9:
+      $Context = virtualinvoke this.getApplicationContext();
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("RESPONSE CODE: ");
+      $SparseArray_Field_c = <ch.btcfx.b.a: SparseArray c>;
+      $Object_Method_get = virtualinvoke $SparseArray_Field_c.get($int);
+      $String = (String) $Object_Method_get;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      $Toast = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context, $String, 0);
+      virtualinvoke $Toast.show();
+      goto label6;
+
+      catch NullPointerException from label0 to label1 with label7;
+      catch NullPointerException from label1 to label2 with label7;
+      catch JSONException from label3 to label4 with label8;
+      catch JSONException from label5 to label6 with label8;
+  }
+
+  @Override
+  public void onClick(View $param0)
+  {
+    int $int, $int_Method_intValue, $int_Method_intValue_1;
+    g $g_Method_b;
+    SubscriptionHelpDialog $SubscriptionHelpDialog;
+    IInAppBillingService $IInAppBillingService_Field_q;
+    String $String;
+    Bundle $Bundle_Method_a;
+    Context $Context;
+    Toast $Toast;
+    RemoteException $RemoteException;
+    StringBuilder $StringBuilder;
+    Parcelable $Parcelable_Method_getParcelable;
+    PendingIntent $PendingIntent;
+    IntentSender $IntentSender_Method_getIntentSender;
+    Intent $Intent;
+    Integer $Integer;
+    IntentSender$SendIntentException $IntentSender_SendIntentException;
+    NullPointerException $NullPointerException;
+    
+      $int = virtualinvoke $param0.getId();
+      lookupswitch ($int) {
+      case 2131230996: goto label2;
+      case 2131231003: goto label1;
+      default: goto label0;
+      };
+
+  label0:
+      return;
+
+  label1:
+      $g_Method_b = virtualinvoke this.b();
+      $SubscriptionHelpDialog = new SubscriptionHelpDialog;
+      specialinvoke $SubscriptionHelpDialog.<SubscriptionHelpDialog: void <init>()>();
+      virtualinvoke $SubscriptionHelpDialog.a($g_Method_b, "subscription_help");
+      return;
+
+  label2:
+      $IInAppBillingService_Field_q = this.<SubscriptionActivity: IInAppBillingService q>;
+
+  label3:
+      $String = virtualinvoke this.getPackageName();
+      $Bundle_Method_a = interfaceinvoke $IInAppBillingService_Field_q.a(3, $String, "btcfx_subscription", "subs", "btcfx_subscription");
+
+  label4:
+      if $Bundle_Method_a != null goto label8;
+
+  label5:
+      $Context = virtualinvoke this.getApplicationContext();
+      $Toast = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context, ":-/ couldn\'t get the buy intent bundle", 0);
+      virtualinvoke $Toast.show();
+
+  label6:
+      return;
+
+  label7:
+      $RemoteException := @caughtexception;
+      $Context = virtualinvoke this.getApplicationContext();
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("remote exception ");
+      $String = virtualinvoke $RemoteException.getLocalizedMessage();
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      $Toast = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context, $String, 0);
+      virtualinvoke $Toast.show();
+      virtualinvoke $RemoteException.printStackTrace();
+      return;
+
+  label8:
+      $Parcelable_Method_getParcelable = virtualinvoke $Bundle_Method_a.getParcelable("BUY_INTENT");
+
+  label9:
+      $PendingIntent = (PendingIntent) $Parcelable_Method_getParcelable;
+
+  label10:
+      $IntentSender_Method_getIntentSender = virtualinvoke $PendingIntent.getIntentSender();
+
+  label11:
+      $Intent = new Intent;
+
+  label12:
+      specialinvoke $Intent.<Intent: void <init>()>();
+      $Integer = staticinvoke Integer.valueOf(0);
+      $int = virtualinvoke $Integer.intValue();
+      $Integer = staticinvoke Integer.valueOf(0);
+      $int_Method_intValue = virtualinvoke $Integer.intValue();
+      $Integer = staticinvoke Integer.valueOf(0);
+      $int_Method_intValue_1 = virtualinvoke $Integer.intValue();
+      virtualinvoke this.startIntentSenderForResult($IntentSender_Method_getIntentSender, 2323, $Intent, $int, $int_Method_intValue, $int_Method_intValue_1);
+
+  label13:
+      return;
+
+  label14:
+      $IntentSender_SendIntentException := @caughtexception;
+      virtualinvoke $IntentSender_SendIntentException.printStackTrace();
+      return;
+
+  label15:
+      $NullPointerException := @caughtexception;
+      $Context = virtualinvoke this.getApplicationContext();
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Android Market not initialised. Please accept EULA and restart.");
+      $String = virtualinvoke $NullPointerException.getLocalizedMessage();
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      $Toast = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context, $String, 1);
+      virtualinvoke $Toast.show();
+      virtualinvoke $NullPointerException.printStackTrace();
+
+      catch RemoteException from label3 to label4 with label7;
+      catch RemoteException from label5 to label6 with label7;
+      catch IntentSender$SendIntentException from label3 to label4 with label14;
+      catch IntentSender$SendIntentException from label5 to label6 with label14;
+      catch NullPointerException from label2 to label4 with label15;
+      catch NullPointerException from label5 to label6 with label15;
+      catch RemoteException from label8 to label9 with label7;
+      catch RemoteException from label10 to label11 with label7;
+      catch RemoteException from label12 to label13 with label7;
+      catch IntentSender$SendIntentException from label8 to label9 with label14;
+      catch IntentSender$SendIntentException from label10 to label11 with label14;
+      catch IntentSender$SendIntentException from label12 to label13 with label14;
+      catch NullPointerException from label8 to label9 with label15;
+      catch NullPointerException from label10 to label11 with label15;
+      catch NullPointerException from label12 to label13 with label15;
+  }
+
+  @Override
+  protected void onCreate(Bundle $param0)
+  {
+    Intent $Intent;
+    ServiceConnection $ServiceConnection_Field_n;
+    AsyncTask $AsyncTask_Field_x;
+    Void[] $arrVoid;
+    
+      specialinvoke this.<FragmentActivity: void onCreate(Bundle)>($param0);
+      virtualinvoke this.setContentView(2130903087);
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(String)>("com.android.vending.billing.InAppBillingService.BIND");
+      $ServiceConnection_Field_n = this.<SubscriptionActivity: ServiceConnection n>;
+      virtualinvoke this.<SubscriptionActivity: boolean bindService(Intent, ServiceConnection, int)>($Intent, $ServiceConnection_Field_n, 1);
+      $AsyncTask_Field_x = this.<SubscriptionActivity: AsyncTask x>;
+      $arrVoid = {  };
+      virtualinvoke $AsyncTask_Field_x.<AsyncTask: AsyncTask execute(Object[])>($arrVoid);
+  }
+
+  @Override
+  public void onDestroy()
+  {
+    ServiceConnection $ServiceConnection;
+    
+      specialinvoke this.<FragmentActivity: void onDestroy()>();
+      $ServiceConnection = this.<SubscriptionActivity: ServiceConnection n>;
+      if $ServiceConnection == null goto label0;
+      $ServiceConnection = this.<SubscriptionActivity: ServiceConnection n>;
+      virtualinvoke this.unbindService($ServiceConnection);
+
+  label0:
+      return;
+  }
+
+}
