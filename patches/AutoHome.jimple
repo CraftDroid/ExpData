@@ -1,3 +1,4 @@
+import android.content.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog$Builder;
 import android.app.Notification;
@@ -236,6 +237,8 @@ public class com.autohome.club.Service.SystemHelper extends Object
   {
     AlertDialog$Builder $AlertDialog_Builder;
     SystemHelper$1 $SystemHelper_1;
+    Activity $Activity;
+    boolean $boolean;
     
       $AlertDialog_Builder = new AlertDialog$Builder;
       specialinvoke $AlertDialog_Builder.<AlertDialog$Builder: void <init>(Context)>($param0);
@@ -243,7 +246,13 @@ public class com.autohome.club.Service.SystemHelper extends Object
       $SystemHelper_1 = new SystemHelper$1;
       specialinvoke $SystemHelper_1.<SystemHelper$1: void <init>(Context)>($param0);
       $AlertDialog_Builder = virtualinvoke $AlertDialog_Builder.<AlertDialog$Builder: AlertDialog$Builder setPositiveButton(CharSequence, DialogInterface$OnClickListener)>("\u786e\u5b9a", $SystemHelper_1);
+      $Activity = (Activity) $param0;
+      $boolean = virtualinvoke $Activity.<Activity: boolean isFinishing()>;
+      if $boolean != 0 goto label1;
       virtualinvoke $AlertDialog_Builder.<AlertDialog$Builder: AlertDialog show()>();
+
+  label1:
+      return;
   }
 
   @Signature(Value="(Ljava/lang/String;Ljava/lang/String;ILjava/lang/Class<*>;)V")
