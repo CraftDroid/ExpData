@@ -1,0 +1,197 @@
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View$OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import com.arkay.gkingujarati.MenuHomeScreenActivity;
+import com.google.ads.Ad;
+import com.google.ads.AdListener;
+import com.google.ads.AdRequest;
+import com.google.ads.AdRequest$ErrorCode;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+import com.google.ads.InterstitialAd;
+import java.lang.Class;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.StringBuilder;
+
+public class com.arkay.gkingujarati.MenuHomeScreenActivity extends Activity implements View$OnClickListener, AdListener
+{
+  private Button btnMoreApps;
+
+  private Button btnPlay;
+
+  private Button btnRateThisApps;
+
+  private InterstitialAd interstitialAd;
+
+  public static final String PREFS_NAME = "preferences";
+
+  public void <init>()
+  {
+    
+      specialinvoke this.<Activity: void <init>()>();
+  }
+
+  @Override
+  public void onClick(View $param0)
+  {
+    int $int_Method_getId;
+    Intent $Intent;
+    String $String;
+    StringBuilder $StringBuilder;
+    Uri $Uri;
+    
+      $int_Method_getId = virtualinvoke $param0.getId();
+      lookupswitch ($int_Method_getId) {
+      case 2131296261: goto label1;
+      case 2131296262: goto label2;
+      case 2131296263: goto label3;
+      default: goto label0;
+      };
+
+  label0:
+      return;
+
+  label1:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/arkay/gkingujarati/LevelActivity;");
+      virtualinvoke this.startActivity($Intent);
+      return;
+
+  label2:
+      $String = virtualinvoke this.getPackageName();
+      $Intent = new Intent;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("market://details?id=");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      $Uri = staticinvoke Uri.parse($String);
+      specialinvoke $Intent.<Intent: void <init>(String, Uri)>("android.intent.action.VIEW", $Uri);
+      virtualinvoke $Intent.<Intent: Intent addFlags(int)>(1074266112);
+      virtualinvoke this.startActivity($Intent);
+      return;
+
+  label3:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(String)>("android.intent.action.VIEW");
+      $Uri = staticinvoke Uri.parse("https://play.google.com/store/search?q=arkay&c=apps");
+      virtualinvoke $Intent.<Intent: Intent setData(Uri)>($Uri);
+      virtualinvoke this.startActivity($Intent);
+  }
+
+  @Override
+  protected void onCreate(Bundle $param0)
+  {
+    InterstitialAd $InterstitialAd;
+    Resources $Resources;
+    String $String;
+    AdRequest $AdRequest;
+    View $View;
+    Button $Button;
+    AdView $AdView;
+    AdSize $AdSize_Field_BANNER;
+    LinearLayout $LinearLayout;
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      virtualinvoke this.setContentView(2130903042);
+      $InterstitialAd = new InterstitialAd;
+      $Resources = virtualinvoke this.getResources();
+      $String = virtualinvoke $Resources.getString(2131099650);
+      specialinvoke $InterstitialAd.<InterstitialAd: void <init>(Activity, String)>(this, $String);
+      this.<MenuHomeScreenActivity: InterstitialAd interstitialAd> = $InterstitialAd;
+      $InterstitialAd = this.<MenuHomeScreenActivity: InterstitialAd interstitialAd>;
+      virtualinvoke $InterstitialAd.<InterstitialAd: void setAdListener(AdListener)>(this);
+      $AdRequest = new AdRequest;
+      specialinvoke $AdRequest.<AdRequest: void <init>()>();
+      $InterstitialAd = this.<MenuHomeScreenActivity: InterstitialAd interstitialAd>;
+      virtualinvoke $InterstitialAd.loadAd($AdRequest);
+      $View = virtualinvoke this.findViewById(2131296261);
+      $Button = (Button) $View;
+      this.<MenuHomeScreenActivity: Button btnPlay> = $Button;
+      $Button = this.<MenuHomeScreenActivity: Button btnPlay>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131296262);
+      $Button = (Button) $View;
+      this.<MenuHomeScreenActivity: Button btnRateThisApps> = $Button;
+      $Button = this.<MenuHomeScreenActivity: Button btnRateThisApps>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131296263);
+      $Button = (Button) $View;
+      this.<MenuHomeScreenActivity: Button btnMoreApps> = $Button;
+      $Button = this.<MenuHomeScreenActivity: Button btnMoreApps>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $AdView = new AdView;
+      $AdSize_Field_BANNER = <AdSize: AdSize BANNER>;
+      $Resources = virtualinvoke this.getResources();
+      $String = virtualinvoke $Resources.getString(2131099650);
+      specialinvoke $AdView.<AdView: void <init>(Activity, AdSize, String)>(this, $AdSize_Field_BANNER, $String);
+      $View = virtualinvoke this.findViewById(2131296259);
+      $LinearLayout = (LinearLayout) $View;
+      virtualinvoke $LinearLayout.<LinearLayout: void addView(View)>($AdView);
+      $AdRequest = new AdRequest;
+      specialinvoke $AdRequest.<AdRequest: void <init>()>();
+      virtualinvoke $AdView.loadAd($AdRequest);
+  }
+
+  @Override
+  public void onDismissScreen(Ad $param0)
+  {
+    
+  }
+
+  @Override
+  public void onFailedToReceiveAd(Ad $param0, AdRequest$ErrorCode $param1)
+  {
+    StringBuilder $StringBuilder;
+    
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("onFailedToReceiveAd (");
+      $StringBuilder = virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(Object)>($param1);
+      $StringBuilder = virtualinvoke $StringBuilder.append(")");
+      virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
+  }
+
+  @Override
+  public void onLeaveApplication(Ad $param0)
+  {
+    
+  }
+
+  @Override
+  public void onPresentScreen(Ad $param0)
+  {
+    
+  }
+
+  @Override
+  public void onReceiveAd(Ad $param0)
+  {
+    InterstitialAd $InterstitialAd_Field_interstitialAd;
+    
+      $InterstitialAd_Field_interstitialAd = this.<MenuHomeScreenActivity: InterstitialAd interstitialAd>;
+      virtualinvoke $InterstitialAd_Field_interstitialAd.show();
+  }
+
+  public void showAds()
+  {
+    InterstitialAd $InterstitialAd;
+    boolean $z0;
+    
+      $InterstitialAd = this.<MenuHomeScreenActivity: InterstitialAd interstitialAd>;
+      $z0 = virtualinvoke $InterstitialAd.isReady();
+      if $z0 == 0 goto label0;
+      $InterstitialAd = this.<MenuHomeScreenActivity: InterstitialAd interstitialAd>;
+      virtualinvoke $InterstitialAd.show();
+
+  label0:
+      return;
+  }
+
+}
