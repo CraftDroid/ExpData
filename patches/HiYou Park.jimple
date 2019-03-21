@@ -82,10 +82,13 @@ public class cn.hiyou.util.ToolCwSetting extends Object
       $ContentResolver = virtualinvoke $param0.getContentResolver();
       $Uri = <ToolCwSetting: Uri PREFERRED_APN_URI>;
       
+  label5:
       $Cursor_Method_query = virtualinvoke $ContentResolver.<ContentResolver: Cursor query(Uri, String[], String, String[], String)>($Uri, null, null, null, null);
       $ContentResolver = virtualinvoke $param0.getContentResolver();
       $Uri = <ToolCwSetting: Uri PREFERRED_APN_URI>;
       $arrString = { "_id", "apn", "type" };
+      
+  label6:
       $Cursor_Method_query_1 = virtualinvoke $ContentResolver.<ContentResolver: Cursor query(Uri, String[], String, String[], String)>($Uri, $arrString, null, null, null);
       interfaceinvoke $Cursor_Method_query_1.<Cursor: boolean moveToFirst()>();
       $z0 = interfaceinvoke $Cursor_Method_query_1.isAfterLast();
@@ -96,9 +99,19 @@ public class cn.hiyou.util.ToolCwSetting extends Object
       interfaceinvoke $Cursor_Method_query.close();
       return $String;
       
+  label3:
+      $String = "";
+      return $String;
+
   label1:
       $String = interfaceinvoke $Cursor_Method_query_1.getString(1);
       goto label0;
+      
+  label2:
+      $se := @caughtexception;
+      goto label3;
+      
+      catch SecurityException from label5 to label6 with label2;
   }
 
   public static String getMNC(Context $param0)
