@@ -1,0 +1,537 @@
+import android.app.ActivityManager;
+import android.app.ActivityManager$MemoryInfo;
+import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
+import android.os.Environment;
+import android.os.StatFs;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
+import cn.com.opda.android.sysinfo.HardwareInfo;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.Exception;
+import java.lang.Float;
+import java.lang.Object;
+import java.lang.Process;
+import java.lang.Runtime;
+import java.lang.String;
+import java.lang.StringBuilder;
+import java.text.DecimalFormat;
+
+public class cn.com.opda.android.sysinfo.HardwareInfo extends Object
+{
+  private ActivityManager am;
+
+  private ActivityManager$MemoryInfo minfo;
+
+  public Context context;
+
+  private static final String TAG = "linux";
+
+  private String ram_all_memory;
+
+  private String ram_all_memory_str;
+
+  private String ram_useble_memory;
+
+  private String str11;
+
+  private String str12;
+
+  private String str1;
+
+  private String str2;
+
+  private String total;
+
+  private String useble;
+
+  public String cutBlank(String $param0)
+  {
+    boolean $z0;
+    int $int;
+    
+      $param0 = virtualinvoke $param0.trim();
+
+  label0:
+      $z0 = virtualinvoke $param0.startsWith(" ");
+      if $z0 != 0 goto label2;
+
+  label1:
+      $z0 = virtualinvoke $param0.endsWith(" ");
+      if $z0 != 0 goto label3;
+      return $param0;
+
+  label2:
+      $int = virtualinvoke $param0.length();
+      $param0 = virtualinvoke $param0.substring(1, $int);
+      $param0 = virtualinvoke $param0.trim();
+      goto label0;
+
+  label3:
+      $int = virtualinvoke $param0.length();
+      $int = $int - 1;
+      $param0 = virtualinvoke $param0.substring(0, $int);
+      $param0 = virtualinvoke $param0.trim();
+      goto label1;
+  }
+
+  public String filesize(float $param0)
+  {
+    String $String, $String_1;
+    byte $b0;
+    DecimalFormat $DecimalFormat;
+    StringBuilder $StringBuilder;
+    double $d0;
+    
+      $String = "";
+      $b0 = $param0 cmpl 1024.0F;
+      if $b0 < 0 goto label0;
+      $String = "KB";
+      $param0 = $param0 / 1024.0F;
+      $b0 = $param0 cmpl 1024.0F;
+      if $b0 < 0 goto label0;
+      $String = "MB";
+      $param0 = $param0 / 1024.0F;
+      $b0 = $param0 cmpl 1024.0F;
+      if $b0 < 0 goto label0;
+      $String = "GB";
+      $param0 = $param0 / 1024.0F;
+
+  label0:
+      $DecimalFormat = new DecimalFormat;
+      specialinvoke $DecimalFormat.<DecimalFormat: void <init>(String)>("#0.00");
+      $StringBuilder = new StringBuilder;
+      $d0 = (double) $param0;
+      $String_1 = virtualinvoke $DecimalFormat.format($d0);
+      $String_1 = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      return $String;
+  }
+
+  public String getCPUInfo()
+  {
+    Process $Process, $Process_Method_exec;
+    Runtime $Runtime_Method_getRuntime;
+    InputStream $InputStream_Method_getInputStream;
+    InputStreamReader $InputStreamReader;
+    BufferedReader $BufferedReader;
+    String $String_2, $String_1, $String, $String_3;
+    int $int, $int_1;
+    StringBuilder $StringBuilder;
+    Context $Context;
+    Resources $Resources;
+    IOException $IOException;
+    Exception $Exception;
+    
+      $Process = null;
+
+  label0:
+      $Runtime_Method_getRuntime = staticinvoke Runtime.getRuntime();
+      $Process_Method_exec = virtualinvoke $Runtime_Method_getRuntime.exec("cat /proc/cpuinfo");
+
+  label1:
+      $Process = $Process_Method_exec;
+
+  label2:
+      $InputStream_Method_getInputStream = virtualinvoke $Process.getInputStream();
+      $InputStreamReader = new InputStreamReader;
+      specialinvoke $InputStreamReader.<InputStreamReader: void <init>(InputStream)>($InputStream_Method_getInputStream);
+      $BufferedReader = new BufferedReader;
+      specialinvoke $BufferedReader.<BufferedReader: void <init>(Reader, int)>($InputStreamReader, 8192);
+      $String_2 = "";
+
+  label3:
+      $String_1 = virtualinvoke $BufferedReader.readLine();
+
+  label4:
+      if $String_1 != null goto label8;
+
+  label5:
+      if $String_2 == "" goto label6;
+      staticinvoke <Log: int i(String, String)>("linux", $String_2);
+      $String = "Processor";
+      $String_1 = "BogoMIPS";
+      $int = virtualinvoke $String_2.indexOf("Processor");
+      $int_1 = virtualinvoke $String.length();
+      $int = $int + $int_1;
+      $int_1 = virtualinvoke $String_2.indexOf("BogoMIPS");
+      $String = virtualinvoke $String_2.substring($int, $int_1);
+      $int = virtualinvoke $String.indexOf(":");
+      $int = $int + 1;
+      $int_1 = virtualinvoke $String.length();
+      $String = virtualinvoke $String.substring($int, $int_1);
+      this.<HardwareInfo: String str1> = $String;
+      $String = this.<HardwareInfo: String str1>;
+      $String = virtualinvoke this.cutBlank($String);
+      this.<HardwareInfo: String str1> = $String;
+      $String = this.<HardwareInfo: String str1>;
+      $String_3 = this.<HardwareInfo: String str1>;
+      $int = virtualinvoke $String_3.indexOf(" ");
+      $String = virtualinvoke $String.substring(0, $int);
+      this.<HardwareInfo: String str11> = $String;
+      $String = this.<HardwareInfo: String str1>;
+      $String_3 = this.<HardwareInfo: String str11>;
+      $int = virtualinvoke $String_3.length();
+      $String_3 = this.<HardwareInfo: String str1>;
+      $int_1 = virtualinvoke $String_3.length();
+      $String = virtualinvoke $String.substring($int, $int_1);
+      this.<HardwareInfo: String str12> = $String;
+      $int = virtualinvoke $String_2.indexOf("BogoMIPS");
+      $int_1 = virtualinvoke $String_1.length();
+      $int = $int + $int_1;
+      $int_1 = virtualinvoke $String_2.indexOf("Features");
+      $String_2 = virtualinvoke $String_2.substring($int, $int_1);
+      $int = virtualinvoke $String_2.indexOf(":");
+      $int = $int + 1;
+      $int_1 = virtualinvoke $String_2.length();
+      $String_2 = virtualinvoke $String_2.substring($int, $int_1);
+      this.<HardwareInfo: String str2> = $String_2;
+      $String_2 = this.<HardwareInfo: String str2>;
+      $String_2 = virtualinvoke this.cutBlank($String_2);
+      this.<HardwareInfo: String str2> = $String_2;
+
+  label6:
+      $StringBuilder = new StringBuilder;
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String_2 = virtualinvoke $Resources.getString(2131099944);
+      $String_2 = staticinvoke <String: String valueOf(Object)>($String_2);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_2);
+      $String_2 = this.<HardwareInfo: String str11>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_2);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $String_2 = this.<HardwareInfo: String str12>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_2);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String_2 = virtualinvoke $Resources.getString(2131099945);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_2);
+      $String_2 = this.<HardwareInfo: String str2>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_2);
+      $StringBuilder = virtualinvoke $StringBuilder.append("HZ");
+      $String_2 = virtualinvoke $StringBuilder.toString();
+      return $String_2;
+
+  label7:
+      $IOException := @caughtexception;
+      virtualinvoke $IOException.printStackTrace();
+      goto label2;
+
+  label8:
+      $StringBuilder = new StringBuilder;
+
+  label9:
+      $String = staticinvoke <String: String valueOf(Object)>($String_2);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $String_1 = virtualinvoke $StringBuilder.toString();
+
+  label10:
+      $String_2 = $String_1;
+      goto label3;
+
+  label11:
+      $Exception := @caughtexception;
+      virtualinvoke $Exception.printStackTrace();
+      goto label5;
+
+      catch IOException from label0 to label1 with label7;
+      catch Exception from label3 to label4 with label11;
+      catch Exception from label9 to label10 with label11;
+  }
+
+  public String getModel()
+  {
+    StringBuilder $StringBuilder;
+    Context $Context_Field_context;
+    Resources $Resources_Method_getResources;
+    String $String;
+    
+      $StringBuilder = new StringBuilder;
+      $Context_Field_context = this.<HardwareInfo: Context context>;
+      $Resources_Method_getResources = virtualinvoke $Context_Field_context.getResources();
+      $String = virtualinvoke $Resources_Method_getResources.getString(2131099943);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $String = <Build: String MODEL>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      return $String;
+  }
+
+  public String getRAMInfo()
+  {
+    Context $Context;
+    Object $Object_Method_getSystemService;
+    ActivityManager $ActivityManager;
+    ActivityManager$MemoryInfo $ActivityManager_MemoryInfo;
+    Process $Process, $Process_Method_exec;
+    Runtime $Runtime_Method_getRuntime;
+    InputStream $InputStream_Method_getInputStream;
+    InputStreamReader $InputStreamReader;
+    BufferedReader $BufferedReader;
+    String $String_1, $String, $String_Method_valueOf;
+    int $int, $int_1;
+    Float $Float_Method_valueOf;
+    float $f0;
+    long $long_Field_availMem;
+    StringBuilder $StringBuilder;
+    Resources $Resources;
+    IOException $IOException;
+    Exception $Exception;
+    
+      $Context = this.<HardwareInfo: Context context>;
+      $Object_Method_getSystemService = virtualinvoke $Context.getSystemService("activity");
+      $ActivityManager = (ActivityManager) $Object_Method_getSystemService;
+      this.<HardwareInfo: ActivityManager am> = $ActivityManager;
+      $ActivityManager_MemoryInfo = new ActivityManager$MemoryInfo;
+      specialinvoke $ActivityManager_MemoryInfo.<ActivityManager$MemoryInfo: void <init>()>();
+      this.<HardwareInfo: ActivityManager$MemoryInfo minfo> = $ActivityManager_MemoryInfo;
+      $ActivityManager = this.<HardwareInfo: ActivityManager am>;
+      $ActivityManager_MemoryInfo = this.<HardwareInfo: ActivityManager$MemoryInfo minfo>;
+      virtualinvoke $ActivityManager.getMemoryInfo($ActivityManager_MemoryInfo);
+      $Process = null;
+
+  label0:
+      $Runtime_Method_getRuntime = staticinvoke Runtime.getRuntime();
+      $Process_Method_exec = virtualinvoke $Runtime_Method_getRuntime.exec("cat /proc/meminfo");
+
+  label1:
+      $Process = $Process_Method_exec;
+
+  label2:
+      $InputStream_Method_getInputStream = virtualinvoke $Process.getInputStream();
+      $InputStreamReader = new InputStreamReader;
+      specialinvoke $InputStreamReader.<InputStreamReader: void <init>(InputStream)>($InputStream_Method_getInputStream);
+      $BufferedReader = new BufferedReader;
+      specialinvoke $BufferedReader.<BufferedReader: void <init>(Reader, int)>($InputStreamReader, 8192);
+      $String_1 = "";
+
+  label3:
+      $String = virtualinvoke $BufferedReader.readLine();
+
+  label4:
+      if $String != null goto label8;
+
+  label5:
+      if $String_1 == "" goto label6;
+      $String = "MemTotal:";
+      $int = virtualinvoke $String_1.indexOf("MemTotal:");
+      $int_1 = virtualinvoke $String.length();
+      $int = $int + $int_1;
+      $int_1 = virtualinvoke $String_1.indexOf("kB");
+      $String_1 = virtualinvoke $String_1.substring($int, $int_1);
+      this.<HardwareInfo: String ram_all_memory_str> = $String_1;
+      $String_1 = this.<HardwareInfo: String ram_all_memory_str>;
+      $String_1 = virtualinvoke this.cutBlank($String_1);
+      this.<HardwareInfo: String ram_all_memory_str> = $String_1;
+      $String_1 = this.<HardwareInfo: String ram_all_memory_str>;
+      $Float_Method_valueOf = staticinvoke Float.valueOf($String_1);
+      $f0 = virtualinvoke $Float_Method_valueOf.floatValue();
+      $f0 = $f0 * 1024.0F;
+      $String_1 = virtualinvoke this.filesize($f0);
+      this.<HardwareInfo: String ram_all_memory> = $String_1;
+      $ActivityManager_MemoryInfo = this.<HardwareInfo: ActivityManager$MemoryInfo minfo>;
+      $long_Field_availMem = $ActivityManager_MemoryInfo.<ActivityManager$MemoryInfo: long availMem>;
+      $f0 = (float) $long_Field_availMem;
+      $String_1 = virtualinvoke this.filesize($f0);
+      this.<HardwareInfo: String ram_useble_memory> = $String_1;
+
+  label6:
+      $StringBuilder = new StringBuilder;
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String_1 = virtualinvoke $Resources.getString(2131099948);
+      $String_1 = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_1);
+      $String_1 = this.<HardwareInfo: String ram_useble_memory>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String_1 = virtualinvoke $Resources.getString(2131099947);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $String_1 = this.<HardwareInfo: String ram_all_memory>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      return $String_1;
+
+  label7:
+      $IOException := @caughtexception;
+      virtualinvoke $IOException.printStackTrace();
+      goto label2;
+
+  label8:
+      $StringBuilder = new StringBuilder;
+
+  label9:
+      $String_Method_valueOf = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_Method_valueOf);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+
+  label10:
+      $String_1 = $String;
+      goto label3;
+
+  label11:
+      $Exception := @caughtexception;
+      virtualinvoke $Exception.printStackTrace();
+      goto label5;
+
+      catch IOException from label0 to label1 with label7;
+      catch Exception from label3 to label4 with label11;
+      catch Exception from label9 to label10 with label11;
+  }
+
+  public String getSDInfo()
+  {
+    String $String;
+    boolean $z0;
+    File $File_Method_getExternalStorageDirectory;
+    StatFs $StatFs;
+    int $int;
+    float $f1, $f2, $f0;
+    StringBuilder $StringBuilder;
+    Context $Context;
+    Resources $Resources;
+    
+      $String = staticinvoke Environment.getExternalStorageState();
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("mounted");
+      if $z0 == 0 goto label0;
+      $File_Method_getExternalStorageDirectory = staticinvoke Environment.getExternalStorageDirectory();
+      $StatFs = new StatFs;
+      $String = virtualinvoke $File_Method_getExternalStorageDirectory.getPath();
+      specialinvoke $StatFs.<StatFs: void <init>(String)>($String);
+      $int = virtualinvoke $StatFs.getBlockSize();
+      $f1 = (float) $int;
+      $int = virtualinvoke $StatFs.getBlockCount();
+      $f2 = (float) $int;
+      $int = virtualinvoke $StatFs.getAvailableBlocks();
+      $f0 = (float) $int;
+      $f2 = $f2 * $f1;
+      $String = virtualinvoke this.filesize($f2);
+      this.<HardwareInfo: String total> = $String;
+      $f0 = $f0 * $f1;
+      $String = virtualinvoke this.filesize($f0);
+      this.<HardwareInfo: String useble> = $String;
+      $StringBuilder = new StringBuilder;
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String = virtualinvoke $Resources.getString(2131099948);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $String = this.<HardwareInfo: String useble>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String = virtualinvoke $Resources.getString(2131099947);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = this.<HardwareInfo: String total>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      return $String;
+
+  label0:
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String = virtualinvoke $Resources.getString(2131099939);
+      return $String;
+  }
+
+  public String getScreenInfo()
+  {
+    DisplayMetrics $DisplayMetrics;
+    Context $Context;
+    Object $Object_Method_getSystemService;
+    WindowManager $WindowManager;
+    Display $Display_Method_getDefaultDisplay;
+    StringBuilder $StringBuilder;
+    Resources $Resources_Method_getResources;
+    String $String;
+    int $int;
+    
+      $DisplayMetrics = new DisplayMetrics;
+      specialinvoke $DisplayMetrics.<DisplayMetrics: void <init>()>();
+      $Context = this.<HardwareInfo: Context context>;
+      $Object_Method_getSystemService = virtualinvoke $Context.getSystemService("window");
+      $WindowManager = (WindowManager) $Object_Method_getSystemService;
+      $Display_Method_getDefaultDisplay = interfaceinvoke $WindowManager.getDefaultDisplay();
+      virtualinvoke $Display_Method_getDefaultDisplay.getMetrics($DisplayMetrics);
+      $StringBuilder = new StringBuilder;
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources_Method_getResources = virtualinvoke $Context.getResources();
+      $String = virtualinvoke $Resources_Method_getResources.getString(2131099946);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $int = $DisplayMetrics.<DisplayMetrics: int widthPixels>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($int);
+      $StringBuilder = virtualinvoke $StringBuilder.append("*");
+      $int = $DisplayMetrics.<DisplayMetrics: int heightPixels>;
+      $StringBuilder = virtualinvoke $StringBuilder.append($int);
+      $String = virtualinvoke $StringBuilder.toString();
+      return $String;
+  }
+
+  public String getTelMemory()
+  {
+    File $File_Method_getDataDirectory;
+    StatFs $StatFs;
+    String $String;
+    int $int;
+    float $f1, $f0, $f2;
+    StringBuilder $StringBuilder;
+    Context $Context;
+    Resources $Resources;
+    
+      $File_Method_getDataDirectory = staticinvoke Environment.getDataDirectory();
+      $StatFs = new StatFs;
+      $String = virtualinvoke $File_Method_getDataDirectory.getPath();
+      specialinvoke $StatFs.<StatFs: void <init>(String)>($String);
+      $int = virtualinvoke $StatFs.getBlockSize();
+      $f1 = (float) $int;
+      $int = virtualinvoke $StatFs.getAvailableBlocks();
+      $f0 = (float) $int;
+      $int = virtualinvoke $StatFs.getBlockCount();
+      $f2 = (float) $int;
+      $StringBuilder = new StringBuilder;
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String = virtualinvoke $Resources.getString(2131099948);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $f0 = $f1 * $f0;
+      $String = virtualinvoke this.filesize($f0);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $Context = this.<HardwareInfo: Context context>;
+      $Resources = virtualinvoke $Context.getResources();
+      $String = virtualinvoke $Resources.getString(2131099947);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $f1 = $f1 * $f2;
+      $String = virtualinvoke this.filesize($f1);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      return $String;
+  }
+
+  public void <init>(Context $param0)
+  {
+    
+      specialinvoke this.<Object: void <init>()>();
+      this.<HardwareInfo: Context context> = $param0;
+  }
+
+}
