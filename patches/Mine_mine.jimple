@@ -50,9 +50,31 @@ public class com.android.cug.saolei.Mysettings extends Activity implements andro
       $String_Method_toString_1 = interfaceinvoke $Editable.toString();
       $Editable = virtualinvoke $EditText_2.getText();
       $String_Method_toString_2 = interfaceinvoke $Editable.toString();
+      if $String_Method_toString == "" goto label50;
       $int_Method_parseInt = staticinvoke Integer.parseInt($String_Method_toString);
+      goto label51;
+      
+  label50:
+      $int_Method_parseInt = -1;
+      
+  label51:
+      if $String_Method_toString_1 == "" goto label52;
       $int_Method_parseInt_1 = staticinvoke Integer.parseInt($String_Method_toString_1);
+      goto label53;
+      
+  label52:
+      $int_Method_parseInt = -1;
+      
+  label53:
+      if $String_Method_toString_2 == "" goto label54;
       $int_Method_parseInt_2 = staticinvoke Integer.parseInt($String_Method_toString_2);
+      goto label55;
+      
+  label54:
+      $int_Method_parseInt_2 = staticinvoke Integer.parseInt($String_Method_toString_2);
+      $int_Method_parseInt = -1;
+            
+  label55:
       if $int_Method_parseInt < 3 goto label0;
       if $String_Method_toString == "" goto label0;
       $z0 = virtualinvoke $String_Method_toString.<String: boolean equals(Object)>(null);
