@@ -421,6 +421,7 @@ public class ch.btcfx.activities.SubscriptionActivity extends FragmentActivity i
       virtualinvoke this.setContentView(2130903087);
       $Intent = new Intent;
       specialinvoke $Intent.<Intent: void <init>(String)>("com.android.vending.billing.InAppBillingService.BIND");
+      virtualinvoke $Intent.<Intent: Intent setPackage(String)>("com.android.vending");
       $ServiceConnection_Field_n = this.<SubscriptionActivity: ServiceConnection n>;
       virtualinvoke this.<SubscriptionActivity: boolean bindService(Intent, ServiceConnection, int)>($Intent, $ServiceConnection_Field_n, 1);
       $AsyncTask_Field_x = this.<SubscriptionActivity: AsyncTask x>;
