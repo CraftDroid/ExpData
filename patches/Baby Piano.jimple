@@ -42,6 +42,9 @@ import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.System;
 import java.util.Random;
+import android.content.Activity;
+import android.content.pm.PackageManager;
+import android.content.ComponentName;
 
 public class com.blackdevelopers.babypiano.CommonResources extends Object
 {
@@ -459,9 +462,12 @@ value=23)
   {
     long $long_Method_currentTimeMillis;
     boolean $z0;
+    Activity $Activity;
+    PackageManager $PackageManager;
     String $String;
     Intent $Intent;
     Uri $Uri_Method_parse;
+    ComponentName $ComponentName;
     
       $long_Method_currentTimeMillis = staticinvoke System.currentTimeMillis();
       <CommonResources: long deVueltaDeUnAd> = $long_Method_currentTimeMillis;
@@ -473,7 +479,13 @@ value=23)
       $Intent = new Intent;
       $Uri_Method_parse = staticinvoke Uri.parse($String);
       specialinvoke $Intent.<Intent: void <init>(String, Uri)>("android.intent.action.VIEW", $Uri_Method_parse);
+      $Activity = (Activity) $param0;
+      $PackageManager = virtualinvoke $Activity.<Activity: PackageManager getPackageManager()>();
+      $ComponentName = virtualinvoke $Intent.<Intent: ComponentName resolveActivity(PackageManager)>($PackageManager);
+      if $ComponentName == null goto label2;
       virtualinvoke $param0.startActivity($Intent);
+      
+  label2:
       return;
 
   label1:
