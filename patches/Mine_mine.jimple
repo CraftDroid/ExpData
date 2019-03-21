@@ -1,0 +1,111 @@
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences$Editor;
+import android.os.Bundle;
+import android.text.Editable;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+import com.android.cug.saolei.Mysettings;
+import java.lang.Boolean;
+import java.lang.CharSequence;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.String;
+
+public class com.android.cug.saolei.Mysettings extends Activity implements android.view.View$OnClickListener
+{
+  public void <init>()
+  {
+    
+      specialinvoke this.<Activity: void <init>()>();
+  }
+
+  @Override
+  public void onClick(View $param0)
+  {
+    SharedPreferences $SharedPreferences_Method_getSharedPreferences;
+    SharedPreferences$Editor $SharedPreferences_Editor_Method_edit;
+    EditText $EditText, $EditText_1, $EditText_2;
+    Boolean $Boolean;
+    Editable $Editable;
+    String $String_Method_toString, $String_Method_toString_1, $String_Method_toString_2;
+    int $int_Method_parseInt, $int_Method_parseInt_1, $int_Method_parseInt_2, $int;
+    boolean $z0;
+    Toast $Toast;
+    
+      $SharedPreferences_Method_getSharedPreferences = virtualinvoke this.getSharedPreferences("Mine_mine", 0);
+      $SharedPreferences_Editor_Method_edit = interfaceinvoke $SharedPreferences_Method_getSharedPreferences.edit();
+      $param0 = virtualinvoke this.findViewById(2131099658);
+      $EditText = (EditText) $param0;
+      $param0 = virtualinvoke this.findViewById(2131099659);
+      $EditText_1 = (EditText) $param0;
+      $param0 = virtualinvoke this.findViewById(2131099657);
+      $EditText_2 = (EditText) $param0;
+      $Boolean = staticinvoke <Boolean: Boolean valueOf(boolean)>(true);
+      $Editable = virtualinvoke $EditText.getText();
+      $String_Method_toString = interfaceinvoke $Editable.toString();
+      $Editable = virtualinvoke $EditText_1.getText();
+      $String_Method_toString_1 = interfaceinvoke $Editable.toString();
+      $Editable = virtualinvoke $EditText_2.getText();
+      $String_Method_toString_2 = interfaceinvoke $Editable.toString();
+      $int_Method_parseInt = staticinvoke Integer.parseInt($String_Method_toString);
+      $int_Method_parseInt_1 = staticinvoke Integer.parseInt($String_Method_toString_1);
+      $int_Method_parseInt_2 = staticinvoke Integer.parseInt($String_Method_toString_2);
+      if $int_Method_parseInt < 3 goto label0;
+      if $String_Method_toString == "" goto label0;
+      $z0 = virtualinvoke $String_Method_toString.<String: boolean equals(Object)>(null);
+      if $z0 == 0 goto label1;
+
+  label0:
+      $Boolean = staticinvoke <Boolean: Boolean valueOf(boolean)>(false);
+      virtualinvoke $EditText.<EditText: void setError(CharSequence)>("Error");
+
+  label1:
+      if $int_Method_parseInt_1 < 3 goto label2;
+      if $String_Method_toString_1 == "" goto label2;
+      $z0 = virtualinvoke $String_Method_toString_1.<String: boolean equals(Object)>(null);
+      if $z0 == 0 goto label3;
+
+  label2:
+      virtualinvoke $EditText_1.<EditText: void setError(CharSequence)>("Error");
+      $Boolean = staticinvoke <Boolean: Boolean valueOf(boolean)>(false);
+
+  label3:
+      $int = $int_Method_parseInt * $int_Method_parseInt_1;
+      $int = $int + -1;
+      if $int_Method_parseInt_2 > $int goto label4;
+      if $String_Method_toString_2 == "" goto label4;
+      $z0 = virtualinvoke $String_Method_toString_2.<String: boolean equals(Object)>(null);
+      if $z0 == 0 goto label5;
+
+  label4:
+      virtualinvoke $EditText_2.<EditText: void setError(CharSequence)>("Error");
+      $Boolean = staticinvoke <Boolean: Boolean valueOf(boolean)>(false);
+
+  label5:
+      $z0 = virtualinvoke $Boolean.booleanValue();
+      if $z0 == 0 goto label6;
+      interfaceinvoke $SharedPreferences_Editor_Method_edit.<SharedPreferences$Editor: SharedPreferences$Editor putInt(String, int)>("rows", $int_Method_parseInt);
+      interfaceinvoke $SharedPreferences_Editor_Method_edit.<SharedPreferences$Editor: SharedPreferences$Editor putInt(String, int)>("colums", $int_Method_parseInt_1);
+      interfaceinvoke $SharedPreferences_Editor_Method_edit.<SharedPreferences$Editor: SharedPreferences$Editor putInt(String, int)>("mine", $int_Method_parseInt_2);
+      interfaceinvoke $SharedPreferences_Editor_Method_edit.<SharedPreferences$Editor: boolean commit()>();
+      $Toast = staticinvoke <Toast: Toast makeText(Context, int, int)>(this, 2130968589, 2);
+      virtualinvoke $Toast.show();
+      return;
+
+  label6:
+      $Toast = staticinvoke <Toast: Toast makeText(Context, int, int)>(this, 2130968590, 2);
+      virtualinvoke $Toast.show();
+  }
+
+  @Override
+  protected void onCreate(Bundle $param0)
+  {
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      virtualinvoke this.setContentView(2130903042);
+  }
+
+}
