@@ -1,4 +1,4 @@
 Bug:
-When the operation requires permission however not granted by the user previous, SecurityException can be thrown.
+If the listened state change requires permissions that are not granted to the app, SecurityException will be thrown.
 Fix:
-As shown in https://developer.android.com/training/permissions/requesting?hl=en, calling requestPermission explicity before app carries sensitive action.
+Check the listened states with the granted permissions, before passing as parameter to telephonyManager.listen().
