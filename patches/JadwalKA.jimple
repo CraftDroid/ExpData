@@ -125,7 +125,7 @@ public class gulajava.jdwl.loads extends Activity
       $DbaseKA_Field_DbHelper = this.<loads: DbaseKA DbHelper>;
       virtualinvoke $DbaseKA_Field_DbHelper.close();
       $Thread_Field_bg = this.<loads: Thread bg>;
-      virtualinvoke $Thread_Field_bg.stop();
+      virtualinvoke $Thread_Field_bg.interrupt();
   }
 
   @Override
