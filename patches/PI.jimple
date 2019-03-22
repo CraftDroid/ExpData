@@ -1,0 +1,37 @@
+import android.content.Context;
+import java.lang.Object;
+import java.lang.String;
+import net.webis.pocketinformant.MainActivity;
+import net.webis.pocketinformant.MainActivity$2;
+import net.webis.pocketinformant.Utils$SignupDialog;
+import net.webis.pocketinformant.prefs.AppPreferences;
+
+@InnerClass(InnerClass="net/webis/pocketinformant/MainActivity$2", OuterClass="net/webis/pocketinformant/MainActivity", Name="InnerClassTag", AccessFlags=0)
+class net.webis.pocketinformant.MainActivity$2 extends Object implements java.lang.Runnable
+{
+  final synthetic MainActivity this$0;
+
+  void <init>(MainActivity $param0)
+  {
+    
+      this.<MainActivity$2: MainActivity this$0> = $param0;
+      specialinvoke this.<Object: void <init>()>();
+  }
+
+  @Override
+  public void run()
+  {
+    MainActivity $MainActivity;
+    AppPreferences $AppPreferences_Field_mPrefs;
+    Utils$SignupDialog $Utils_SignupDialog;
+    
+      $MainActivity = this.<MainActivity$2: MainActivity this$0>;
+      $AppPreferences_Field_mPrefs = $MainActivity.<MainActivity: AppPreferences mPrefs>;
+      virtualinvoke $AppPreferences_Field_mPrefs.<AppPreferences: void setBoolean(String, boolean)>("SubscriptionRequest", true);
+      $Utils_SignupDialog = new Utils$SignupDialog;
+      $MainActivity = this.<MainActivity$2: MainActivity this$0>;
+      specialinvoke $Utils_SignupDialog.<Utils$SignupDialog: void <init>(Context)>($MainActivity);
+      virtualinvoke $Utils_SignupDialog.show();
+  }
+
+}
