@@ -1,0 +1,139 @@
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import gulajava.jdwl.databases.DbaseKA;
+import gulajava.jdwl.loads;
+import gulajava.jdwl.loads$1;
+import gulajava.jdwl.loads$2;
+import java.lang.Class;
+import java.lang.Runnable;
+import java.lang.String;
+import java.lang.Thread;
+@InnerClass(InnerClass="gulajava/jdwl/loads$1", OuterClass="gulajava/jdwl/loads", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="gulajava/jdwl/loads$2", OuterClass="gulajava/jdwl/loads", Name="InnerClassTag", AccessFlags=0)
+
+public class gulajava.jdwl.loads extends Activity
+{
+  private Intent intent;
+
+  private Handler handler;
+
+  private static boolean isRunning;
+
+  private DbaseKA DbHelper;
+
+  Runnable splash;
+
+  Runnable threads;
+
+  private Thread bg;
+
+  static Intent access$0(loads $param0)
+  {
+    Intent r1;
+    
+      r1 = $param0.<loads: Intent intent>;
+      return r1;
+  }
+
+  static Handler access$3(loads $param0)
+  {
+    Handler r1;
+    
+      r1 = $param0.<loads: Handler handler>;
+      return r1;
+  }
+
+  static boolean access$1()
+  {
+    boolean z0;
+    
+      z0 = <loads: boolean isRunning>;
+      return z0;
+  }
+
+  static DbaseKA access$2(loads $param0)
+  {
+    DbaseKA r1;
+    
+      r1 = $param0.<loads: DbaseKA DbHelper>;
+      return r1;
+  }
+
+  static void <clinit>()
+  {
+      <loads: boolean isRunning> = false;
+  }
+
+  public void <init>()
+  {
+    loads$1 $loads_1;
+    loads$2 $loads_2;
+    
+      specialinvoke this.<Activity: void <init>()>();
+      $loads_1 = new loads$1;
+      specialinvoke $loads_1.<loads$1: void <init>(loads)>(this);
+      this.<loads: Runnable splash> = $loads_1;
+      $loads_2 = new loads$2;
+      specialinvoke $loads_2.<loads$2: void <init>(loads)>(this);
+      this.<loads: Runnable threads> = $loads_2;
+  }
+
+  @Override
+  public void onCreate(Bundle $param0)
+  {
+    Intent $Intent;
+    Handler $Handler;
+    DbaseKA $DbaseKA;
+    Thread $Thread;
+    Runnable $Runnable_Field_threads;
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      virtualinvoke this.setContentView(2130903050);
+      staticinvoke <Log: int w(String, String)>("Test log", "Pengetesan log");
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>()>();
+      $Intent = virtualinvoke $Intent.<Intent: Intent setClass(Context, Class)>(this, class "Lgulajava/jdwl/mainmenu;");
+      this.<loads: Intent intent> = $Intent;
+      $Handler = new Handler;
+      specialinvoke $Handler.<Handler: void <init>()>();
+      this.<loads: Handler handler> = $Handler;
+      $DbaseKA = new DbaseKA;
+      specialinvoke $DbaseKA.<DbaseKA: void <init>(Context)>(this);
+      this.<loads: DbaseKA DbHelper> = $DbaseKA;
+      $Thread = new Thread;
+      $Runnable_Field_threads = this.<loads: Runnable threads>;
+      specialinvoke $Thread.<Thread: void <init>(Runnable)>($Runnable_Field_threads);
+      this.<loads: Thread bg> = $Thread;
+      <loads: boolean isRunning> = true;
+      $Thread = this.<loads: Thread bg>;
+      virtualinvoke $Thread.setPriority(10);
+      $Thread = this.<loads: Thread bg>;
+      virtualinvoke $Thread.start();
+  }
+
+  @Override
+  public void onDestroy()
+  {
+    DbaseKA $DbaseKA_Field_DbHelper;
+    Thread $Thread_Field_bg;
+    
+      specialinvoke this.<Activity: void onDestroy()>();
+      $DbaseKA_Field_DbHelper = this.<loads: DbaseKA DbHelper>;
+      virtualinvoke $DbaseKA_Field_DbHelper.close();
+      $Thread_Field_bg = this.<loads: Thread bg>;
+      virtualinvoke $Thread_Field_bg.stop();
+  }
+
+  @Override
+  public void onStop()
+  {
+    
+      specialinvoke this.<Activity: void onStop()>();
+      <loads: boolean isRunning> = false;
+  }
+
+}
