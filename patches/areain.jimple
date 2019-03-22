@@ -829,7 +829,11 @@ public class com.hukuhuku.area.MainActivity extends Activity implements Location
       $LocationManager = this.<MainActivity: LocationManager H>;
       virtualinvoke $LocationManager.<LocationManager: void requestLocationUpdates(String, long, float, LocationListener)>("gps", 3000L, 3.0F, this);
       $LocationManager = this.<MainActivity: LocationManager H>;
+      $z0 = virtualinvoke $LocationManager.isProviderEnabled("network");
+      if $z0 == 0 goto label2;
       virtualinvoke $LocationManager.<LocationManager: void requestLocationUpdates(String, long, float, LocationListener)>("network", 3000L, 3.0F, this);
+  
+  label2:    
       return;
 
   label1:
