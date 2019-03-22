@@ -1,0 +1,480 @@
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences$Editor;
+import android.content.res.Resources;
+import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection$OnScanCompletedListener;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+import com.google.android.gms.maps.c;
+import eu.bischofs.a.c.a;
+import eu.bischofs.android.commons.b.e;
+import eu.bischofs.android.commons.b.j;
+import eu.bischofs.android.commons.g.d;
+import eu.bischofs.android.commons.mapcam.k;
+import eu.bischofs.mapcam.MapCamActivity;
+import eu.bischofs.mapcam.b;
+import java.io.File;
+import java.lang.CharSequence;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.StringBuilder;
+
+public class eu.bischofs.mapcam.MapCamActivity extends eu.bischofs.android.commons.mapcam.d implements eu.bischofs.android.commons.b.f
+{
+  private ServiceConnection p;
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu $param0)
+  {
+    MenuInflater $MenuInflater_Method_getMenuInflater;
+    
+      $MenuInflater_Method_getMenuInflater = virtualinvoke this.getMenuInflater();
+      virtualinvoke $MenuInflater_Method_getMenuInflater.inflate(2131492865, $param0);
+      return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem $param0)
+  {
+    int $int_Method_getItemId;
+    boolean $z0;
+    Intent $Intent;
+    Bundle $Bundle;
+    File $File_Method_d;
+    String $String_Method_getPath;
+    c $c;
+    
+      $int_Method_getItemId = interfaceinvoke $param0.getItemId();
+      lookupswitch ($int_Method_getItemId) {
+      case 2131230786: goto label2;
+      case 2131230787: goto label1;
+      case 2131230788: goto label6;
+      case 2131230789: goto label7;
+      case 2131230790: goto label4;
+      case 2131230791: goto label8;
+      case 2131230792: goto label5;
+      case 2131230793: goto label3;
+      default: goto label0;
+      };
+
+  label0:
+      goto label1;
+
+  label1:
+      $z0 = specialinvoke this.<eu.bischofs.android.commons.mapcam.d: boolean onOptionsItemSelected(MenuItem)>($param0);
+      return $z0;
+
+  label2:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Leu/bischofs/mapcam/FolderChoiceActivity;");
+      $Bundle = new Bundle;
+      specialinvoke $Bundle.<Bundle: void <init>()>();
+      $File_Method_d = virtualinvoke this.d();
+      $String_Method_getPath = virtualinvoke $File_Method_d.getPath();
+      virtualinvoke $Bundle.putString("dir", $String_Method_getPath);
+      virtualinvoke $Intent.<Intent: Intent putExtras(Bundle)>($Bundle);
+      virtualinvoke this.startActivityForResult($Intent, 3874);
+      return true;
+
+  label3:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Leu/bischofs/mapcam/SettingsActivity;");
+      virtualinvoke this.startActivity($Intent);
+      return true;
+
+  label4:
+      $c = this.<MapCamActivity: c c>;
+      virtualinvoke $c.a(4);
+      interfaceinvoke $param0.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label5:
+      $c = this.<MapCamActivity: c c>;
+      virtualinvoke $c.a(0);
+      interfaceinvoke $param0.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label6:
+      $c = this.<MapCamActivity: c c>;
+      virtualinvoke $c.a(1);
+      interfaceinvoke $param0.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label7:
+      $c = this.<MapCamActivity: c c>;
+      virtualinvoke $c.a(2);
+      interfaceinvoke $param0.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label8:
+      $c = this.<MapCamActivity: c c>;
+      virtualinvoke $c.a(3);
+      interfaceinvoke $param0.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu $param0)
+  {
+    Intent $Intent_Method_getIntent;
+    String $String_Method_getAction;
+    boolean $z0;
+    MenuItem $MenuItem;
+    c $c;
+    int $int_Method_d;
+    
+      $Intent_Method_getIntent = virtualinvoke this.getIntent();
+      $String_Method_getAction = virtualinvoke $Intent_Method_getIntent.getAction();
+      $z0 = virtualinvoke $String_Method_getAction.<String: boolean equals(Object)>("android.media.action.IMAGE_CAPTURE");
+      if $z0 == 0 goto label1;
+      $MenuItem = interfaceinvoke $param0.findItem(2131230786);
+      interfaceinvoke $MenuItem.<MenuItem: MenuItem setVisible(boolean)>(false);
+
+  label0:
+      $c = this.<MapCamActivity: c c>;
+      if $c != null goto label2;
+      return true;
+
+  label1:
+      $MenuItem = interfaceinvoke $param0.findItem(2131230786);
+      interfaceinvoke $MenuItem.<MenuItem: MenuItem setVisible(boolean)>(true);
+      goto label0;
+
+  label2:
+      $c = this.<MapCamActivity: c c>;
+      $int_Method_d = virtualinvoke $c.d();
+      lookupswitch ($int_Method_d) {
+      case 0: goto label5;
+      case 1: goto label6;
+      case 2: goto label7;
+      case 3: goto label8;
+      case 4: goto label9;
+      default: goto label3;
+      };
+
+  label3:
+      goto label4;
+
+  label4:
+      return true;
+
+  label5:
+      $MenuItem = interfaceinvoke $param0.findItem(2131230792);
+      interfaceinvoke $MenuItem.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label6:
+      $MenuItem = interfaceinvoke $param0.findItem(2131230788);
+      interfaceinvoke $MenuItem.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label7:
+      $MenuItem = interfaceinvoke $param0.findItem(2131230789);
+      interfaceinvoke $MenuItem.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label8:
+      $MenuItem = interfaceinvoke $param0.findItem(2131230791);
+      interfaceinvoke $MenuItem.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+
+  label9:
+      $MenuItem = interfaceinvoke $param0.findItem(2131230790);
+      interfaceinvoke $MenuItem.<MenuItem: MenuItem setChecked(boolean)>(true);
+      return true;
+  }
+
+  @Override
+  public eu.bischofs.android.commons.mapcam.j e()
+  {
+    b $b;
+    
+      $b = new b;
+      specialinvoke $b.<b: void <init>(Context)>(this);
+      return $b;
+  }
+
+  @Override
+  public int c()
+  {
+    
+      return 2130837602;
+  }
+
+  @Override
+  protected File d()
+  {
+    SharedPreferences $SharedPreferences_Method_getSharedPreferences;
+    String $String_Method_getString;
+    File $File;
+    boolean $z0;
+    
+      $SharedPreferences_Method_getSharedPreferences = virtualinvoke this.getSharedPreferences("MapCamActivity", 0);
+      $String_Method_getString = interfaceinvoke $SharedPreferences_Method_getSharedPreferences.<SharedPreferences: String getString(String, String)>("photoDir", null);
+      if $String_Method_getString == null goto label1;
+      $File = new File;
+      specialinvoke $File.<File: void <init>(String)>($String_Method_getString);
+      $z0 = virtualinvoke $File.exists();
+      if $z0 != 0 goto label0;
+      virtualinvoke $File.<File: boolean mkdirs()>();
+
+  label0:
+      $z0 = virtualinvoke $File.isDirectory();
+      if $z0 == 0 goto label1;
+      return $File;
+
+  label1:
+      $File = staticinvoke k.a("MapCam");
+      return $File;
+  }
+
+  @Override
+  public String b()
+  {
+    Resources $Resources_Method_getResources;
+    String $String_Method_getString;
+    
+      $Resources_Method_getResources = virtualinvoke this.getResources();
+      $String_Method_getString = virtualinvoke $Resources_Method_getResources.getString(2131099886);
+      return $String_Method_getString;
+  }
+
+  public void <init>()
+  {
+    
+      specialinvoke this.<eu.bischofs.android.commons.mapcam.d: void <init>()>();
+      this.<MapCamActivity: ServiceConnection p> = null;
+  }
+
+  @Override
+  public void A_()
+  {
+    
+      virtualinvoke this.finish();
+  }
+
+  @Override
+  protected void a(Uri $param0)
+  {
+    SharedPreferences $SharedPreferences_Method_getDefaultSharedPreferences;
+    boolean $z0;
+    File $File, $File_Method_d;
+    String $String;
+    Intent $Intent;
+    String[] $arrString;
+    
+      $SharedPreferences_Method_getDefaultSharedPreferences = staticinvoke <PreferenceManager: SharedPreferences getDefaultSharedPreferences(Context)>(this);
+      $z0 = interfaceinvoke $SharedPreferences_Method_getDefaultSharedPreferences.<SharedPreferences: boolean getBoolean(String, boolean)>("pref_key_iptc_headline", false);
+      if $z0 == 0 goto label0;
+      $File = new File;
+      $String = virtualinvoke $param0.getPath();
+      specialinvoke $File.<File: void <init>(String)>($String);
+      $File_Method_d = virtualinvoke this.d();
+      $String = virtualinvoke $File_Method_d.getName();
+      specialinvoke this.a($File, $String);
+
+  label0:
+      $z0 = interfaceinvoke $SharedPreferences_Method_getDefaultSharedPreferences.<SharedPreferences: boolean getBoolean(String, boolean)>("pref_key_show_edit_photo", true);
+      if $z0 == 0 goto label1;
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Leu/bischofs/mapcam/PostProcessingActivity;");
+      virtualinvoke $Intent.<Intent: Intent putExtra(String, Parcelable)>("photoUri", $param0);
+      $z0 = interfaceinvoke $SharedPreferences_Method_getDefaultSharedPreferences.<SharedPreferences: boolean getBoolean(String, boolean)>("pref_key_iptc_caption", true);
+      virtualinvoke $Intent.<Intent: Intent putExtra(String, boolean)>("askForCaption", $z0);
+      virtualinvoke this.startActivity($Intent);
+
+  label1:
+      $arrString = newarray (String)[1];
+      $String = virtualinvoke $param0.getPath();
+      $arrString[0] = $String;
+      staticinvoke <MediaScannerConnection: void scanFile(Context, String[], String[], MediaScannerConnection$OnScanCompletedListener)>(this, $arrString, null, null);
+  }
+
+  private void a(File $param0, String $param1)
+  {
+    File $File;
+    String $String_Method_getParent, $String;
+    StringBuilder $StringBuilder;
+    boolean $z0;
+    long $long_Method_length;
+    byte $b1;
+    Exception $Exception;
+    Toast $Toast;
+    
+      $File = new File;
+      $String_Method_getParent = virtualinvoke $param0.getParent();
+      $StringBuilder = new StringBuilder;
+      $String = virtualinvoke $param0.getName();
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append(".iptc.jpeg");
+      $String = virtualinvoke $StringBuilder.toString();
+      specialinvoke $File.<File: void <init>(String, String)>($String_Method_getParent, $String);
+
+  label0:
+      staticinvoke a.a($param0, $File, $param1);
+
+  label1:
+      $z0 = virtualinvoke $File.isFile();
+      if $z0 == 0 goto label3;
+      $long_Method_length = virtualinvoke $File.length();
+      $b1 = $long_Method_length cmp 0L;
+      if $b1 <= 0 goto label3;
+      virtualinvoke $param0.<File: boolean delete()>();
+      virtualinvoke $File.<File: boolean renameTo(File)>($param0);
+      return;
+
+  label2:
+      $Exception := @caughtexception;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Error adding IPTC headline. Keeping the original file. ");
+      $param1 = virtualinvoke $Exception.getLocalizedMessage();
+      $StringBuilder = virtualinvoke $StringBuilder.append($param1);
+      $param1 = virtualinvoke $StringBuilder.toString();
+      $Toast = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>(this, $param1, 1);
+      virtualinvoke $Toast.show();
+      virtualinvoke $File.<File: boolean delete()>();
+      return;
+
+  label3:
+      $Toast = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>(this, "Error adding IPTC headline. Keeping the original file.", 1);
+      virtualinvoke $Toast.show();
+      virtualinvoke $File.<File: boolean delete()>();
+
+      catch Exception from label0 to label1 with label2;
+  }
+
+  @Override
+  public void onActivityResult(int $param0, int $param1, Intent $param2)
+  {
+    SharedPreferences $SharedPreferences_Method_getSharedPreferences;
+    SharedPreferences$Editor $SharedPreferences_Editor;
+    String $String;
+    ActionBar $ActionBar_Method_getActionBar;
+    File $File_Method_d;
+    
+      specialinvoke this.<eu.bischofs.android.commons.mapcam.d: void onActivityResult(int, int, Intent)>($param0, $param1, $param2);
+      if $param0 != 3874 goto label0;
+      if $param1 != -1 goto label0;
+      $SharedPreferences_Method_getSharedPreferences = virtualinvoke this.getSharedPreferences("MapCamActivity", 0);
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Method_getSharedPreferences.edit();
+      $String = virtualinvoke $param2.getStringExtra("folder");
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Editor.putString("photoDir", $String);
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: boolean commit()>();
+      $ActionBar_Method_getActionBar = virtualinvoke this.getActionBar();
+      $File_Method_d = virtualinvoke this.d();
+      $String = virtualinvoke $File_Method_d.getName();
+      virtualinvoke $ActionBar_Method_getActionBar.<ActionBar: void setTitle(CharSequence)>($String);
+      $String = virtualinvoke $File_Method_d.toString();
+      virtualinvoke $ActionBar_Method_getActionBar.<ActionBar: void setSubtitle(CharSequence)>($String);
+
+  label0:
+      return;
+  }
+
+  @Override
+  public void onBackPressed()
+  {
+    boolean $z0;
+    Resources $Resources_Method_getResources;
+    String $String_Method_getString;
+    
+      virtualinvoke this.f();
+      staticinvoke <e: void a(String, Context, int, int)>("PhotoMap Ad", this, 1, 6);
+      $z0 = staticinvoke <e: boolean a(String, Activity, int, int, String)>("PhotoMap Ad", this, 2130837602, 2130903053, "market://details?id=eu.bischofs.photomap");
+      if $z0 == 0 goto label0;
+      return;
+
+  label0:
+      staticinvoke <j: void a(Context, int, int)>(this, 4, 8);
+      $Resources_Method_getResources = virtualinvoke this.getResources();
+      $String_Method_getString = virtualinvoke $Resources_Method_getResources.getString(2131099886);
+      $z0 = staticinvoke <j: boolean a(Activity, String, int, String)>(this, $String_Method_getString, 2130837602, "market://details?id=eu.bischofs.mapcam");
+      if $z0 != 0 goto label1;
+      virtualinvoke this.finish();
+
+  label1:
+      return;
+  }
+
+  @Override
+  protected void onCreate(Bundle $param0)
+  {
+    ActionBar $ActionBar_Method_getActionBar;
+    File $File_Method_d;
+    String $String;
+    eu.bischofs.android.commons.a.a $a;
+    Intent $Intent;
+    ServiceConnection $ServiceConnection_Field_p;
+    
+      staticinvoke <eu.bischofs.c.c: void a(Context)>(this);
+      specialinvoke this.<eu.bischofs.android.commons.mapcam.d: void onCreate(Bundle)>($param0);
+      $ActionBar_Method_getActionBar = virtualinvoke this.getActionBar();
+      $File_Method_d = virtualinvoke this.d();
+      $String = virtualinvoke $File_Method_d.getName();
+      virtualinvoke $ActionBar_Method_getActionBar.<ActionBar: void setTitle(CharSequence)>($String);
+      $String = virtualinvoke $File_Method_d.toString();
+      virtualinvoke $ActionBar_Method_getActionBar.<ActionBar: void setSubtitle(CharSequence)>($String);
+      $a = new eu.bischofs.android.commons.a.a;
+      specialinvoke $a.<eu.bischofs.android.commons.a.a: void <init>(Context)>(this);
+      this.<MapCamActivity: ServiceConnection p> = $a;
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(String)>("com.android.vending.billing.InAppBillingService.BIND");
+      $ServiceConnection_Field_p = this.<MapCamActivity: ServiceConnection p>;
+      virtualinvoke this.<MapCamActivity: boolean bindService(Intent, ServiceConnection, int)>($Intent, $ServiceConnection_Field_p, 1);
+  }
+
+  @Override
+  public void onDestroy()
+  {
+    ServiceConnection $ServiceConnection;
+    
+      specialinvoke this.<eu.bischofs.android.commons.mapcam.d: void onDestroy()>();
+      $ServiceConnection = this.<MapCamActivity: ServiceConnection p>;
+      if $ServiceConnection == null goto label0;
+      $ServiceConnection = this.<MapCamActivity: ServiceConnection p>;
+      virtualinvoke this.unbindService($ServiceConnection);
+
+  label0:
+      return;
+  }
+
+  @Override
+  protected void onResume()
+  {
+    SharedPreferences $SharedPreferences_Method_getDefaultSharedPreferences;
+    boolean $z0;
+    SharedPreferences$Editor $SharedPreferences_Editor;
+    
+      specialinvoke this.<eu.bischofs.android.commons.mapcam.d: void onResume()>();
+      $SharedPreferences_Method_getDefaultSharedPreferences = staticinvoke <PreferenceManager: SharedPreferences getDefaultSharedPreferences(Context)>(this);
+      $z0 = staticinvoke <eu.bischofs.android.commons.a.a: boolean a(Context)>(this);
+      if $z0 != 0 goto label0;
+      $z0 = staticinvoke <d: boolean a(Context)>(this);
+      if $z0 != 0 goto label0;
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Method_getDefaultSharedPreferences.edit();
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putBoolean(String, boolean)>("pref_key_signal_details", false);
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putBoolean(String, boolean)>("pref_key_switch_automatically", false);
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Editor.putString("pref_key_button_red", "20");
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Editor.putString("pref_key_button_filled", "100");
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: boolean commit()>();
+
+  label0:
+      $z0 = interfaceinvoke $SharedPreferences_Method_getDefaultSharedPreferences.<SharedPreferences: boolean getBoolean(String, boolean)>("pref_key_signal_details", false);
+      virtualinvoke this.a($z0);
+  }
+
+}
