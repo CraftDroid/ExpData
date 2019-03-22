@@ -1,4 +1,6 @@
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface$OnClickListener;
 import android.content.Intent;
@@ -79,6 +81,8 @@ public class gwj.void1898.www.mixedcolor.MixedColorMenuActivity extends Activity
     boolean $z0;
     Uri $Uri_Method_parse;
     MixedColorMenuActivity$2 $MixedColorMenuActivity_2;
+    PackageManager $PackageManager;
+    ComponentName $ComponentName;
     
       $Intent = null;
       $int_Method_getId = virtualinvoke $param0.getId();
@@ -93,6 +97,9 @@ public class gwj.void1898.www.mixedcolor.MixedColorMenuActivity extends Activity
 
   label0:
       if $Intent == null goto label7;
+      $PackageManager = virtualinvoke this.<MixedColorMenuActivity: PackageManager getPackageManager()>();
+      $ComponentName = virtualinvoke $Intent.<Intent: ComponentName resolveActivity(PackageManager)>($PackageManager);
+      if $ComponentName == null goto label7;
       virtualinvoke this.startActivity($Intent);
       return;
 
