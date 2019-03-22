@@ -437,6 +437,7 @@ public class com.magdalm.flashlightledenergyball.MainActivity extends Activity
     Context $Context_Method_getApplicationContext;
     MainActivity$4 $MainActivity_4;
     Exception $Exception;
+    boolean $boolean;
     
       specialinvoke this.<Activity: void onStart()>();
       $View = virtualinvoke this.findViewById(2131296316);
@@ -525,7 +526,11 @@ public class com.magdalm.flashlightledenergyball.MainActivity extends Activity
       $MainActivity_4 = new MainActivity$4;
       specialinvoke $MainActivity_4.<MainActivity$4: void <init>(MainActivity)>(this);
       $AlertDialog_Builder = virtualinvoke $AlertDialog_Builder.<AlertDialog$Builder: AlertDialog$Builder setPositiveButton(int, DialogInterface$OnClickListener)>(2131492895, $MainActivity_4);
+      $boolean = virtualinvoke this.<Activity: boolean isFinishing()>();
+      if $boolean != 0 goto label64;
       virtualinvoke $AlertDialog_Builder.<AlertDialog$Builder: AlertDialog show()>();
+
+  label64:
       $z0 = false;
       goto label0;
 
