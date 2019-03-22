@@ -899,7 +899,7 @@ public class superchly.fruit.sric.view.GameView extends BoardView
       specialinvoke $GameView_RefreshTime.<GameView$RefreshTime: void <init>(GameView)>(this);
       this.<GameView: GameView$RefreshTime refreshTime> = $GameView_RefreshTime;
       $GameView_RefreshTime = this.<GameView: GameView$RefreshTime refreshTime>;
-      virtualinvoke $GameView_RefreshTime.stop();
+      virtualinvoke $GameView_RefreshTime.interrupt();
   }
 
   public void refreshChange()
