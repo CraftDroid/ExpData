@@ -24,6 +24,7 @@ class net.webis.pocketinformant.MainActivity$2 extends Object implements java.la
     MainActivity $MainActivity;
     AppPreferences $AppPreferences_Field_mPrefs;
     Utils$SignupDialog $Utils_SignupDialog;
+    boolean $boolean;
     
       $MainActivity = this.<MainActivity$2: MainActivity this$0>;
       $AppPreferences_Field_mPrefs = $MainActivity.<MainActivity: AppPreferences mPrefs>;
@@ -31,7 +32,12 @@ class net.webis.pocketinformant.MainActivity$2 extends Object implements java.la
       $Utils_SignupDialog = new Utils$SignupDialog;
       $MainActivity = this.<MainActivity$2: MainActivity this$0>;
       specialinvoke $Utils_SignupDialog.<Utils$SignupDialog: void <init>(Context)>($MainActivity);
+      $boolean = virtualinvoke this.<MainActivity$2: boolean isFinishing()>();
+      if $boolean != 0 goto label1;
       virtualinvoke $Utils_SignupDialog.show();
+
+  label1:
+      return;
   }
 
 }
