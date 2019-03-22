@@ -1,0 +1,1934 @@
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog$Builder;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface$OnClickListener;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences$Editor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View$OnClickListener;
+import android.view.View$OnFocusChangeListener;
+import android.widget.AdapterView$OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.SeekBar;
+import android.widget.SeekBar$OnSeekBarChangeListener;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.mhuang.overclocking.constants;
+import com.mhuang.overclocking.cupcake;
+import com.mhuang.overclocking.cupcake$1;
+import com.mhuang.overclocking.cupcake$2;
+import com.mhuang.overclocking.cupcake$3;
+import com.mhuang.overclocking.cupcake$clicker;
+import com.mhuang.overclocking.cupcake$seeker;
+import com.mhuang.overclocking.cupcake$seekerFocus;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.CharSequence;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Process;
+import java.lang.Runnable;
+import java.lang.Runtime;
+import java.lang.String;
+import java.lang.StringBuilder;
+import java.lang.Throwable;
+import java.util.Arrays;
+@InnerClass(InnerClass="com/mhuang/overclocking/cupcake$1", OuterClass="com/mhuang/overclocking/cupcake", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/mhuang/overclocking/cupcake$2", OuterClass="com/mhuang/overclocking/cupcake", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/mhuang/overclocking/cupcake$3", OuterClass="com/mhuang/overclocking/cupcake", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/mhuang/overclocking/cupcake$clicker", OuterClass="com/mhuang/overclocking/cupcake", Name="InnerClassTag", AccessFlags=2)
+@InnerClass(InnerClass="com/mhuang/overclocking/cupcake$seeker", OuterClass="com/mhuang/overclocking/cupcake", Name="InnerClassTag", AccessFlags=2)
+@InnerClass(InnerClass="com/mhuang/overclocking/cupcake$seekerFocus", OuterClass="com/mhuang/overclocking/cupcake", Name="InnerClassTag", AccessFlags=2)
+
+public class com.mhuang.overclocking.cupcake extends Activity
+{
+  Context context;
+
+  SharedPreferences settings;
+
+  SharedPreferences$Editor editor;
+
+  Handler handler;
+
+  Button about;
+
+  Button advanced;
+
+  Button donate;
+
+  Button info;
+
+  Button profiles;
+
+  Button refresh;
+
+  CheckBox autorefresh;
+
+  CheckBox boot;
+
+  SeekBar maxSeek;
+
+  SeekBar minSeek;
+
+  Spinner chooseGovernor;
+
+  TextView maxText;
+
+  TextView meterMax;
+
+  TextView meterMin;
+
+  TextView minText;
+
+  TextView note;
+
+  TextView status;
+
+  TextView versionText;
+
+  boolean hasRoot;
+
+  public static final boolean sholesinfo;
+
+  boolean stopRefresh;
+
+  cupcake$clicker clicker;
+
+  cupcake$seeker seeker;
+
+  cupcake$seekerFocus seekerFocus;
+
+  public int cores;
+
+  public int defaultMax;
+
+  public int defaultMin;
+
+  public int limitMax;
+
+  public int limitMin;
+
+  int[] bounds;
+
+  public int[] freq;
+
+  DataInputStream in;
+
+  DataOutputStream os;
+
+  Process process;
+
+  Runnable refreshCounter;
+
+  public String[] freqText;
+
+  public String[] governors;
+
+  public boolean checkChmod()
+  {
+    Runtime $Runtime_Method_getRuntime;
+    Process $Process;
+    DataOutputStream $DataOutputStream;
+    OutputStream $OutputStream_Method_getOutputStream;
+    DataInputStream $DataInputStream;
+    InputStream $InputStream_Method_getInputStream;
+    String $String_Method_readLine;
+    boolean $z0;
+    IOException $IOException;
+    TextView $TextView;
+    Exception $Exception;
+    
+
+  label0:
+      $Runtime_Method_getRuntime = staticinvoke Runtime.getRuntime();
+      $Process = virtualinvoke $Runtime_Method_getRuntime.exec("sh");
+
+  label1:
+      this.<cupcake: Process process> = $Process;
+
+  label2:
+      $DataOutputStream = new DataOutputStream;
+
+  label3:
+      $Process = this.<cupcake: Process process>;
+
+  label4:
+      $OutputStream_Method_getOutputStream = virtualinvoke $Process.getOutputStream();
+      specialinvoke $DataOutputStream.<DataOutputStream: void <init>(OutputStream)>($OutputStream_Method_getOutputStream);
+
+  label5:
+      this.<cupcake: DataOutputStream os> = $DataOutputStream;
+
+  label6:
+      $DataInputStream = new DataInputStream;
+
+  label7:
+      $Process = this.<cupcake: Process process>;
+
+  label8:
+      $InputStream_Method_getInputStream = virtualinvoke $Process.getInputStream();
+      specialinvoke $DataInputStream.<DataInputStream: void <init>(InputStream)>($InputStream_Method_getInputStream);
+
+  label9:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label10:
+      virtualinvoke $DataOutputStream.writeBytes("ls -l /sys/devices/system/cpu/cpu0\n");
+      $String_Method_readLine = virtualinvoke $DataInputStream.readLine();
+
+  label11:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label12:
+      virtualinvoke $DataOutputStream.writeBytes("exit\n");
+
+  label13:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label14:
+      virtualinvoke $DataOutputStream.flush();
+
+  label15:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label16:
+      virtualinvoke $DataOutputStream.close();
+      virtualinvoke $DataInputStream.close();
+
+  label17:
+      $Process = this.<cupcake: Process process>;
+
+  label18:
+      virtualinvoke $Process.<Process: int waitFor()>();
+
+  label19:
+      $Process = this.<cupcake: Process process>;
+
+  label20:
+      virtualinvoke $Process.destroy();
+      $z0 = virtualinvoke $String_Method_readLine.<String: boolean contains(CharSequence)>("rwxrwxrwx");
+
+  label21:
+      return $z0;
+
+  label22:
+      $IOException := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("IO Error [chmod()]");
+
+  label23:
+      return false;
+
+  label24:
+      $Exception := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("Error");
+      goto label23;
+
+      catch IOException from label0 to label1 with label22;
+      catch IOException from label4 to label5 with label22;
+      catch IOException from label8 to label9 with label22;
+      catch IOException from label10 to label11 with label22;
+      catch IOException from label12 to label13 with label22;
+      catch IOException from label14 to label15 with label22;
+      catch IOException from label16 to label17 with label22;
+      catch IOException from label18 to label19 with label22;
+      catch IOException from label20 to label21 with label22;
+      catch Exception from label1 to label2 with label24;
+      catch Exception from label0 to label1 with label24;
+      catch Exception from label5 to label6 with label24;
+      catch Exception from label4 to label5 with label24;
+      catch Exception from label3 to label4 with label24;
+      catch Exception from label19 to label21 with label24;
+      catch Exception from label18 to label19 with label24;
+      catch Exception from label17 to label18 with label24;
+      catch Exception from label16 to label17 with label24;
+      catch Exception from label15 to label16 with label24;
+      catch Exception from label14 to label15 with label24;
+      catch Exception from label13 to label14 with label24;
+      catch Exception from label12 to label13 with label24;
+      catch Exception from label11 to label12 with label24;
+      catch Exception from label10 to label11 with label24;
+      catch Exception from label9 to label10 with label24;
+      catch Exception from label8 to label9 with label24;
+      catch Exception from label7 to label8 with label24;
+  }
+
+  public boolean getRoot()
+  {
+    boolean $z0;
+    Runtime $Runtime_Method_getRuntime;
+    Process $Process;
+    DataOutputStream $DataOutputStream;
+    OutputStream $OutputStream_Method_getOutputStream;
+    int $int_Method_exitValue;
+    Exception $Exception, $Exception_1, $Exception_2, $Exception_3;
+    TextView $TextView;
+    Throwable $Throwable;
+    
+      $z0 = true;
+
+  label0:
+      $Runtime_Method_getRuntime = staticinvoke Runtime.getRuntime();
+      $Process = virtualinvoke $Runtime_Method_getRuntime.exec("su");
+      this.<cupcake: Process process> = $Process;
+
+  label1:
+      $DataOutputStream = new DataOutputStream;
+
+  label2:
+      $Process = this.<cupcake: Process process>;
+      $OutputStream_Method_getOutputStream = virtualinvoke $Process.getOutputStream();
+      specialinvoke $DataOutputStream.<DataOutputStream: void <init>(OutputStream)>($OutputStream_Method_getOutputStream);
+      this.<cupcake: DataOutputStream os> = $DataOutputStream;
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      virtualinvoke $DataOutputStream.writeBytes("exit\n");
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      virtualinvoke $DataOutputStream.flush();
+      $Process = this.<cupcake: Process process>;
+      virtualinvoke $Process.<Process: int waitFor()>();
+      $Process = this.<cupcake: Process process>;
+      $int_Method_exitValue = virtualinvoke $Process.exitValue();
+
+  label3:
+      if $int_Method_exitValue == 0 goto label4;
+      $z0 = false;
+
+  label4:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      if $DataOutputStream == null goto label16;
+
+  label5:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      virtualinvoke $DataOutputStream.close();
+
+  label6:
+      return $z0;
+
+  label7:
+      $Exception := @caughtexception;
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      if $DataOutputStream == null goto label17;
+
+  label8:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      virtualinvoke $DataOutputStream.close();
+
+  label9:
+      return false;
+
+  label10:
+      $Exception_1 := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("Error");
+      return false;
+
+  label11:
+      $Throwable := @caughtexception;
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      if $DataOutputStream == null goto label13;
+
+  label12:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+      virtualinvoke $DataOutputStream.close();
+
+  label13:
+      throw $Throwable;
+
+  label14:
+      $Exception_2 := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("Error");
+      goto label13;
+
+  label15:
+      $Exception_3 := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("Error");
+
+  label16:
+      return $z0;
+
+  label17:
+      return false;
+
+      catch Exception from label0 to label1 with label7;
+      catch Exception from label2 to label3 with label7;
+      catch Throwable from label1 to label3 with label11;
+      catch Throwable from label0 to label1 with label11;
+      catch Exception from label5 to label6 with label15;
+      catch Exception from label8 to label9 with label10;
+      catch Exception from label12 to label13 with label14;
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu $param0)
+  {
+    
+      interfaceinvoke $param0.<Menu: MenuItem add(int, int, int, CharSequence)>(0, 0, 0, "Device Selection");
+      return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem $param0)
+  {
+    int $int_Method_getItemId;
+    SharedPreferences$Editor $SharedPreferences_Editor;
+    Intent $Intent;
+    
+      $int_Method_getItemId = interfaceinvoke $param0.getItemId();
+      lookupswitch ($int_Method_getItemId) {
+      case 0: goto label1;
+      default: goto label0;
+      };
+
+  label0:
+      return false;
+
+  label1:
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putInt(String, int)>("androidVersion", 2);
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putBoolean(String, boolean)>("hasRoot", false);
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: boolean commit()>();
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/mhuang/overclocking/overclocking;");
+      virtualinvoke this.startActivity($Intent);
+      virtualinvoke this.finish();
+      return true;
+  }
+
+  public int getIndex(int $param0)
+  {
+    int $int, $int_1;
+    int[] $arrint;
+    
+      $int = 0;
+
+  label0:
+      $arrint = this.<cupcake: int[] freq>;
+      $int_1 = lengthof $arrint;
+      if $int < $int_1 goto label1;
+      return -1;
+
+  label1:
+      $arrint = this.<cupcake: int[] freq>;
+      $int_1 = $arrint[$int];
+      if $int_1 != $param0 goto label2;
+      return $int;
+
+  label2:
+      $int = $int + 1;
+      goto label0;
+  }
+
+  public int getIndex(String $param0, String[] $param1)
+  {
+    int $int, $int_1;
+    String $String;
+    boolean $z0;
+    
+      $int = 0;
+
+  label0:
+      $int_1 = lengthof $param1;
+      if $int < $int_1 goto label1;
+      return -1;
+
+  label1:
+      $String = $param1[$int];
+      $z0 = virtualinvoke $String.<String: boolean contains(CharSequence)>($param0);
+      if $z0 != 0 goto label2;
+      $String = $param1[$int];
+      $z0 = virtualinvoke $param0.<String: boolean contains(CharSequence)>($String);
+      if $z0 == 0 goto label3;
+
+  label2:
+      return $int;
+
+  label3:
+      $int = $int + 1;
+      goto label0;
+  }
+
+  public int readFrequency()
+  {
+    String $String_Method_readInfo;
+    int $int_Method_parseInt;
+    
+      $String_Method_readInfo = virtualinvoke this.readInfo("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
+      $int_Method_parseInt = staticinvoke Integer.parseInt($String_Method_readInfo);
+      return $int_Method_parseInt;
+  }
+
+  public int[] convertStringArray(String[] $param0)
+  {
+    int $int_1, $int;
+    int[] $arrint;
+    String $String;
+    
+      if $param0 == null goto label2;
+      $int_1 = lengthof $param0;
+      $arrint = newarray (int)[$int_1];
+      $int_1 = 0;
+
+  label0:
+      $int = lengthof $param0;
+      if $int_1 < $int goto label1;
+      return $arrint;
+
+  label1:
+      $String = $param0[$int_1];
+      $int = staticinvoke Integer.parseInt($String);
+      $arrint[$int_1] = $int;
+      $int_1 = $int_1 + 1;
+      goto label0;
+
+  label2:
+      return null;
+  }
+
+  public int[] readMaxMinFrequency()
+  {
+    int[] $arrint;
+    String $String;
+    int $int;
+    
+      $arrint = { 528, 528 };
+      $String = virtualinvoke this.readInfo("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
+      $int = staticinvoke Integer.parseInt($String);
+      $arrint[0] = $int;
+      $String = virtualinvoke this.readInfo("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
+      $int = staticinvoke Integer.parseInt($String);
+      $arrint[1] = $int;
+      return $arrint;
+  }
+
+  public String readGovernor()
+  {
+    String $String, $String_Method_readGovernorAttempt;
+    int $int;
+    
+      $String = virtualinvoke this.readGovernorAttempt();
+      $int = 0;
+
+  label0:
+      if $String == null goto label2;
+      if $String == "" goto label2;
+
+  label1:
+      $String = virtualinvoke $String.trim();
+      return $String;
+
+  label2:
+      $String_Method_readGovernorAttempt = virtualinvoke this.readGovernorAttempt();
+      $String = $String_Method_readGovernorAttempt;
+      if $String_Method_readGovernorAttempt == null goto label3;
+      if $String_Method_readGovernorAttempt != "" goto label4;
+
+  label3:
+      $String = virtualinvoke $String_Method_readGovernorAttempt.trim();
+      return $String;
+
+  label4:
+      if $int >= 10 goto label1;
+      $int = $int + 1;
+      goto label0;
+  }
+
+  public String readGovernorAttempt()
+  {
+    String $String_Method_readInfo;
+    
+      $String_Method_readInfo = virtualinvoke this.readInfo("/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
+      return $String_Method_readInfo;
+  }
+
+  public String readInfo(String $param0)
+  {
+    String $String;
+    DataInputStream $DataInputStream;
+    FileInputStream $FileInputStream;
+    StringBuilder $StringBuilder;
+    Exception $Exception, $Exception_1, $Exception_2, $Exception_3;
+    Throwable $Throwable;
+    
+      this.<cupcake: DataInputStream in> = null;
+      $String = "";
+
+  label0:
+      $DataInputStream = new DataInputStream;
+      $FileInputStream = new FileInputStream;
+
+  label1:
+      specialinvoke $FileInputStream.<FileInputStream: void <init>(String)>($param0);
+      specialinvoke $DataInputStream.<DataInputStream: void <init>(InputStream)>($FileInputStream);
+      this.<cupcake: DataInputStream in> = $DataInputStream;
+
+  label2:
+      $DataInputStream = this.<cupcake: DataInputStream in>;
+      $param0 = virtualinvoke $DataInputStream.readLine();
+
+  label3:
+      if $param0 != null goto label6;
+
+  label4:
+      $DataInputStream = this.<cupcake: DataInputStream in>;
+      virtualinvoke $DataInputStream.close();
+
+  label5:
+      $param0 = virtualinvoke $String.trim();
+      return $param0;
+
+  label6:
+      $StringBuilder = new StringBuilder;
+
+  label7:
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $param0 = virtualinvoke $param0.trim();
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $param0 = virtualinvoke $StringBuilder.toString();
+
+  label8:
+      $String = $param0;
+      goto label2;
+
+  label9:
+      $Exception := @caughtexception;
+
+  label10:
+      $DataInputStream = this.<cupcake: DataInputStream in>;
+      virtualinvoke $DataInputStream.close();
+
+  label11:
+      return null;
+
+  label12:
+      $Exception_1 := @caughtexception;
+      return null;
+
+  label13:
+      $Throwable := @caughtexception;
+
+  label14:
+      $DataInputStream = this.<cupcake: DataInputStream in>;
+      virtualinvoke $DataInputStream.close();
+
+  label15:
+      throw $Throwable;
+
+  label16:
+      $Exception_2 := @caughtexception;
+      return null;
+
+  label17:
+      $Exception_3 := @caughtexception;
+      return null;
+
+      catch Exception from label1 to label3 with label9;
+      catch Throwable from label0 to label3 with label13;
+      catch Exception from label4 to label5 with label17;
+      catch Exception from label7 to label8 with label9;
+      catch Throwable from label6 to label8 with label13;
+      catch Exception from label10 to label11 with label12;
+      catch Exception from label14 to label15 with label16;
+  }
+
+  public String[] convertIntArray(int[] $param0)
+  {
+    int $int_1, $int;
+    String[] $arrString;
+    StringBuilder $StringBuilder;
+    String $String_Method_toString;
+    
+      if $param0 == null goto label2;
+      $int_1 = lengthof $param0;
+      $arrString = newarray (String)[$int_1];
+      $int_1 = 0;
+
+  label0:
+      $int = lengthof $param0;
+      if $int_1 < $int goto label1;
+      return $arrString;
+
+  label1:
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>()>();
+      $int = $param0[$int_1];
+      $StringBuilder = virtualinvoke $StringBuilder.append($int);
+      $String_Method_toString = virtualinvoke $StringBuilder.toString();
+      $arrString[$int_1] = $String_Method_toString;
+      $int_1 = $int_1 + 1;
+      goto label0;
+
+  label2:
+      return null;
+  }
+
+  public void <init>()
+  {
+    cupcake$clicker $cupcake_clicker;
+    cupcake$seekerFocus $cupcake_seekerFocus;
+    cupcake$seeker $cupcake_seeker;
+    Handler $Handler;
+    
+      specialinvoke this.<Activity: void <init>()>();
+      $cupcake_clicker = new cupcake$clicker;
+      specialinvoke $cupcake_clicker.<cupcake$clicker: void <init>(cupcake, cupcake$clicker)>(this, null);
+      this.<cupcake: cupcake$clicker clicker> = $cupcake_clicker;
+      $cupcake_seekerFocus = new cupcake$seekerFocus;
+      specialinvoke $cupcake_seekerFocus.<cupcake$seekerFocus: void <init>(cupcake, cupcake$seekerFocus)>(this, null);
+      this.<cupcake: cupcake$seekerFocus seekerFocus> = $cupcake_seekerFocus;
+      $cupcake_seeker = new cupcake$seeker;
+      specialinvoke $cupcake_seeker.<cupcake$seeker: void <init>(cupcake, cupcake$seeker)>(this, null);
+      this.<cupcake: cupcake$seeker seeker> = $cupcake_seeker;
+      this.<cupcake: boolean hasRoot> = true;
+      this.<cupcake: boolean stopRefresh> = false;
+      $Handler = new Handler;
+      specialinvoke $Handler.<Handler: void <init>()>();
+      this.<cupcake: Handler handler> = $Handler;
+  }
+
+  public void chmod()
+  {
+    Runtime $Runtime_Method_getRuntime;
+    Process $Process;
+    DataOutputStream $DataOutputStream;
+    OutputStream $OutputStream_Method_getOutputStream;
+    Exception $Exception;
+    IOException $IOException;
+    
+
+  label0:
+      $Runtime_Method_getRuntime = staticinvoke Runtime.getRuntime();
+      $Process = virtualinvoke $Runtime_Method_getRuntime.exec("su");
+
+  label1:
+      this.<cupcake: Process process> = $Process;
+
+  label2:
+      $DataOutputStream = new DataOutputStream;
+
+  label3:
+      $Process = this.<cupcake: Process process>;
+
+  label4:
+      $OutputStream_Method_getOutputStream = virtualinvoke $Process.getOutputStream();
+      specialinvoke $DataOutputStream.<DataOutputStream: void <init>(OutputStream)>($OutputStream_Method_getOutputStream);
+
+  label5:
+      this.<cupcake: DataOutputStream os> = $DataOutputStream;
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label6:
+      virtualinvoke $DataOutputStream.writeBytes("chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/\n");
+
+  label7:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label8:
+      virtualinvoke $DataOutputStream.writeBytes("chmod 666 /sys/devices/system/cpu/cpu0/cpufreq/*\n");
+
+  label9:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label10:
+      virtualinvoke $DataOutputStream.writeBytes("chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/ondemand/\n");
+
+  label11:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label12:
+      virtualinvoke $DataOutputStream.writeBytes("chmod 666 /sys/devices/system/cpu/cpu0/cpufreq/ondemand/*\n");
+
+  label13:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label14:
+      virtualinvoke $DataOutputStream.writeBytes("exit\n");
+
+  label15:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label16:
+      virtualinvoke $DataOutputStream.flush();
+
+  label17:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label18:
+      virtualinvoke $DataOutputStream.close();
+
+  label19:
+      $Process = this.<cupcake: Process process>;
+
+  label20:
+      virtualinvoke $Process.<Object: void wait(long)>(1000L);
+
+  label21:
+      $Process = this.<cupcake: Process process>;
+
+  label22:
+      virtualinvoke $Process.destroy();
+
+  label23:
+      return;
+
+  label24:
+      $Exception := @caughtexception;
+      return;
+
+  label25:
+      $IOException := @caughtexception;
+
+      catch IOException from label0 to label1 with label25;
+      catch IOException from label4 to label5 with label25;
+      catch IOException from label6 to label7 with label25;
+      catch IOException from label8 to label9 with label25;
+      catch IOException from label10 to label11 with label25;
+      catch IOException from label12 to label13 with label25;
+      catch IOException from label14 to label15 with label25;
+      catch IOException from label16 to label17 with label25;
+      catch IOException from label18 to label19 with label25;
+      catch IOException from label20 to label21 with label25;
+      catch IOException from label22 to label23 with label25;
+      catch Exception from label1 to label2 with label24;
+      catch Exception from label0 to label1 with label24;
+      catch Exception from label21 to label23 with label24;
+      catch Exception from label20 to label21 with label24;
+      catch Exception from label19 to label20 with label24;
+      catch Exception from label18 to label19 with label24;
+      catch Exception from label17 to label18 with label24;
+      catch Exception from label16 to label17 with label24;
+      catch Exception from label15 to label16 with label24;
+      catch Exception from label14 to label15 with label24;
+      catch Exception from label13 to label14 with label24;
+      catch Exception from label12 to label13 with label24;
+      catch Exception from label11 to label12 with label24;
+      catch Exception from label10 to label11 with label24;
+      catch Exception from label9 to label10 with label24;
+      catch Exception from label8 to label9 with label24;
+      catch Exception from label7 to label8 with label24;
+      catch Exception from label6 to label7 with label24;
+      catch Exception from label5 to label6 with label24;
+      catch Exception from label4 to label5 with label24;
+      catch Exception from label3 to label4 with label24;
+  }
+
+  @Signature(Value="(Ljava/lang/Class<*>;)V")
+  public void launchClass(Class $param0)
+  {
+    Intent $Intent;
+    
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, $param0);
+      virtualinvoke this.startActivity($Intent);
+  }
+
+  @Override
+  public void onCreate(Bundle $param0)
+  {
+    Context $Context_Method_getApplicationContext;
+    SharedPreferences $SharedPreferences;
+    SharedPreferences$Editor $SharedPreferences_Editor_Method_edit;
+    boolean $z0;
+    String $String, $String_1, $String_2;
+    constants $constants;
+    StringBuilder $StringBuilder;
+    String[] $arrString;
+    int[] $arrint, $arrint_1;
+    int $int;
+    View $View;
+    TextView $TextView, $TextView_1;
+    CharSequence $CharSequence;
+    Button $Button;
+    SeekBar $SeekBar;
+    Spinner $Spinner;
+    cupcake$seeker $cupcake_seeker;
+    cupcake$seekerFocus $cupcake_seekerFocus;
+    CheckBox $CheckBox;
+    cupcake$clicker $cupcake_clicker;
+    ArrayAdapter $ArrayAdapter;
+    cupcake$1 $cupcake_1;
+    cupcake$2 $cupcake_2;
+    Handler $Handler_Field_handler;
+    Runnable $Runnable_Field_refreshCounter;
+    Intent $Intent;
+    LinearLayout $LinearLayout, $LinearLayout_1, $LinearLayout_2;
+    ScrollView $ScrollView;
+    Exception $Exception, $Exception_1;
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      $Context_Method_getApplicationContext = virtualinvoke this.getApplicationContext();
+      this.<cupcake: Context context> = $Context_Method_getApplicationContext;
+      $SharedPreferences = virtualinvoke this.getSharedPreferences("setcpu", 0);
+      this.<cupcake: SharedPreferences settings> = $SharedPreferences;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $SharedPreferences_Editor_Method_edit = interfaceinvoke $SharedPreferences.edit();
+      this.<cupcake: SharedPreferences$Editor editor> = $SharedPreferences_Editor_Method_edit;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $z0 = interfaceinvoke $SharedPreferences.<SharedPreferences: boolean getBoolean(String, boolean)>("firstLaunch", true);
+      if $z0 == 0 goto label0;
+      virtualinvoke this.showChangeWarning();
+
+  label0:
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $String = interfaceinvoke $SharedPreferences.getString("device", "htc_msm");
+      $String_1 = $String;
+      $constants = new constants;
+      specialinvoke $constants.<constants: void <init>(String)>($String);
+      $z0 = virtualinvoke $String.<String: boolean contains(CharSequence)>("custom");
+      if $z0 == 0 goto label22;
+
+  label1:
+      staticinvoke <Log: int d(String, String)>("setcpu", "Custom Config");
+      $String_2 = virtualinvoke this.readInfo("/sdcard/setcpu.txt");
+
+  label2:
+      $String = $String_2;
+      if $String_2 == null goto label3;
+      if $String_2 != "" goto label4;
+
+  label3:
+      $String = virtualinvoke this.readInfo("/system/sd/setcpu.txt");
+
+  label4:
+      if $String == null goto label5;
+      if $String != "" goto label6;
+
+  label5:
+      $String = virtualinvoke this.readInfo("/system/setcpu");
+
+  label6:
+      if $String == null goto label7;
+      if $String != "" goto label8;
+
+  label7:
+      $String = virtualinvoke this.readInfo("/data/local/setcpu");
+
+  label8:
+      if $String == null goto label19;
+      if $String == "" goto label19;
+      $StringBuilder = new StringBuilder;
+
+  label9:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Custom frequencies detected: ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String_2 = virtualinvoke $StringBuilder.toString();
+      staticinvoke <Log: int d(String, String)>("setcpu", $String_2);
+      $String = virtualinvoke $String.trim();
+      $arrString = virtualinvoke $String.split(",");
+      this.<cupcake: String[] freqText> = $arrString;
+      $arrString = this.<cupcake: String[] freqText>;
+      $arrint = virtualinvoke this.convertStringArray($arrString);
+      this.<cupcake: int[] freq> = $arrint;
+      $arrint = this.<cupcake: int[] freq>;
+      staticinvoke Arrays.sort($arrint);
+      $arrint = this.<cupcake: int[] freq>;
+      $arrString = virtualinvoke this.convertIntArray($arrint);
+      this.<cupcake: String[] freqText> = $arrString;
+      $arrint = this.<cupcake: int[] freq>;
+      $arrint_1 = this.<cupcake: int[] freq>;
+      $int = lengthof $arrint_1;
+
+  label10:
+      $int = $int - 1;
+
+  label11:
+      $int = $arrint[$int];
+      this.<cupcake: int defaultMax> = $int;
+      $arrint = this.<cupcake: int[] freq>;
+      $int = $arrint[0];
+      this.<cupcake: int defaultMin> = $int;
+      this.<cupcake: int limitMax> = 1000000000;
+      this.<cupcake: int limitMin> = 0;
+
+  label12:
+      $z0 = virtualinvoke $String_1.<String: boolean contains(CharSequence)>("custom");
+      if $z0 != 0 goto label13;
+      $z0 = virtualinvoke $String_1.<String: boolean contains(CharSequence)>("autodetect");
+      if $z0 != 0 goto label13;
+      $arrint = virtualinvoke $constants.getFreq();
+      this.<cupcake: int[] freq> = $arrint;
+      $arrString = virtualinvoke $constants.getFreqText();
+      this.<cupcake: String[] freqText> = $arrString;
+      $int = virtualinvoke $constants.getDefaultMax();
+      this.<cupcake: int defaultMax> = $int;
+      $int = virtualinvoke $constants.getDefaultMin();
+      this.<cupcake: int defaultMin> = $int;
+      $int = virtualinvoke $constants.getLimitMax();
+      this.<cupcake: int limitMax> = $int;
+      $int = virtualinvoke $constants.getLimitMin();
+      this.<cupcake: int limitMin> = $int;
+
+  label13:
+      virtualinvoke this.<cupcake: boolean requestWindowFeature(int)>(1);
+      virtualinvoke this.setContentView(2130903045);
+      $View = virtualinvoke this.findViewById(2131165226);
+      $TextView = (TextView) $View;
+      this.<cupcake: TextView status> = $TextView;
+      $View = virtualinvoke this.findViewById(2131165227);
+      $TextView = (TextView) $View;
+      this.<cupcake: TextView note> = $TextView;
+      $View = virtualinvoke this.findViewById(2131165228);
+      $TextView = (TextView) $View;
+      this.<cupcake: TextView meterMax> = $TextView;
+      $View = virtualinvoke this.findViewById(2131165229);
+      $TextView = (TextView) $View;
+      this.<cupcake: TextView meterMin> = $TextView;
+      $View = virtualinvoke this.findViewById(2131165232);
+      $TextView = (TextView) $View;
+      this.<cupcake: TextView maxText> = $TextView;
+      $View = virtualinvoke this.findViewById(2131165234);
+      $TextView = (TextView) $View;
+      this.<cupcake: TextView minText> = $TextView;
+      $View = virtualinvoke this.findViewById(2131165245);
+      $TextView = (TextView) $View;
+      this.<cupcake: TextView versionText> = $TextView;
+      $TextView = this.<cupcake: TextView versionText>;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>()>();
+      $TextView_1 = this.<cupcake: TextView versionText>;
+      $CharSequence = virtualinvoke $TextView_1.getText();
+      $StringBuilder = virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(Object)>($CharSequence);
+      $StringBuilder = virtualinvoke $StringBuilder.append(" ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      $z0 = virtualinvoke this.checkChmod();
+      if $z0 != 0 goto label14;
+      $z0 = virtualinvoke this.getRoot();
+      if $z0 == 0 goto label32;
+      virtualinvoke this.chmod();
+
+  label14:
+      $View = virtualinvoke this.findViewById(2131165236);
+      $Button = (Button) $View;
+      this.<cupcake: Button refresh> = $Button;
+      $View = virtualinvoke this.findViewById(2131165238);
+      $Button = (Button) $View;
+      this.<cupcake: Button info> = $Button;
+      $View = virtualinvoke this.findViewById(2131165237);
+      $Button = (Button) $View;
+      this.<cupcake: Button profiles> = $Button;
+      $View = virtualinvoke this.findViewById(2131165239);
+      $Button = (Button) $View;
+      this.<cupcake: Button advanced> = $Button;
+      $View = virtualinvoke this.findViewById(2131165240);
+      $Button = (Button) $View;
+      this.<cupcake: Button about> = $Button;
+      $View = virtualinvoke this.findViewById(2131165233);
+      $SeekBar = (SeekBar) $View;
+      this.<cupcake: SeekBar maxSeek> = $SeekBar;
+      $View = virtualinvoke this.findViewById(2131165235);
+      $SeekBar = (SeekBar) $View;
+      this.<cupcake: SeekBar minSeek> = $SeekBar;
+      $View = virtualinvoke this.findViewById(2131165242);
+      $Spinner = (Spinner) $View;
+      this.<cupcake: Spinner chooseGovernor> = $Spinner;
+      $SeekBar = this.<cupcake: SeekBar maxSeek>;
+      $arrint = this.<cupcake: int[] freq>;
+      $int = lengthof $arrint;
+      $int = $int - 1;
+      virtualinvoke $SeekBar.setMax($int);
+      $SeekBar = this.<cupcake: SeekBar minSeek>;
+      $arrint = this.<cupcake: int[] freq>;
+      $int = lengthof $arrint;
+      $int = $int - 1;
+      virtualinvoke $SeekBar.setMax($int);
+      $SeekBar = this.<cupcake: SeekBar maxSeek>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = this.<cupcake: int defaultMax>;
+      $int = interfaceinvoke $SharedPreferences.getInt("max", $int);
+      $int = virtualinvoke this.getIndex($int);
+      virtualinvoke $SeekBar.setProgress($int);
+      $SeekBar = this.<cupcake: SeekBar minSeek>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = this.<cupcake: int defaultMin>;
+      $int = interfaceinvoke $SharedPreferences.getInt("min", $int);
+      $int = virtualinvoke this.getIndex($int);
+      virtualinvoke $SeekBar.setProgress($int);
+      $SeekBar = this.<cupcake: SeekBar maxSeek>;
+      $cupcake_seeker = this.<cupcake: cupcake$seeker seeker>;
+      virtualinvoke $SeekBar.<SeekBar: void setOnSeekBarChangeListener(SeekBar$OnSeekBarChangeListener)>($cupcake_seeker);
+      $SeekBar = this.<cupcake: SeekBar minSeek>;
+      $cupcake_seeker = this.<cupcake: cupcake$seeker seeker>;
+      virtualinvoke $SeekBar.<SeekBar: void setOnSeekBarChangeListener(SeekBar$OnSeekBarChangeListener)>($cupcake_seeker);
+      $SeekBar = this.<cupcake: SeekBar maxSeek>;
+      $cupcake_seekerFocus = this.<cupcake: cupcake$seekerFocus seekerFocus>;
+      virtualinvoke $SeekBar.<SeekBar: void setOnFocusChangeListener(View$OnFocusChangeListener)>($cupcake_seekerFocus);
+      $SeekBar = this.<cupcake: SeekBar minSeek>;
+      $cupcake_seekerFocus = this.<cupcake: cupcake$seekerFocus seekerFocus>;
+      virtualinvoke $SeekBar.<SeekBar: void setOnFocusChangeListener(View$OnFocusChangeListener)>($cupcake_seekerFocus);
+      $View = virtualinvoke this.findViewById(2131165244);
+      $CheckBox = (CheckBox) $View;
+      this.<cupcake: CheckBox boot> = $CheckBox;
+      $View = virtualinvoke this.findViewById(2131165243);
+      $CheckBox = (CheckBox) $View;
+      this.<cupcake: CheckBox autorefresh> = $CheckBox;
+      $CheckBox = this.<cupcake: CheckBox autorefresh>;
+      $cupcake_clicker = this.<cupcake: cupcake$clicker clicker>;
+      virtualinvoke $CheckBox.<CheckBox: void setOnClickListener(View$OnClickListener)>($cupcake_clicker);
+      $TextView = this.<cupcake: TextView status>;
+      $StringBuilder = new StringBuilder;
+      $int = virtualinvoke this.readFrequency();
+      $int = $int / 1000;
+      $String_1 = staticinvoke Integer.toString($int);
+      $String_1 = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz");
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      $Button = this.<cupcake: Button refresh>;
+      $cupcake_clicker = this.<cupcake: cupcake$clicker clicker>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>($cupcake_clicker);
+      $Button = this.<cupcake: Button info>;
+      $cupcake_clicker = this.<cupcake: cupcake$clicker clicker>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>($cupcake_clicker);
+      $Button = this.<cupcake: Button profiles>;
+      $cupcake_clicker = this.<cupcake: cupcake$clicker clicker>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>($cupcake_clicker);
+      $Button = this.<cupcake: Button advanced>;
+      $cupcake_clicker = this.<cupcake: cupcake$clicker clicker>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>($cupcake_clicker);
+      $Button = this.<cupcake: Button about>;
+      $cupcake_clicker = this.<cupcake: cupcake$clicker clicker>;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>($cupcake_clicker);
+      $CheckBox = this.<cupcake: CheckBox boot>;
+      $cupcake_clicker = this.<cupcake: cupcake$clicker clicker>;
+      virtualinvoke $CheckBox.<CheckBox: void setOnClickListener(View$OnClickListener)>($cupcake_clicker);
+      $View = virtualinvoke this.findViewById(2131165185);
+      $Button = (Button) $View;
+      this.<cupcake: Button donate> = $Button;
+      $Button = this.<cupcake: Button donate>;
+      virtualinvoke $Button.setVisibility(8);
+      $arrint = virtualinvoke this.readMaxMinFrequency();
+      this.<cupcake: int[] bounds> = $arrint;
+      $TextView = this.<cupcake: TextView meterMax>;
+      $StringBuilder = new StringBuilder;
+      $arrint = this.<cupcake: int[] bounds>;
+      $int = $arrint[0];
+      $int = $int / 1000;
+      $String_1 = staticinvoke Integer.toString($int);
+      $String_1 = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz max");
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      $TextView = this.<cupcake: TextView meterMin>;
+      $StringBuilder = new StringBuilder;
+      $arrint = this.<cupcake: int[] bounds>;
+      $int = $arrint[1];
+      $int = $int / 1000;
+      $String_1 = staticinvoke Integer.toString($int);
+      $String_1 = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz min");
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      $TextView = this.<cupcake: TextView maxText>;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Max: ");
+      $arrString = this.<cupcake: String[] freqText>;
+      $SeekBar = this.<cupcake: SeekBar maxSeek>;
+      $int = virtualinvoke $SeekBar.getProgress();
+      $String_1 = $arrString[$int];
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      $TextView = this.<cupcake: TextView minText>;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Min: ");
+      $arrString = this.<cupcake: String[] freqText>;
+      $SeekBar = this.<cupcake: SeekBar minSeek>;
+      $int = virtualinvoke $SeekBar.getProgress();
+      $String_1 = $arrString[$int];
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      $String_1 = virtualinvoke this.readInfo("/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors");
+      $arrString = virtualinvoke $String_1.split(" ");
+      this.<cupcake: String[] governors> = $arrString;
+      $ArrayAdapter = new ArrayAdapter;
+      $arrString = this.<cupcake: String[] governors>;
+      specialinvoke $ArrayAdapter.<ArrayAdapter: void <init>(Context, int, Object[])>(this, 17367048, $arrString);
+      virtualinvoke $ArrayAdapter.setDropDownViewResource(17367049);
+      $Spinner = this.<cupcake: Spinner chooseGovernor>;
+      virtualinvoke $Spinner.<Spinner: void setAdapter(SpinnerAdapter)>($ArrayAdapter);
+      $Spinner = this.<cupcake: Spinner chooseGovernor>;
+      $cupcake_1 = new cupcake$1;
+      specialinvoke $cupcake_1.<cupcake$1: void <init>(cupcake)>(this);
+      virtualinvoke $Spinner.<Spinner: void setOnItemSelectedListener(AdapterView$OnItemSelectedListener)>($cupcake_1);
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("startBoot", 0);
+      if $int != 1 goto label15;
+      $CheckBox = this.<cupcake: CheckBox boot>;
+      virtualinvoke $CheckBox.<CheckBox: void setChecked(boolean)>(true);
+
+  label15:
+      $cupcake_2 = new cupcake$2;
+      specialinvoke $cupcake_2.<cupcake$2: void <init>(cupcake)>(this);
+      this.<cupcake: Runnable refreshCounter> = $cupcake_2;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("autorefresh", 1);
+      if $int != 1 goto label16;
+      $CheckBox = this.<cupcake: CheckBox autorefresh>;
+      virtualinvoke $CheckBox.<CheckBox: void setChecked(boolean)>(true);
+      $Handler_Field_handler = this.<cupcake: Handler handler>;
+      $Runnable_Field_refreshCounter = this.<cupcake: Runnable refreshCounter>;
+      virtualinvoke $Handler_Field_handler.<Handler: boolean postDelayed(Runnable, long)>($Runnable_Field_refreshCounter, 250L);
+
+  label16:
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $z0 = interfaceinvoke $SharedPreferences.<SharedPreferences: boolean getBoolean(String, boolean)>("profilesOn", false);
+      if $z0 == 0 goto label17;
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/mhuang/overclocking/cupcakeservice;");
+      virtualinvoke this.<cupcake: ComponentName startService(Intent)>($Intent);
+
+  label17:
+      $Spinner = this.<cupcake: Spinner chooseGovernor>;
+      $String_1 = virtualinvoke this.readGovernor();
+      $arrString = this.<cupcake: String[] governors>;
+      $int = virtualinvoke this.getIndex($String_1, $arrString);
+      virtualinvoke $Spinner.setSelection($int);
+      $TextView = this.<cupcake: TextView note>;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("scaling ");
+      $String_1 = virtualinvoke this.readGovernor();
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      $z0 = this.<cupcake: boolean hasRoot>;
+      if $z0 != 0 goto label18;
+      virtualinvoke this.showToast("No root access detected. Are applications allowed access to root? Operating in read-only mode.", 1);
+      $Button = this.<cupcake: Button profiles>;
+      virtualinvoke $Button.<Button: void setEnabled(boolean)>(false);
+      $SeekBar = this.<cupcake: SeekBar maxSeek>;
+      virtualinvoke $SeekBar.<SeekBar: void setEnabled(boolean)>(false);
+      $SeekBar = this.<cupcake: SeekBar maxSeek>;
+      $arrint = this.<cupcake: int[] bounds>;
+      $int = $arrint[0];
+      $int = virtualinvoke this.getIndex($int);
+      virtualinvoke $SeekBar.setProgress($int);
+      $SeekBar = this.<cupcake: SeekBar minSeek>;
+      virtualinvoke $SeekBar.<SeekBar: void setEnabled(boolean)>(false);
+      $SeekBar = this.<cupcake: SeekBar minSeek>;
+      $arrint = this.<cupcake: int[] bounds>;
+      $int = $arrint[1];
+      $int = virtualinvoke this.getIndex($int);
+      virtualinvoke $SeekBar.setProgress($int);
+      $CheckBox = this.<cupcake: CheckBox boot>;
+      virtualinvoke $CheckBox.<CheckBox: void setEnabled(boolean)>(false);
+      $Spinner = this.<cupcake: Spinner chooseGovernor>;
+      virtualinvoke $Spinner.<Spinner: void setEnabled(boolean)>(false);
+      $Button = this.<cupcake: Button advanced>;
+      virtualinvoke $Button.<Button: void setEnabled(boolean)>(false);
+      $TextView = this.<cupcake: TextView versionText>;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>()>();
+      $TextView_1 = this.<cupcake: TextView versionText>;
+      $CharSequence = virtualinvoke $TextView_1.getText();
+      $StringBuilder = virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(Object)>($CharSequence);
+      $StringBuilder = virtualinvoke $StringBuilder.append(" read-only");
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+
+  label18:
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("cores", 1);
+      this.<cupcake: int cores> = $int;
+      $View = virtualinvoke this.findViewById(2131165224);
+      $LinearLayout = (LinearLayout) $View;
+      $View = virtualinvoke this.findViewById(2131165225);
+      $LinearLayout_1 = (LinearLayout) $View;
+      $View = virtualinvoke this.findViewById(2131165231);
+      $LinearLayout_2 = (LinearLayout) $View;
+      $View = virtualinvoke this.findViewById(2131165230);
+      $ScrollView = (ScrollView) $View;
+      $View = virtualinvoke this.findViewById(2131165241);
+      $TextView = (TextView) $View;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $String_1 = interfaceinvoke $SharedPreferences.getString("theme", "Default");
+      $z0 = virtualinvoke $String_1.<String: boolean contains(CharSequence)>("Default");
+      if $z0 != 0 goto label33;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_header", -13421773);
+      virtualinvoke $LinearLayout.setBackgroundColor($int);
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_header", -13421773);
+      virtualinvoke $LinearLayout_1.setBackgroundColor($int);
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_background", -16777216);
+      virtualinvoke $LinearLayout_2.setBackgroundColor($int);
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_background", -16777216);
+      virtualinvoke $ScrollView.setBackgroundColor($int);
+      $TextView_1 = this.<cupcake: TextView status>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_headertext", -1);
+      virtualinvoke $TextView_1.setTextColor($int);
+      $TextView_1 = this.<cupcake: TextView note>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_headertext", -1);
+      virtualinvoke $TextView_1.setTextColor($int);
+      $TextView_1 = this.<cupcake: TextView maxText>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_text", -1);
+      virtualinvoke $TextView_1.setTextColor($int);
+      $TextView_1 = this.<cupcake: TextView minText>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_text", -1);
+      virtualinvoke $TextView_1.setTextColor($int);
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_text", -1);
+      virtualinvoke $TextView.setTextColor($int);
+      $CheckBox = this.<cupcake: CheckBox boot>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_text", -1);
+      virtualinvoke $CheckBox.setTextColor($int);
+      $CheckBox = this.<cupcake: CheckBox autorefresh>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_text", -1);
+      virtualinvoke $CheckBox.setTextColor($int);
+      $TextView = this.<cupcake: TextView versionText>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_text", -1);
+      virtualinvoke $TextView.setTextColor($int);
+      $TextView = this.<cupcake: TextView meterMax>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_freqtext", -10617846);
+      virtualinvoke $TextView.setTextColor($int);
+      $TextView = this.<cupcake: TextView meterMin>;
+      $SharedPreferences = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences.getInt("color_freqtext", -10617846);
+      virtualinvoke $TextView.setTextColor($int);
+      return;
+
+  label19:
+      virtualinvoke this.showToast("Could not read SetCPU custom config. Reverting to defaults. Is your SD card unmounted from the PC?", 1);
+
+  label20:
+      $String_1 = "";
+      goto label12;
+
+  label21:
+      $Exception := @caughtexception;
+      virtualinvoke this.showToast("Custom frequencies unreadable or badly formatted.", 1);
+      $String_1 = "";
+      goto label12;
+
+  label22:
+      $z0 = virtualinvoke $String.<String: boolean contains(CharSequence)>("autodetect");
+      if $z0 == 0 goto label12;
+
+  label23:
+      staticinvoke <Log: int d(String, String)>("setcpu", "Autodetecting Frequencies");
+      $String = virtualinvoke this.readInfo("/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
+
+  label24:
+      if $String == "" goto label30;
+      $StringBuilder = new StringBuilder;
+
+  label25:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Frequencies autodetected: ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String_2 = virtualinvoke $StringBuilder.toString();
+      staticinvoke <Log: int d(String, String)>("setcpu", $String_2);
+      $arrString = virtualinvoke $String.split(" ");
+      this.<cupcake: String[] freqText> = $arrString;
+      $arrString = this.<cupcake: String[] freqText>;
+      $arrint = virtualinvoke this.convertStringArray($arrString);
+      this.<cupcake: int[] freq> = $arrint;
+      $arrint = this.<cupcake: int[] freq>;
+      staticinvoke Arrays.sort($arrint);
+      $arrint = this.<cupcake: int[] freq>;
+      $arrString = virtualinvoke this.convertIntArray($arrint);
+      this.<cupcake: String[] freqText> = $arrString;
+      $arrint = this.<cupcake: int[] freq>;
+      $arrint_1 = this.<cupcake: int[] freq>;
+      $int = lengthof $arrint_1;
+
+  label26:
+      $int = $int - 1;
+
+  label27:
+      $int = $arrint[$int];
+      this.<cupcake: int defaultMax> = $int;
+      $arrint = this.<cupcake: int[] freq>;
+      $int = $arrint[0];
+      this.<cupcake: int defaultMin> = $int;
+      this.<cupcake: int limitMax> = 1000000000;
+      this.<cupcake: int limitMin> = 0;
+
+  label28:
+      goto label12;
+
+  label29:
+      $Exception_1 := @caughtexception;
+      virtualinvoke this.showToast("Could not autodetect frequencies. Press Menu to manually select a device.", 1);
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>()>();
+      $StringBuilder = virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(Object)>($Exception_1);
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      staticinvoke <Log: int d(String, String)>("setcpu", $String_1);
+      $String_1 = "";
+      goto label12;
+
+  label30:
+      virtualinvoke this.showToast("Could not autodetect frequencies. Press Menu to manually select a device.", 1);
+
+  label31:
+      $String_1 = "";
+      goto label12;
+
+  label32:
+      this.<cupcake: boolean hasRoot> = false;
+      goto label14;
+
+  label33:
+      return;
+
+      catch Exception from label1 to label2 with label21;
+      catch Exception from label3 to label4 with label21;
+      catch Exception from label5 to label6 with label21;
+      catch Exception from label7 to label8 with label21;
+      catch Exception from label9 to label10 with label21;
+      catch Exception from label11 to label12 with label21;
+      catch Exception from label19 to label20 with label21;
+      catch Exception from label23 to label24 with label29;
+      catch Exception from label25 to label26 with label29;
+      catch Exception from label27 to label28 with label29;
+      catch Exception from label30 to label31 with label29;
+  }
+
+  @Override
+  public void onDestroy()
+  {
+    Handler $Handler_Field_handler;
+    Runnable $Runnable_Field_refreshCounter;
+    
+      specialinvoke this.<Activity: void onDestroy()>();
+      $Handler_Field_handler = this.<cupcake: Handler handler>;
+      $Runnable_Field_refreshCounter = this.<cupcake: Runnable refreshCounter>;
+      virtualinvoke $Handler_Field_handler.removeCallbacks($Runnable_Field_refreshCounter);
+  }
+
+  public void refresh()
+  {
+    int[] $arrint;
+    TextView $TextView;
+    StringBuilder $StringBuilder;
+    int $int;
+    String $String;
+    Spinner $Spinner_Field_chooseGovernor;
+    String[] $arrString_Field_governors;
+    
+      $arrint = virtualinvoke this.readMaxMinFrequency();
+      this.<cupcake: int[] bounds> = $arrint;
+      $TextView = this.<cupcake: TextView meterMax>;
+      $StringBuilder = new StringBuilder;
+      $arrint = this.<cupcake: int[] bounds>;
+      $int = $arrint[0];
+      $int = $int / 1000;
+      $String = staticinvoke Integer.toString($int);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz max");
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String);
+      $TextView = this.<cupcake: TextView meterMin>;
+      $StringBuilder = new StringBuilder;
+      $arrint = this.<cupcake: int[] bounds>;
+      $int = $arrint[1];
+      $int = $int / 1000;
+      $String = staticinvoke Integer.toString($int);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz min");
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String);
+      $TextView = this.<cupcake: TextView status>;
+      $StringBuilder = new StringBuilder;
+      $int = virtualinvoke this.readFrequency();
+      $int = $int / 1000;
+      $String = staticinvoke Integer.toString($int);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz");
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String);
+      $Spinner_Field_chooseGovernor = this.<cupcake: Spinner chooseGovernor>;
+      $String = virtualinvoke this.readGovernor();
+      $arrString_Field_governors = this.<cupcake: String[] governors>;
+      $int = virtualinvoke this.getIndex($String, $arrString_Field_governors);
+      virtualinvoke $Spinner_Field_chooseGovernor.setSelection($int);
+      $TextView = this.<cupcake: TextView note>;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("scaling ");
+      $String = virtualinvoke this.readGovernor();
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String);
+  }
+
+  public void refreshCurrent()
+  {
+    TextView $TextView_Field_status;
+    StringBuilder $StringBuilder;
+    int $int;
+    String $String;
+    
+      $TextView_Field_status = this.<cupcake: TextView status>;
+      $StringBuilder = new StringBuilder;
+      $int = virtualinvoke this.readFrequency();
+      $int = $int / 1000;
+      $String = staticinvoke String.valueOf($int);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz");
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView_Field_status.<TextView: void setText(CharSequence)>($String);
+  }
+
+  public void setFrequency(int $param0, int $param1)
+  {
+    int $int;
+    SharedPreferences $SharedPreferences_Field_settings;
+    SharedPreferences$Editor $SharedPreferences_Editor;
+    CheckBox $CheckBox_Field_boot;
+    Runtime $Runtime_Method_getRuntime;
+    Process $Process;
+    DataOutputStream $DataOutputStream;
+    OutputStream $OutputStream_Method_getOutputStream;
+    String $String, $String_1, $String_Method_toString;
+    StringBuilder $StringBuilder;
+    TextView $TextView;
+    IOException $IOException;
+    Exception $Exception;
+    
+      if $param0 < $param1 goto label36;
+      $int = this.<cupcake: int limitMin>;
+      if $param0 < $int goto label0;
+      $int = this.<cupcake: int limitMin>;
+      if $param1 < $int goto label0;
+      $int = this.<cupcake: int limitMax>;
+      if $param0 > $int goto label0;
+      $int = this.<cupcake: int limitMax>;
+      if $param1 <= $int goto label1;
+
+  label0:
+      $SharedPreferences_Field_settings = this.<cupcake: SharedPreferences settings>;
+      $int = interfaceinvoke $SharedPreferences_Field_settings.getInt("startBoot", 0);
+      if $int != 1 goto label1;
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putInt(String, int)>("startBoot", 0);
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: boolean commit()>();
+      $CheckBox_Field_boot = this.<cupcake: CheckBox boot>;
+      virtualinvoke $CheckBox_Field_boot.<CheckBox: void setChecked(boolean)>(false);
+      virtualinvoke this.showToast("Potentially dangerous frequency selected. Not starting on boot.");
+
+  label1:
+      $Runtime_Method_getRuntime = staticinvoke Runtime.getRuntime();
+      $Process = virtualinvoke $Runtime_Method_getRuntime.exec("sh");
+
+  label2:
+      this.<cupcake: Process process> = $Process;
+
+  label3:
+      $DataOutputStream = new DataOutputStream;
+
+  label4:
+      $Process = this.<cupcake: Process process>;
+
+  label5:
+      $OutputStream_Method_getOutputStream = virtualinvoke $Process.getOutputStream();
+      specialinvoke $DataOutputStream.<DataOutputStream: void <init>(OutputStream)>($OutputStream_Method_getOutputStream);
+
+  label6:
+      this.<cupcake: DataOutputStream os> = $DataOutputStream;
+
+  label7:
+      $String = staticinvoke Integer.toString($param1);
+      $String_1 = staticinvoke Integer.toString($param0);
+
+  label8:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label9:
+      $StringBuilder = new StringBuilder;
+
+  label10:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("echo ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append(" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
+      $String_Method_toString = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $DataOutputStream.writeBytes($String_Method_toString);
+
+  label11:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label12:
+      $StringBuilder = new StringBuilder;
+
+  label13:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("echo ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append(" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq\n");
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $DataOutputStream.writeBytes($String);
+
+  label14:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label15:
+      $StringBuilder = new StringBuilder;
+
+  label16:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("echo ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append(" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $DataOutputStream.writeBytes($String_1);
+
+  label17:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label18:
+      virtualinvoke $DataOutputStream.writeBytes("exit\n");
+
+  label19:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label20:
+      virtualinvoke $DataOutputStream.flush();
+
+  label21:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label22:
+      virtualinvoke $DataOutputStream.close();
+
+  label23:
+      $Process = this.<cupcake: Process process>;
+
+  label24:
+      virtualinvoke $Process.<Process: int waitFor()>();
+
+  label25:
+      $TextView = this.<cupcake: TextView meterMax>;
+
+  label26:
+      $StringBuilder = new StringBuilder;
+      $int = $param0 / 1000;
+
+  label27:
+      $String_1 = staticinvoke Integer.toString($int);
+      $String_1 = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz max");
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+
+  label28:
+      $TextView = this.<cupcake: TextView meterMin>;
+
+  label29:
+      $StringBuilder = new StringBuilder;
+      $int = $param1 / 1000;
+
+  label30:
+      $String_1 = staticinvoke Integer.toString($int);
+      $String_1 = staticinvoke <String: String valueOf(Object)>($String_1);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append("MHz min");
+      $String_1 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>($String_1);
+      virtualinvoke this.refresh();
+      virtualinvoke this.storeFrequency($param0, $param1);
+
+  label31:
+      $Process = this.<cupcake: Process process>;
+
+  label32:
+      virtualinvoke $Process.destroy();
+
+  label33:
+      return;
+
+  label34:
+      $IOException := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("IO Error [setFrequency()]");
+      return;
+
+  label35:
+      $Exception := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("Error");
+      return;
+
+  label36:
+      virtualinvoke this.showToast("Cannot set min higher than max!");
+
+      catch IOException from label1 to label2 with label34;
+      catch IOException from label5 to label6 with label34;
+      catch IOException from label7 to label8 with label34;
+      catch IOException from label10 to label11 with label34;
+      catch IOException from label13 to label14 with label34;
+      catch IOException from label16 to label17 with label34;
+      catch IOException from label18 to label19 with label34;
+      catch IOException from label20 to label21 with label34;
+      catch IOException from label22 to label23 with label34;
+      catch IOException from label24 to label25 with label34;
+      catch IOException from label27 to label28 with label34;
+      catch IOException from label30 to label31 with label34;
+      catch IOException from label32 to label33 with label34;
+      catch Exception from label2 to label3 with label35;
+      catch Exception from label1 to label2 with label35;
+      catch Exception from label8 to label9 with label35;
+      catch Exception from label7 to label8 with label35;
+      catch Exception from label6 to label7 with label35;
+      catch Exception from label5 to label6 with label35;
+      catch Exception from label4 to label5 with label35;
+      catch Exception from label11 to label12 with label35;
+      catch Exception from label10 to label11 with label35;
+      catch Exception from label14 to label15 with label35;
+      catch Exception from label13 to label14 with label35;
+      catch Exception from label25 to label26 with label35;
+      catch Exception from label24 to label25 with label35;
+      catch Exception from label23 to label24 with label35;
+      catch Exception from label22 to label23 with label35;
+      catch Exception from label21 to label22 with label35;
+      catch Exception from label20 to label21 with label35;
+      catch Exception from label19 to label20 with label35;
+      catch Exception from label18 to label19 with label35;
+      catch Exception from label17 to label18 with label35;
+      catch Exception from label16 to label17 with label35;
+      catch Exception from label28 to label29 with label35;
+      catch Exception from label27 to label28 with label35;
+      catch Exception from label31 to label33 with label35;
+      catch Exception from label30 to label31 with label35;
+  }
+
+  public void setGovernor(String $param0)
+  {
+    Runtime $Runtime_Method_getRuntime;
+    Process $Process;
+    DataOutputStream $DataOutputStream;
+    OutputStream $OutputStream_Method_getOutputStream;
+    StringBuilder $StringBuilder;
+    String $String_Method_toString;
+    IOException $IOException;
+    TextView $TextView;
+    Exception $Exception;
+    
+
+  label0:
+      $Runtime_Method_getRuntime = staticinvoke Runtime.getRuntime();
+      $Process = virtualinvoke $Runtime_Method_getRuntime.exec("sh");
+
+  label1:
+      this.<cupcake: Process process> = $Process;
+
+  label2:
+      $DataOutputStream = new DataOutputStream;
+
+  label3:
+      $Process = this.<cupcake: Process process>;
+
+  label4:
+      $OutputStream_Method_getOutputStream = virtualinvoke $Process.getOutputStream();
+      specialinvoke $DataOutputStream.<DataOutputStream: void <init>(OutputStream)>($OutputStream_Method_getOutputStream);
+
+  label5:
+      this.<cupcake: DataOutputStream os> = $DataOutputStream;
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label6:
+      $StringBuilder = new StringBuilder;
+
+  label7:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("echo ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      $StringBuilder = virtualinvoke $StringBuilder.append(" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor\n");
+      $String_Method_toString = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $DataOutputStream.writeBytes($String_Method_toString);
+
+  label8:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label9:
+      $StringBuilder = new StringBuilder;
+
+  label10:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("echo ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      $StringBuilder = virtualinvoke $StringBuilder.append(" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor\n");
+      $param0 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $DataOutputStream.writeBytes($param0);
+
+  label11:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label12:
+      virtualinvoke $DataOutputStream.writeBytes("exit\n");
+
+  label13:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label14:
+      virtualinvoke $DataOutputStream.flush();
+
+  label15:
+      $DataOutputStream = this.<cupcake: DataOutputStream os>;
+
+  label16:
+      virtualinvoke $DataOutputStream.close();
+
+  label17:
+      $Process = this.<cupcake: Process process>;
+
+  label18:
+      virtualinvoke $Process.<Process: int waitFor()>();
+
+  label19:
+      $Process = this.<cupcake: Process process>;
+
+  label20:
+      virtualinvoke $Process.destroy();
+
+  label21:
+      return;
+
+  label22:
+      $IOException := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("IO Error ([setGovernor()]");
+      return;
+
+  label23:
+      $Exception := @caughtexception;
+      $TextView = this.<cupcake: TextView status>;
+      virtualinvoke $TextView.<TextView: void setText(CharSequence)>("Governor Error");
+
+      catch IOException from label0 to label1 with label22;
+      catch IOException from label4 to label5 with label22;
+      catch IOException from label7 to label8 with label22;
+      catch IOException from label10 to label11 with label22;
+      catch IOException from label12 to label13 with label22;
+      catch IOException from label14 to label15 with label22;
+      catch IOException from label16 to label17 with label22;
+      catch IOException from label18 to label19 with label22;
+      catch IOException from label20 to label21 with label22;
+      catch Exception from label1 to label2 with label23;
+      catch Exception from label0 to label1 with label23;
+      catch Exception from label5 to label6 with label23;
+      catch Exception from label4 to label5 with label23;
+      catch Exception from label3 to label4 with label23;
+      catch Exception from label8 to label9 with label23;
+      catch Exception from label7 to label8 with label23;
+      catch Exception from label19 to label21 with label23;
+      catch Exception from label18 to label19 with label23;
+      catch Exception from label17 to label18 with label23;
+      catch Exception from label16 to label17 with label23;
+      catch Exception from label15 to label16 with label23;
+      catch Exception from label14 to label15 with label23;
+      catch Exception from label13 to label14 with label23;
+      catch Exception from label12 to label13 with label23;
+      catch Exception from label11 to label12 with label23;
+      catch Exception from label10 to label11 with label23;
+  }
+
+  public void showChangeWarning()
+  {
+    AlertDialog$Builder $AlertDialog_Builder;
+    AlertDialog $AlertDialog_Method_create;
+    cupcake$3 $cupcake_3;
+    
+      $AlertDialog_Builder = new AlertDialog$Builder;
+      specialinvoke $AlertDialog_Builder.<AlertDialog$Builder: void <init>(Context)>(this);
+      $AlertDialog_Method_create = virtualinvoke $AlertDialog_Builder.create();
+      virtualinvoke $AlertDialog_Method_create.<AlertDialog: void setTitle(CharSequence)>("Settings Saved");
+      $cupcake_3 = new cupcake$3;
+      specialinvoke $cupcake_3.<cupcake$3: void <init>(cupcake)>(this);
+      virtualinvoke $AlertDialog_Method_create.<AlertDialog: void setButton(CharSequence, DialogInterface$OnClickListener)>("Ok", $cupcake_3);
+      virtualinvoke $AlertDialog_Method_create.<AlertDialog: void setMessage(CharSequence)>("Settings have been saved. To change your device, press Menu, then select Device Selection at SetCPU\'s main interface.");
+      virtualinvoke $AlertDialog_Method_create.show();
+  }
+
+  public void showToast(String $param0)
+  {
+    Context $Context_Field_context;
+    Toast $Toast_Method_makeText;
+    
+      $Context_Field_context = this.<cupcake: Context context>;
+      $Toast_Method_makeText = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context_Field_context, $param0, 0);
+      virtualinvoke $Toast_Method_makeText.show();
+  }
+
+  public void showToast(String $param0, int $param1)
+  {
+    Context $Context_Field_context;
+    Toast $Toast_Method_makeText;
+    
+      $Context_Field_context = this.<cupcake: Context context>;
+      $Toast_Method_makeText = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context_Field_context, $param0, $param1);
+      virtualinvoke $Toast_Method_makeText.show();
+  }
+
+  public void storeFrequency(int $param0, int $param1)
+  {
+    SharedPreferences$Editor $SharedPreferences_Editor;
+    
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putInt(String, int)>("min", $param1);
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putInt(String, int)>("max", $param0);
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: boolean commit()>();
+  }
+
+  public void storeGovernor(String $param0)
+  {
+    SharedPreferences$Editor $SharedPreferences_Editor;
+    
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putString(String, String)>("stringGovernor", $param0);
+      $SharedPreferences_Editor = this.<cupcake: SharedPreferences$Editor editor>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: boolean commit()>();
+  }
+
+  public void updateWidget()
+  {
+    Intent $Intent;
+    
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(String)>("setcpu.intent.action.updatewidget");
+      virtualinvoke this.sendBroadcast($Intent);
+  }
+
+}
