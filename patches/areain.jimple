@@ -1,0 +1,1971 @@
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences$Editor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.view.n;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
+import android.widget.SearchView$OnQueryTextListener;
+import android.widget.Toast;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.b;
+import com.google.android.gms.ads.b$a;
+import com.google.android.gms.ads.c;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.a;
+import com.google.android.gms.maps.c$a;
+import com.google.android.gms.maps.c$b;
+import com.google.android.gms.maps.c$c;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CameraPosition$a;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.h;
+import com.google.android.gms.maps.model.j;
+import com.google.gson.Gson;
+import com.hukuhuku.area.MainActivity;
+import com.hukuhuku.area.MainActivity$a;
+import com.hukuhuku.area.MainActivity$b;
+import com.hukuhuku.area.MainActivity$c;
+import com.hukuhuku.area.Past;
+import com.hukuhuku.area.TrackerService;
+import com.hukuhuku.area.m;
+import com.hukuhuku.area.o;
+import java.io.IOException;
+import java.lang.CharSequence;
+import java.lang.Class;
+import java.lang.Double;
+import java.lang.Exception;
+import java.lang.Float;
+import java.lang.Integer;
+import java.lang.Iterable;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.StringBuilder;
+import java.lang.Void;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+@InnerClass(InnerClass="com/hukuhuku/area/MainActivity$a", OuterClass="com/hukuhuku/area/MainActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/hukuhuku/area/MainActivity$b", OuterClass="com/hukuhuku/area/MainActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/hukuhuku/area/MainActivity$c", OuterClass="com/hukuhuku/area/MainActivity", Name="InnerClassTag", AccessFlags=0)
+
+public class com.hukuhuku.area.MainActivity extends Activity implements LocationListener
+{
+  Intent o;
+
+  private ServiceConnection M;
+
+  private SharedPreferences K;
+
+  SharedPreferences p;
+
+  SharedPreferences$Editor q;
+
+  private Location z;
+
+  private LocationManager H;
+
+  LinearLayout r;
+
+  private final SearchView$OnQueryTextListener N;
+
+  AdView s;
+
+  private com.google.android.gms.maps.c t;
+
+  private h I;
+
+  Gson a;
+
+  private Past v;
+
+  TrackerService n;
+
+  private double F;
+
+  private double G;
+
+  private float w;
+
+  private int A;
+
+  private int C;
+
+  private int J;
+
+  int b;
+
+  int c;
+
+  int d;
+
+  int e;
+
+  int f;
+
+  private String D;
+
+  private String E;
+
+  private String L;
+
+  private String u;
+
+  private String x;
+
+  private String y;
+
+  @Signature(Value="Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;")
+  private ArrayList B;
+
+  @Signature(Value="Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/l;>;")
+  ArrayList g;
+
+  @Signature(Value="Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;")
+  ArrayList h;
+
+  @Signature(Value="Ljava/util/ArrayList<Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;>;")
+  ArrayList i;
+
+  @Signature(Value="Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/j;>;")
+  ArrayList j;
+
+  @Signature(Value="Ljava/util/ArrayList<Ljava/lang/Integer;>;")
+  ArrayList k;
+
+  @Signature(Value="Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/lang/Double;>;>;>;")
+  ArrayList l;
+
+  @Signature(Value="Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/util/ArrayList<Ljava/lang/Double;>;>;>;")
+  ArrayList m;
+
+  static Location d(MainActivity $param0)
+  {
+    Location r1;
+    
+      r1 = $param0.<MainActivity: Location z>;
+      return r1;
+  }
+
+  protected boolean a(Location $param0, Location $param1)
+  {
+    String $String;
+    boolean $z0;
+    float $f0;
+    Float $Float_Method_valueOf;
+    byte $b0;
+    
+      $String = this.<MainActivity: String y>;
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("walk");
+      if $z0 == 0 goto label2;
+      $f0 = virtualinvoke $param0.getAccuracy();
+      $Float_Method_valueOf = staticinvoke Float.valueOf($f0);
+      $String = virtualinvoke $Float_Method_valueOf.toString();
+      staticinvoke <Log: int d(String, String)>("walk", $String);
+      $f0 = virtualinvoke $param0.getAccuracy();
+      $b0 = $f0 cmpg 50.0F;
+      if $b0 >= 0 goto label0;
+      $String = virtualinvoke $param0.getProvider();
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("gps");
+      if $z0 == 0 goto label0;
+      return true;
+
+  label0:
+      $f0 = virtualinvoke $param0.getAccuracy();
+      $b0 = $f0 cmpg 10.0F;
+      if $b0 >= 0 goto label1;
+      $String = virtualinvoke $param0.getProvider();
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("network");
+      if $z0 != 0 goto label4;
+
+  label1:
+      return false;
+
+  label2:
+      $f0 = virtualinvoke $param0.getAccuracy();
+      $b0 = $f0 cmpg 50.0F;
+      if $b0 >= 0 goto label3;
+      $String = virtualinvoke $param0.getProvider();
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("gps");
+      if $z0 != 0 goto label4;
+
+  label3:
+      $f0 = virtualinvoke $param0.getAccuracy();
+      $b0 = $f0 cmpg 20.0F;
+      if $b0 >= 0 goto label1;
+      $String = virtualinvoke $param0.getProvider();
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("network");
+      if $z0 == 0 goto label1;
+
+  label4:
+      return true;
+  }
+
+  public boolean a(LatLng $param0, LatLng $param1, LatLng $param2, LatLng $param3)
+  {
+    double $d0, $d1, $d2, $d3, $d4;
+    byte $b0;
+    
+      $d0 = $param0.<LatLng: double b>;
+      $d1 = $param1.<LatLng: double b>;
+      $d0 = $d0 - $d1;
+      $d1 = $param2.<LatLng: double c>;
+      $d2 = $param0.<LatLng: double c>;
+      $d1 = $d1 - $d2;
+      $d0 = $d0 * $d1;
+      $d1 = $param0.<LatLng: double c>;
+      $d2 = $param1.<LatLng: double c>;
+      $d1 = $d1 - $d2;
+      $d2 = $param0.<LatLng: double b>;
+      $d3 = $param2.<LatLng: double b>;
+      $d2 = $d2 - $d3;
+      $d1 = $d1 * $d2;
+      $d0 = $d0 + $d1;
+      $d1 = $param0.<LatLng: double b>;
+      $d2 = $param1.<LatLng: double b>;
+      $d1 = $d1 - $d2;
+      $d2 = $param3.<LatLng: double c>;
+      $d3 = $param0.<LatLng: double c>;
+      $d2 = $d2 - $d3;
+      $d1 = $d1 * $d2;
+      $d2 = $param0.<LatLng: double c>;
+      $d3 = $param1.<LatLng: double c>;
+      $d2 = $d2 - $d3;
+      $d3 = $param0.<LatLng: double b>;
+      $d4 = $param3.<LatLng: double b>;
+      $d3 = $d3 - $d4;
+      $d2 = $d2 * $d3;
+      $d1 = $d1 + $d2;
+      $d0 = $d0 * $d1;
+      $b0 = $d0 cmpg 0.0;
+      if $b0 >= 0 goto label0;
+      $d0 = $param2.<LatLng: double b>;
+      $d1 = $param3.<LatLng: double b>;
+      $d0 = $d0 - $d1;
+      $d1 = $param0.<LatLng: double c>;
+      $d2 = $param2.<LatLng: double c>;
+      $d1 = $d1 - $d2;
+      $d0 = $d0 * $d1;
+      $d1 = $param2.<LatLng: double c>;
+      $d2 = $param3.<LatLng: double c>;
+      $d1 = $d1 - $d2;
+      $d2 = $param2.<LatLng: double b>;
+      $d3 = $param0.<LatLng: double b>;
+      $d2 = $d2 - $d3;
+      $d1 = $d1 * $d2;
+      $d0 = $d0 + $d1;
+      $d1 = $param2.<LatLng: double b>;
+      $d2 = $param3.<LatLng: double b>;
+      $d1 = $d1 - $d2;
+      $d2 = $param1.<LatLng: double c>;
+      $d3 = $param2.<LatLng: double c>;
+      $d2 = $d2 - $d3;
+      $d1 = $d1 * $d2;
+      $d2 = $param2.<LatLng: double c>;
+      $d3 = $param3.<LatLng: double c>;
+      $d2 = $d2 - $d3;
+      $d3 = $param2.<LatLng: double b>;
+      $d4 = $param1.<LatLng: double b>;
+      $d3 = $d3 - $d4;
+      $d2 = $d2 * $d3;
+      $d1 = $d1 + $d2;
+      $d0 = $d0 * $d1;
+      $b0 = $d0 cmpg 0.0;
+      if $b0 >= 0 goto label0;
+      return true;
+
+  label0:
+      return false;
+  }
+
+  @Signature(Value="(Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;Lcom/google/android/gms/maps/model/LatLng;)Z")
+  public boolean a(ArrayList $param0, LatLng $param1)
+  {
+    double $d0, $d1, $d3, $d4, $d2, $d5;
+    int $int, $int_1, $int_2;
+    double[] $arrdouble, $arrdouble_1;
+    Object $Object;
+    h $h;
+    byte $b3;
+    
+      $d0 = $param1.<LatLng: double b>;
+      $d1 = $param1.<LatLng: double c>;
+      $int = virtualinvoke $param0.size();
+      $int = $int + 1;
+      $arrdouble = newarray (double)[$int];
+      $int = virtualinvoke $param0.size();
+      $int = $int + 1;
+      $arrdouble_1 = newarray (double)[$int];
+      $int = 0;
+
+  label0:
+      $int_1 = virtualinvoke $param0.size();
+      if $int < $int_1 goto label2;
+      $int = virtualinvoke $param0.size();
+      $Object = virtualinvoke $param0.get(0);
+      $h = (h) $Object;
+      $param1 = virtualinvoke $h.b();
+      $d3 = $param1.<LatLng: double b>;
+      $arrdouble[$int] = $d3;
+      $int = virtualinvoke $param0.size();
+      $Object = virtualinvoke $param0.get(0);
+      $h = (h) $Object;
+      $param1 = virtualinvoke $h.b();
+      $d3 = $param1.<LatLng: double c>;
+      $arrdouble_1[$int] = $d3;
+      $int = 0;
+      $int_1 = 0;
+
+  label1:
+      $int_2 = virtualinvoke $param0.size();
+      if $int_1 < $int_2 goto label3;
+      $int = $int % 2;
+      if $int != 1 goto label7;
+      return true;
+
+  label2:
+      $Object = virtualinvoke $param0.get($int);
+      $h = (h) $Object;
+      $param1 = virtualinvoke $h.b();
+      $d3 = $param1.<LatLng: double b>;
+      $arrdouble[$int] = $d3;
+      $Object = virtualinvoke $param0.get($int);
+      $h = (h) $Object;
+      $param1 = virtualinvoke $h.b();
+      $d3 = $param1.<LatLng: double c>;
+      $arrdouble_1[$int] = $d3;
+      $int = $int + 1;
+      goto label0;
+
+  label3:
+      $d3 = $arrdouble_1[$int_1];
+      $b3 = $d3 cmpg $d1;
+      if $b3 > 0 goto label4;
+      $int_2 = $int_1 + 1;
+      $d3 = $arrdouble_1[$int_2];
+      $b3 = $d3 cmpl $d1;
+      if $b3 > 0 goto label5;
+
+  label4:
+      $d3 = $arrdouble_1[$int_1];
+      $b3 = $d3 cmpl $d1;
+      if $b3 <= 0 goto label6;
+      $int_2 = $int_1 + 1;
+      $d3 = $arrdouble_1[$int_2];
+      $b3 = $d3 cmpg $d1;
+      if $b3 > 0 goto label6;
+
+  label5:
+      $d3 = $arrdouble_1[$int_1];
+      $d3 = $d1 - $d3;
+      $int_2 = $int_1 + 1;
+      $d4 = $arrdouble_1[$int_2];
+      $d2 = $arrdouble_1[$int_1];
+      $d4 = $d4 - $d2;
+      $d4 = $d3 / $d4;
+      $d3 = $arrdouble[$int_1];
+      $int_2 = $int_1 + 1;
+      $d5 = $arrdouble[$int_2];
+      $d2 = $arrdouble[$int_1];
+      $d2 = $d5 - $d2;
+      $d4 = $d4 * $d2;
+      $d3 = $d4 + $d3;
+      $b3 = $d0 cmpg $d3;
+      if $b3 >= 0 goto label6;
+      $int = $int + 1;
+
+  label6:
+      $int_1 = $int_1 + 1;
+      goto label1;
+
+  label7:
+      return false;
+  }
+
+  @Signature(Value="(Ljava/util/ArrayList<Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;>;Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;)Z")
+  public boolean b(ArrayList $param0, ArrayList $param1)
+  {
+    int $int, $int_1;
+    Object $Object_Method_get;
+    ArrayList $ArrayList;
+    
+      $int = 0;
+
+  label0:
+      $int_1 = virtualinvoke $param0.size();
+      if $int < $int_1 goto label1;
+      return false;
+
+  label1:
+      $Object_Method_get = virtualinvoke $param0.get($int);
+      $ArrayList = (ArrayList) $Object_Method_get;
+      $int_1 = virtualinvoke this.a($ArrayList, $param1);
+      if $int_1 != 1 goto label2;
+      return true;
+
+  label2:
+      $int = $int + 1;
+      goto label0;
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu $param0)
+  {
+    MenuInflater $MenuInflater_Method_getMenuInflater;
+    MenuItem $MenuItem_Method_findItem;
+    View $View_Method_a;
+    SearchView $SearchView;
+    String $String_Method_getString;
+    SearchView$OnQueryTextListener $SearchView_OnQueryTextListener_Field_N;
+    boolean $z0;
+    
+      $MenuInflater_Method_getMenuInflater = virtualinvoke this.getMenuInflater();
+      virtualinvoke $MenuInflater_Method_getMenuInflater.inflate(2131689472, $param0);
+      $MenuItem_Method_findItem = interfaceinvoke $param0.findItem(2131165288);
+      $View_Method_a = staticinvoke n.a($MenuItem_Method_findItem);
+      $SearchView = (SearchView) $View_Method_a;
+      virtualinvoke $SearchView.<SearchView: void setIconifiedByDefault(boolean)>(true);
+      virtualinvoke $SearchView.<SearchView: void setSubmitButtonEnabled(boolean)>(false);
+      $String_Method_getString = virtualinvoke this.getString(2131492936);
+      virtualinvoke $SearchView.<SearchView: void setQueryHint(CharSequence)>($String_Method_getString);
+      $SearchView_OnQueryTextListener_Field_N = this.<MainActivity: SearchView$OnQueryTextListener N>;
+      virtualinvoke $SearchView.setOnQueryTextListener($SearchView_OnQueryTextListener_Field_N);
+      $z0 = specialinvoke this.<Activity: boolean onCreateOptionsMenu(Menu)>($param0);
+      return $z0;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem $param0)
+  {
+    int $int_Method_getItemId;
+    boolean $z0;
+    Intent $Intent;
+    
+      $int_Method_getItemId = interfaceinvoke $param0.getItemId();
+      lookupswitch ($int_Method_getItemId) {
+      case 2131165289: goto label2;
+      case 2131165290: goto label1;
+      default: goto label0;
+      };
+
+  label0:
+      $z0 = specialinvoke this.<Activity: boolean onOptionsItemSelected(MenuItem)>($param0);
+      return $z0;
+
+  label1:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/hukuhuku/area/GcmActivity;");
+      virtualinvoke this.startActivity($Intent);
+      goto label0;
+
+  label2:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>()>();
+      virtualinvoke $Intent.<Intent: Intent setClassName(String, String)>("com.hukuhuku.area", "com.hukuhuku.area.SettingsActivity");
+      virtualinvoke this.startActivity($Intent);
+      goto label0;
+  }
+
+  static com.google.android.gms.maps.c e(MainActivity $param0)
+  {
+    com.google.android.gms.maps.c r1;
+    
+      r1 = $param0.<MainActivity: com.google.android.gms.maps.c t>;
+      return r1;
+  }
+
+  static double g(MainActivity $param0)
+  {
+    double d0;
+    
+      d0 = $param0.<MainActivity: double F>;
+      return d0;
+  }
+
+  static double h(MainActivity $param0)
+  {
+    double d0;
+    
+      d0 = $param0.<MainActivity: double G>;
+      return d0;
+  }
+
+  @Signature(Value="(Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;)I")
+  public int a(ArrayList $param0, ArrayList $param1)
+  {
+    int $int, $int_1, $int_Method_size;
+    Object $Object_Method_get;
+    h $h;
+    LatLng $LatLng_Method_b;
+    boolean $z0;
+    
+      $int = 0;
+      $int_1 = 0;
+
+  label0:
+      $int_Method_size = virtualinvoke $param1.size();
+      if $int < $int_Method_size goto label1;
+      $int = virtualinvoke $param1.size();
+      if $int_1 != $int goto label3;
+      return 1;
+
+  label1:
+      $Object_Method_get = virtualinvoke $param1.get($int);
+      $h = (h) $Object_Method_get;
+      $LatLng_Method_b = virtualinvoke $h.b();
+      $z0 = virtualinvoke this.a($param0, $LatLng_Method_b);
+      if $z0 == 0 goto label2;
+      $int_1 = $int_1 + 1;
+
+  label2:
+      $int = $int + 1;
+      goto label0;
+
+  label3:
+      if $int_1 <= 0 goto label4;
+      $int = virtualinvoke $param1.size();
+      if $int_1 < $int goto label5;
+
+  label4:
+      return -1;
+
+  label5:
+      return 0;
+  }
+
+  static String a(MainActivity $param0)
+  {
+    String r1;
+    
+      r1 = $param0.<MainActivity: String y>;
+      return r1;
+  }
+
+  static String b(MainActivity $param0)
+  {
+    String r1;
+    
+      r1 = $param0.<MainActivity: String E>;
+      return r1;
+  }
+
+  static String c(MainActivity $param0)
+  {
+    String r1;
+    
+      r1 = $param0.<MainActivity: String x>;
+      return r1;
+  }
+
+  static String f(MainActivity $param0)
+  {
+    String r1;
+    
+      r1 = $param0.<MainActivity: String D>;
+      return r1;
+  }
+
+  static String i(MainActivity $param0)
+  {
+    String r1;
+    
+      r1 = $param0.<MainActivity: String L>;
+      return r1;
+  }
+
+  @Signature(Value="(Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/h;>;)Ljava/util/ArrayList<Lcom/google/android/gms/maps/model/LatLng;>;")
+  public ArrayList a(ArrayList $param0)
+  {
+    ArrayList $ArrayList;
+    int $int, $int_Method_size;
+    Object $Object_Method_get;
+    h $h;
+    LatLng $LatLng_Method_b;
+    
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      $int = 0;
+
+  label0:
+      $int_Method_size = virtualinvoke $param0.size();
+      if $int < $int_Method_size goto label1;
+      return $ArrayList;
+
+  label1:
+      $Object_Method_get = virtualinvoke $param0.get($int);
+      $h = (h) $Object_Method_get;
+      $LatLng_Method_b = virtualinvoke $h.b();
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($LatLng_Method_b);
+      $int = $int + 1;
+      goto label0;
+  }
+
+  public void <init>()
+  {
+    Gson $Gson;
+    ArrayList $ArrayList;
+    m $m;
+    com.hukuhuku.area.n $n;
+    
+      specialinvoke this.<Activity: void <init>()>();
+      $Gson = new Gson;
+      specialinvoke $Gson.<Gson: void <init>()>();
+      this.<MainActivity: Gson a> = $Gson;
+      this.<MainActivity: int f> = 1;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<MainActivity: ArrayList g> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<MainActivity: ArrayList h> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<MainActivity: ArrayList i> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<MainActivity: ArrayList j> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<MainActivity: ArrayList k> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<MainActivity: ArrayList l> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<MainActivity: ArrayList m> = $ArrayList;
+      this.<MainActivity: float w> = 16.5F;
+      this.<MainActivity: String y> = "walk";
+      this.<MainActivity: int A> = 1;
+      this.<MainActivity: int C> = 1;
+      this.<MainActivity: int J> = -1;
+      $m = new m;
+      specialinvoke $m.<m: void <init>(MainActivity)>(this);
+      this.<MainActivity: ServiceConnection M> = $m;
+      $n = new com.hukuhuku.area.n;
+      specialinvoke $n.<com.hukuhuku.area.n: void <init>(MainActivity)>(this);
+      this.<MainActivity: SearchView$OnQueryTextListener N> = $n;
+  }
+
+  public void CameraMove(View $param0)
+  {
+    Location $Location;
+    CameraPosition$a $CameraPosition_a;
+    LatLng $LatLng;
+    double $d0, $d1;
+    float $f0;
+    CameraPosition $CameraPosition_Method_a;
+    com.google.android.gms.maps.c $c_Field_t;
+    a $a_Method_a;
+    
+      $Location = this.<MainActivity: Location z>;
+      if $Location != null goto label0;
+      return;
+
+  label0:
+      $CameraPosition_a = new CameraPosition$a;
+      specialinvoke $CameraPosition_a.<CameraPosition$a: void <init>()>();
+      $LatLng = new LatLng;
+      $Location = this.<MainActivity: Location z>;
+      $d0 = virtualinvoke $Location.getLatitude();
+      $Location = this.<MainActivity: Location z>;
+      $d1 = virtualinvoke $Location.getLongitude();
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      $CameraPosition_a = virtualinvoke $CameraPosition_a.a($LatLng);
+      $f0 = this.<MainActivity: float w>;
+      $CameraPosition_a = virtualinvoke $CameraPosition_a.a($f0);
+      $CameraPosition_Method_a = virtualinvoke $CameraPosition_a.a();
+      $c_Field_t = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $a_Method_a = staticinvoke com.google.android.gms.maps.b.a($CameraPosition_Method_a);
+      virtualinvoke $c_Field_t.a($a_Method_a);
+  }
+
+  public void EraserSet(View $param0)
+  {
+    ImageButton $ImageButton;
+    
+      this.<MainActivity: int b> = 0;
+      this.<MainActivity: int c> = 1;
+      this.<MainActivity: int d> = 0;
+      this.<MainActivity: int e> = 0;
+      $param0 = virtualinvoke this.findViewById(2131165262);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837635);
+      $param0 = virtualinvoke this.findViewById(2131165263);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837616);
+      $param0 = virtualinvoke this.findViewById(2131165264);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837619);
+      $param0 = virtualinvoke this.findViewById(2131165265);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837617);
+  }
+
+  public void FillOut(View $param0)
+  {
+    ImageButton $ImageButton;
+    
+      this.<MainActivity: int b> = 0;
+      this.<MainActivity: int c> = 0;
+      this.<MainActivity: int d> = 0;
+      this.<MainActivity: int e> = 1;
+      $param0 = virtualinvoke this.findViewById(2131165262);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837635);
+      $param0 = virtualinvoke this.findViewById(2131165263);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837615);
+      $param0 = virtualinvoke this.findViewById(2131165264);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837619);
+      $param0 = virtualinvoke this.findViewById(2131165265);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837618);
+  }
+
+  public void FillSafe(View $param0)
+  {
+    ImageButton $ImageButton;
+    
+      this.<MainActivity: int b> = 0;
+      this.<MainActivity: int c> = 0;
+      this.<MainActivity: int d> = 1;
+      this.<MainActivity: int e> = 0;
+      $param0 = virtualinvoke this.findViewById(2131165262);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837635);
+      $param0 = virtualinvoke this.findViewById(2131165263);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837615);
+      $param0 = virtualinvoke this.findViewById(2131165264);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837620);
+      $param0 = virtualinvoke this.findViewById(2131165265);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837617);
+  }
+
+  public void Finish(View $param0)
+  {
+    
+      virtualinvoke this.finish();
+  }
+
+  public void PenSet(View $param0)
+  {
+    ImageButton $ImageButton;
+    
+      this.<MainActivity: int b> = 1;
+      this.<MainActivity: int c> = 0;
+      this.<MainActivity: int d> = 0;
+      this.<MainActivity: int e> = 0;
+      $param0 = virtualinvoke this.findViewById(2131165262);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837636);
+      $param0 = virtualinvoke this.findViewById(2131165263);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837615);
+      $param0 = virtualinvoke this.findViewById(2131165264);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837619);
+      $param0 = virtualinvoke this.findViewById(2131165265);
+      $ImageButton = (ImageButton) $param0;
+      virtualinvoke $ImageButton.setImageResource(2130837617);
+  }
+
+  public void Share(View $param0)
+  {
+    Intent $Intent;
+    
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/hukuhuku/area/GcmActivity;");
+      virtualinvoke this.startActivity($Intent);
+  }
+
+  public void a()
+  {
+    LocationManager $LocationManager;
+    boolean $z0;
+    Context $Context_Method_getApplicationContext;
+    Toast $Toast_Method_makeText;
+    String $String_Field_y;
+    
+      $LocationManager = this.<MainActivity: LocationManager H>;
+      $z0 = virtualinvoke $LocationManager.isProviderEnabled("gps");
+      if $z0 != 0 goto label0;
+      $Context_Method_getApplicationContext = virtualinvoke this.getApplicationContext();
+      $Toast_Method_makeText = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context_Method_getApplicationContext, "GPS\u3092\u6709\u52b9\u306b\u3057\u306a\u3044\u3068\u6b63\u3057\u304f\u901a\u77e5\u3055\u308c\u307e\u305b\u3093", 1);
+      virtualinvoke $Toast_Method_makeText.show();
+
+  label0:
+      $String_Field_y = this.<MainActivity: String y>;
+      $z0 = virtualinvoke $String_Field_y.<String: boolean equals(Object)>("walk");
+      if $z0 == 0 goto label1;
+      $LocationManager = this.<MainActivity: LocationManager H>;
+      virtualinvoke $LocationManager.<LocationManager: void requestLocationUpdates(String, long, float, LocationListener)>("gps", 3000L, 3.0F, this);
+      $LocationManager = this.<MainActivity: LocationManager H>;
+      virtualinvoke $LocationManager.<LocationManager: void requestLocationUpdates(String, long, float, LocationListener)>("network", 3000L, 3.0F, this);
+      return;
+
+  label1:
+      $LocationManager = this.<MainActivity: LocationManager H>;
+      virtualinvoke $LocationManager.<LocationManager: void requestLocationUpdates(String, long, float, LocationListener)>("gps", 5000L, 100.0F, this);
+      $LocationManager = this.<MainActivity: LocationManager H>;
+      virtualinvoke $LocationManager.<LocationManager: void requestLocationUpdates(String, long, float, LocationListener)>("network", 5000L, 100.0F, this);
+  }
+
+  public void a(Location $param0)
+  {
+    Class $Class;
+    String $String;
+    SharedPreferences $SharedPreferences_Method_getSharedPreferences;
+    double $d0;
+    o $o;
+    Void[] $arrVoid;
+    
+      $Class = class "Lcom/hukuhuku/area/MainActivity;";
+      $String = virtualinvoke $Class.getSimpleName();
+      $SharedPreferences_Method_getSharedPreferences = virtualinvoke this.getSharedPreferences($String, 0);
+      $String = interfaceinvoke $SharedPreferences_Method_getSharedPreferences.getString("receiver", "");
+      this.<MainActivity: String D> = $String;
+      $String = interfaceinvoke $SharedPreferences_Method_getSharedPreferences.getString("name", "");
+      this.<MainActivity: String E> = $String;
+      $String = this.<MainActivity: String D>;
+      staticinvoke <Log: int d(String, String)>("receiver", $String);
+      $d0 = virtualinvoke $param0.getLatitude();
+      this.<MainActivity: double F> = $d0;
+      $d0 = virtualinvoke $param0.getLongitude();
+      this.<MainActivity: double G> = $d0;
+      $String = interfaceinvoke $SharedPreferences_Method_getSharedPreferences.getString("registration_id", "");
+      this.<MainActivity: String L> = $String;
+      $o = new o;
+      specialinvoke $o.<o: void <init>(MainActivity)>(this);
+      $arrVoid = { null, null, null };
+      virtualinvoke $o.<o: AsyncTask execute(Object[])>($arrVoid);
+  }
+
+  static void a(MainActivity $param0, float $param1)
+  {
+    
+      $param0.<MainActivity: float w> = $param1;
+  }
+
+  public void a(int $param0)
+  {
+    PolygonOptions $PolygonOptions;
+    int $int, $int_1, $int_2;
+    ArrayList $ArrayList, $ArrayList_1, $ArrayList_2;
+    Object $Object;
+    Integer $Integer;
+    j $j;
+    com.google.android.gms.maps.c $c_Field_t;
+    boolean $z0;
+    
+      $PolygonOptions = new PolygonOptions;
+      specialinvoke $PolygonOptions.<PolygonOptions: void <init>()>();
+      $int = $param0 + -1;
+
+  label0:
+      if $int >= 0 goto label1;
+      return;
+
+  label1:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($param0);
+      $ArrayList_1 = (ArrayList) $Object;
+      $int_1 = virtualinvoke this.a($ArrayList, $ArrayList_1);
+      if $int_1 != 1 goto label8;
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList = virtualinvoke this.a($ArrayList);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(Iterable)>($ArrayList);
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $Integer = (Integer) $Object;
+      $int_1 = virtualinvoke $Integer.intValue();
+      if $int_1 != 1 goto label2;
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(int)>(1140883456);
+
+  label2:
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $Integer = (Integer) $Object;
+      $int_1 = virtualinvoke $Integer.intValue();
+      if $int_1 != -1 goto label3;
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(int)>(1157562368);
+
+  label3:
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(int)>(-872415232);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(float)>(10.0F);
+      $int_1 = $int + 1;
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $int_2 = virtualinvoke $ArrayList.size();
+      if $int_1 >= $int_2 goto label5;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      $int_1 = $int + 1;
+
+  label4:
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $int_2 = virtualinvoke $ArrayList_1.size();
+      if $int_1 < $int_2 goto label6;
+
+  label5:
+      $ArrayList = this.<MainActivity: ArrayList j>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $j = (j) $Object;
+      virtualinvoke $j.a();
+      $ArrayList = this.<MainActivity: ArrayList j>;
+      virtualinvoke $ArrayList.<ArrayList: Object remove(int)>($int);
+      $c_Field_t = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $j = virtualinvoke $c_Field_t.a($PolygonOptions);
+      $ArrayList = this.<MainActivity: ArrayList j>;
+      virtualinvoke $ArrayList.<ArrayList: void add(int, Object)>($int, $j);
+      return;
+
+  label6:
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int);
+      $ArrayList_1 = (ArrayList) $Object;
+      $ArrayList_2 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_2.get($int_1);
+      $ArrayList_2 = (ArrayList) $Object;
+      $int_2 = virtualinvoke this.a($ArrayList_1, $ArrayList_2);
+      if $int_2 != 1 goto label7;
+      if $param0 == $int_1 goto label7;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int_1);
+      $ArrayList_1 = (ArrayList) $Object;
+      $z0 = virtualinvoke this.b($ArrayList, $ArrayList_1);
+      if $z0 != 0 goto label7;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int_1);
+      $ArrayList_1 = (ArrayList) $Object;
+      $ArrayList_1 = virtualinvoke this.a($ArrayList_1);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(Iterable)>($ArrayList_1);
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int_1);
+      $ArrayList_1 = (ArrayList) $Object;
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($ArrayList_1);
+
+  label7:
+      $int_1 = $int_1 + 1;
+      goto label4;
+
+  label8:
+      $int = $int + -1;
+      goto label0;
+  }
+
+  public void a(String $param0)
+  {
+    Geocoder $Geocoder;
+    Locale $Locale_Method_getDefault;
+    List $List_Method_getFromLocationName;
+    int $int_Method_size;
+    Object $Object_Method_get;
+    Address $Address;
+    double $d0, $d1;
+    float $f0, $f1;
+    CameraPosition$a $CameraPosition_a;
+    LatLng $LatLng;
+    CameraPosition $CameraPosition_Method_a;
+    com.google.android.gms.maps.c $c_Field_t;
+    a $a_Method_a;
+    IOException $IOException;
+    Context $Context_Method_getApplicationContext;
+    Toast $Toast_Method_makeText;
+    
+      $Geocoder = new Geocoder;
+      $Locale_Method_getDefault = staticinvoke Locale.getDefault();
+      specialinvoke $Geocoder.<Geocoder: void <init>(Context, Locale)>(this, $Locale_Method_getDefault);
+
+  label0:
+      $List_Method_getFromLocationName = virtualinvoke $Geocoder.getFromLocationName($param0, 1);
+
+  label1:
+      if $List_Method_getFromLocationName == null goto label17;
+
+  label2:
+      $int_Method_size = interfaceinvoke $List_Method_getFromLocationName.size();
+
+  label3:
+      if $int_Method_size <= 0 goto label17;
+
+  label4:
+      $Object_Method_get = interfaceinvoke $List_Method_getFromLocationName.get(0);
+
+  label5:
+      $Address = (Address) $Object_Method_get;
+
+  label6:
+      $d0 = virtualinvoke $Address.getLatitude();
+
+  label7:
+      $f0 = (float) $d0;
+
+  label8:
+      $d0 = virtualinvoke $Address.getLongitude();
+
+  label9:
+      $f1 = (float) $d0;
+      $CameraPosition_a = new CameraPosition$a;
+
+  label10:
+      specialinvoke $CameraPosition_a.<CameraPosition$a: void <init>()>();
+
+  label11:
+      $LatLng = new LatLng;
+      $d0 = (double) $f0;
+      $d1 = (double) $f1;
+
+  label12:
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      $CameraPosition_a = virtualinvoke $CameraPosition_a.a($LatLng);
+      $CameraPosition_a = virtualinvoke $CameraPosition_a.a(16.5F);
+      $CameraPosition_Method_a = virtualinvoke $CameraPosition_a.a();
+
+  label13:
+      $c_Field_t = this.<MainActivity: com.google.android.gms.maps.c t>;
+
+  label14:
+      $a_Method_a = staticinvoke com.google.android.gms.maps.b.a($CameraPosition_Method_a);
+      virtualinvoke $c_Field_t.a($a_Method_a);
+
+  label15:
+      return;
+
+  label16:
+      $IOException := @caughtexception;
+      $Context_Method_getApplicationContext = virtualinvoke this.getApplicationContext();
+      $param0 = virtualinvoke this.getString(2131492945);
+      $Toast_Method_makeText = staticinvoke <Toast: Toast makeText(Context, CharSequence, int)>($Context_Method_getApplicationContext, $param0, 1);
+      virtualinvoke $Toast_Method_makeText.show();
+      virtualinvoke $IOException.printStackTrace();
+
+  label17:
+      return;
+
+      catch IOException from label0 to label1 with label16;
+      catch IOException from label2 to label3 with label16;
+      catch IOException from label4 to label5 with label16;
+      catch IOException from label6 to label7 with label16;
+      catch IOException from label8 to label9 with label16;
+      catch IOException from label10 to label11 with label16;
+      catch IOException from label12 to label13 with label16;
+      catch IOException from label14 to label15 with label16;
+  }
+
+  public void a(String $param0, double $param1, double $param2)
+  {
+    Notification $Notification;
+    Intent $Intent;
+    Context $Context;
+    PendingIntent $PendingIntent_Method_getActivity;
+    String $String, $String_1, $String_2;
+    Geocoder $Geocoder;
+    Locale $Locale_Method_getDefault;
+    List $List;
+    boolean $z0;
+    StringBuilder $StringBuilder;
+    Object $Object;
+    Address $Address;
+    long[] $arrlong;
+    int $int_Field_C;
+    Uri $Uri_Method_parse;
+    NotificationManager $NotificationManager;
+    IOException $IOException;
+    
+      $Notification = new Notification;
+      specialinvoke $Notification.<Notification: void <init>()>();
+      $Notification.<Notification: int icon> = 2130837628;
+      $Intent = new Intent;
+      $Context = virtualinvoke this.getApplicationContext();
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>($Context, class "Lcom/hukuhuku/area/MainActivity;");
+      virtualinvoke $Intent.<Intent: Intent putExtra(String, double)>("lat", $param1);
+      virtualinvoke $Intent.<Intent: Intent putExtra(String, double)>("log", $param2);
+      $Context = virtualinvoke this.getApplicationContext();
+      $PendingIntent_Method_getActivity = staticinvoke PendingIntent.getActivity($Context, 0, $Intent, 0);
+      $String = new String;
+      specialinvoke $String.<String: void <init>()>();
+      $Geocoder = new Geocoder;
+      $Locale_Method_getDefault = staticinvoke Locale.getDefault();
+      specialinvoke $Geocoder.<Geocoder: void <init>(Context, Locale)>(this, $Locale_Method_getDefault);
+
+  label0:
+      $List = virtualinvoke $Geocoder.getFromLocation($param1, $param2, 1);
+
+  label1:
+      if $List == null goto label7;
+      $z0 = interfaceinvoke $List.isEmpty();
+      if $z0 != 0 goto label6;
+      $StringBuilder = new StringBuilder;
+      $String = virtualinvoke this.getString(2131492917);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append(":");
+      $Object = interfaceinvoke $List.get(0);
+      $Address = (Address) $Object;
+      $String = virtualinvoke $Address.getAddressLine(1);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String = virtualinvoke $StringBuilder.toString();
+
+  label2:
+      $Context = virtualinvoke this.getApplicationContext();
+      $String_1 = virtualinvoke this.getString(2131492910);
+      $StringBuilder = new StringBuilder;
+      $String_2 = staticinvoke <String: String valueOf(Object)>($param0);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String_2);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $String_2 = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $Notification.<Notification: void setLatestEventInfo(Context, CharSequence, CharSequence, PendingIntent)>($Context, $String_1, $String_2, $PendingIntent_Method_getActivity);
+      $String_1 = virtualinvoke this.getString(2131492923);
+      $z0 = virtualinvoke $param0.<String: boolean equals(Object)>($String_1);
+      if $z0 == 0 goto label8;
+      $arrlong = { 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L, 100L, 100L, 100L, 100L, 100L, 250L };
+      $Notification.<Notification: long[] vibrate> = $arrlong;
+
+  label3:
+      $int_Field_C = this.<MainActivity: int C>;
+      if $int_Field_C != 0 goto label4;
+      $arrlong = newarray (long)[4];
+      $Notification.<Notification: long[] vibrate> = $arrlong;
+
+  label4:
+      $StringBuilder = new StringBuilder;
+      $param0 = staticinvoke <String: String valueOf(Object)>($param0);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($param0);
+      $StringBuilder = virtualinvoke $StringBuilder.append("\n");
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $param0 = virtualinvoke $StringBuilder.toString();
+      $Notification.<Notification: CharSequence tickerText> = $param0;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("android.resource://");
+      $param0 = virtualinvoke this.getPackageName();
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      $StringBuilder = virtualinvoke $StringBuilder.append("/");
+      $StringBuilder = virtualinvoke $StringBuilder.append(2131099649);
+      $param0 = virtualinvoke $StringBuilder.toString();
+      $Uri_Method_parse = staticinvoke Uri.parse($param0);
+      $Notification.<Notification: Uri sound> = $Uri_Method_parse;
+      $Object = virtualinvoke this.getSystemService("notification");
+      $NotificationManager = (NotificationManager) $Object;
+      virtualinvoke $NotificationManager.notify(1, $Notification);
+      return;
+
+  label5:
+      $IOException := @caughtexception;
+      virtualinvoke $IOException.printStackTrace();
+      $List = null;
+      goto label1;
+
+  label6:
+      $String = virtualinvoke this.getString(2131492944);
+      goto label2;
+
+  label7:
+      $String = virtualinvoke this.getString(2131492944);
+      goto label2;
+
+  label8:
+      $arrlong = { 100L, 100L, 100L, 100L, 100L, 250L };
+      $Notification.<Notification: long[] vibrate> = $arrlong;
+      goto label3;
+
+      catch IOException from label0 to label1 with label5;
+  }
+
+  private void b()
+  {
+    com.google.android.gms.maps.c $c;
+    Object $Object_Method_getSystemService;
+    LocationManager $LocationManager;
+    Location $Location;
+    double $d0, $d1;
+    CameraPosition$a $CameraPosition_a;
+    LatLng $LatLng;
+    float $f0;
+    CameraPosition $CameraPosition_Method_a;
+    a $a_Method_a;
+    MarkerOptions $MarkerOptions;
+    com.google.android.gms.maps.model.a $a_Method_a_1;
+    h $h_Method_a;
+    MainActivity$b $MainActivity_b;
+    MainActivity$c $MainActivity_c;
+    MainActivity$a $MainActivity_a;
+    
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      virtualinvoke $c.a(1);
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      virtualinvoke $c.<com.google.android.gms.maps.c: void a(boolean)>(false);
+      $Object_Method_getSystemService = virtualinvoke this.getSystemService("location");
+      $LocationManager = (LocationManager) $Object_Method_getSystemService;
+      $Location = virtualinvoke $LocationManager.getLastKnownLocation("gps");
+      if $Location != null goto label3;
+      $Location = virtualinvoke $LocationManager.getLastKnownLocation("passive");
+
+  label0:
+      if $Location == null goto label2;
+      $d0 = virtualinvoke $Location.getLatitude();
+      $d1 = virtualinvoke $Location.getLongitude();
+
+  label1:
+      $CameraPosition_a = new CameraPosition$a;
+      specialinvoke $CameraPosition_a.<CameraPosition$a: void <init>()>();
+      $LatLng = new LatLng;
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      $CameraPosition_a = virtualinvoke $CameraPosition_a.a($LatLng);
+      $f0 = this.<MainActivity: float w>;
+      $CameraPosition_a = virtualinvoke $CameraPosition_a.a($f0);
+      $CameraPosition_Method_a = virtualinvoke $CameraPosition_a.a();
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $a_Method_a = staticinvoke com.google.android.gms.maps.b.a($CameraPosition_Method_a);
+      virtualinvoke $c.a($a_Method_a);
+      $MarkerOptions = new MarkerOptions;
+      specialinvoke $MarkerOptions.<MarkerOptions: void <init>()>();
+      $a_Method_a_1 = staticinvoke com.google.android.gms.maps.model.b.a(2130837621);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(com.google.android.gms.maps.model.a)>($a_Method_a_1);
+      $LatLng = new LatLng;
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(LatLng)>($LatLng);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(float, float)>(0.5F, 0.5F);
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $h_Method_a = virtualinvoke $c.a($MarkerOptions);
+      this.<MainActivity: h I> = $h_Method_a;
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $MainActivity_b = new MainActivity$b;
+      specialinvoke $MainActivity_b.<MainActivity$b: void <init>(MainActivity)>(this);
+      virtualinvoke $c.<com.google.android.gms.maps.c: void a(c$b)>($MainActivity_b);
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $MainActivity_c = new MainActivity$c;
+      specialinvoke $MainActivity_c.<MainActivity$c: void <init>(MainActivity)>(this);
+      virtualinvoke $c.<com.google.android.gms.maps.c: void a(c$c)>($MainActivity_c);
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $MainActivity_a = new MainActivity$a;
+      specialinvoke $MainActivity_a.<MainActivity$a: void <init>(MainActivity)>(this);
+      virtualinvoke $c.<com.google.android.gms.maps.c: void a(c$a)>($MainActivity_a);
+      return;
+
+  label2:
+      $d1 = 139.766084;
+      $d0 = 35.681382;
+      goto label1;
+
+  label3:
+      goto label0;
+  }
+
+  @Override
+  public void onCreate(Bundle $param0)
+  {
+    AdView $AdView;
+    c $c_Field_a;
+    View $View_Method_findViewById;
+    LinearLayout $LinearLayout;
+    b$a $b_a;
+    b $b_Method_a;
+    Intent $Intent;
+    SharedPreferences $SharedPreferences;
+    String $String;
+    Gson $Gson;
+    Object $Object;
+    Past $Past;
+    ArrayList $ArrayList, $ArrayList_1, $ArrayList_2;
+    float $f0;
+    FragmentManager $FragmentManager_Method_getFragmentManager;
+    Fragment $Fragment_Method_findFragmentById;
+    MapFragment $MapFragment;
+    com.google.android.gms.maps.c $c;
+    int $int, $int_1, $int_2, $int_3;
+    LocationManager $LocationManager;
+    PolygonOptions $PolygonOptions;
+    Integer $Integer;
+    j $j;
+    MarkerOptions $MarkerOptions;
+    LatLng $LatLng;
+    Double $Double;
+    double $d0, $d1;
+    com.google.android.gms.maps.model.a $a_Method_a;
+    h $h_Method_a;
+    boolean $z0;
+    Exception $Exception;
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      virtualinvoke this.setContentView(2130903064);
+      $AdView = new AdView;
+      specialinvoke $AdView.<AdView: void <init>(Context)>(this);
+      this.<MainActivity: AdView s> = $AdView;
+      $AdView = this.<MainActivity: AdView s>;
+      virtualinvoke $AdView.setAdUnitId("ca-app-pub-8597984774286594/6943000465");
+      $AdView = this.<MainActivity: AdView s>;
+      $c_Field_a = <c: c a>;
+      virtualinvoke $AdView.setAdSize($c_Field_a);
+      $View_Method_findViewById = virtualinvoke this.findViewById(2131165269);
+      $LinearLayout = (LinearLayout) $View_Method_findViewById;
+      this.<MainActivity: LinearLayout r> = $LinearLayout;
+      $LinearLayout = this.<MainActivity: LinearLayout r>;
+      $AdView = this.<MainActivity: AdView s>;
+      virtualinvoke $LinearLayout.<LinearLayout: void addView(View)>($AdView);
+      $b_a = new b$a;
+      specialinvoke $b_a.<b$a: void <init>()>();
+      $b_Method_a = virtualinvoke $b_a.a();
+      $AdView = this.<MainActivity: AdView s>;
+      virtualinvoke $AdView.a($b_Method_a);
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/hukuhuku/area/TrackerService;");
+      this.<MainActivity: Intent o> = $Intent;
+      $SharedPreferences = virtualinvoke this.getSharedPreferences("preferenceTest", 0);
+      this.<MainActivity: SharedPreferences p> = $SharedPreferences;
+      $SharedPreferences = this.<MainActivity: SharedPreferences p>;
+      $String = interfaceinvoke $SharedPreferences.getString("js", "");
+      this.<MainActivity: String u> = $String;
+      $String = this.<MainActivity: String u>;
+      if $String == "" goto label0;
+      $Gson = this.<MainActivity: Gson a>;
+      $String = this.<MainActivity: String u>;
+      $Object = virtualinvoke $Gson.fromJson($String, class "Lcom/hukuhuku/area/Past;");
+      $Past = (Past) $Object;
+      this.<MainActivity: Past v> = $Past;
+      $Past = this.<MainActivity: Past v>;
+      $ArrayList = $Past.<Past: ArrayList state>;
+      this.<MainActivity: ArrayList k> = $ArrayList;
+      $Past = this.<MainActivity: Past v>;
+      $ArrayList = $Past.<Past: ArrayList dou>;
+      this.<MainActivity: ArrayList l> = $ArrayList;
+      $Past = this.<MainActivity: Past v>;
+      $f0 = $Past.<Past: float zoom>;
+      this.<MainActivity: float w> = $f0;
+
+  label0:
+      $FragmentManager_Method_getFragmentManager = virtualinvoke this.getFragmentManager();
+      $Fragment_Method_findFragmentById = virtualinvoke $FragmentManager_Method_getFragmentManager.findFragmentById(2131165267);
+      $MapFragment = (MapFragment) $Fragment_Method_findFragmentById;
+
+  label1:
+      $c = virtualinvoke $MapFragment.b();
+      this.<MainActivity: com.google.android.gms.maps.c t> = $c;
+
+  label2:
+      if $param0 != null goto label4;
+
+  label3:
+      virtualinvoke $MapFragment.<MapFragment: void setRetainInstance(boolean)>(true);
+      specialinvoke this.b();
+
+  label4:
+      $String = this.<MainActivity: String u>;
+      if $String == "" goto label6;
+      $Gson = this.<MainActivity: Gson a>;
+      $String = this.<MainActivity: String u>;
+      $Object = virtualinvoke $Gson.fromJson($String, class "Lcom/hukuhuku/area/Past;");
+      $Past = (Past) $Object;
+      this.<MainActivity: Past v> = $Past;
+      $Past = this.<MainActivity: Past v>;
+      $ArrayList = $Past.<Past: ArrayList state>;
+      this.<MainActivity: ArrayList k> = $ArrayList;
+      $Past = this.<MainActivity: Past v>;
+      $ArrayList = $Past.<Past: ArrayList dou>;
+      this.<MainActivity: ArrayList l> = $ArrayList;
+      $Past = this.<MainActivity: Past v>;
+      $f0 = $Past.<Past: float zoom>;
+      this.<MainActivity: float w> = $f0;
+      $int = 0;
+
+  label5:
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $int_1 = virtualinvoke $ArrayList.size();
+      if $int < $int_1 goto label7;
+
+  label6:
+      staticinvoke <PreferenceManager: void setDefaultValues(Context, int, boolean)>(this, 2131034114, false);
+      $Intent = virtualinvoke this.getIntent();
+      virtualinvoke this.onNewIntent($Intent);
+      $Object = virtualinvoke this.getSystemService("location");
+      $LocationManager = (LocationManager) $Object;
+      this.<MainActivity: LocationManager H> = $LocationManager;
+      virtualinvoke this.a();
+      return;
+
+  label7:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $ArrayList_1 = new ArrayList;
+      specialinvoke $ArrayList_1.<ArrayList: void <init>()>();
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($ArrayList_1);
+      $int_1 = 0;
+
+  label8:
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $int_2 = virtualinvoke $ArrayList.size();
+      if $int_1 < $int_2 goto label13;
+      $PolygonOptions = new PolygonOptions;
+      specialinvoke $PolygonOptions.<PolygonOptions: void <init>()>();
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList = virtualinvoke this.a($ArrayList);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(Iterable)>($ArrayList);
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $Integer = (Integer) $Object;
+      $int_1 = virtualinvoke $Integer.intValue();
+      if $int_1 != 1 goto label9;
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(int)>(1140883456);
+
+  label9:
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $Integer = (Integer) $Object;
+      $int_1 = virtualinvoke $Integer.intValue();
+      if $int_1 != -1 goto label10;
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(int)>(1157562368);
+
+  label10:
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(int)>(-872415232);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(float)>(10.0F);
+      $ArrayList = this.<MainActivity: ArrayList j>;
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $j = virtualinvoke $c.a($PolygonOptions);
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($j);
+      $int_1 = $int + -1;
+
+  label11:
+      if $int_1 >= 0 goto label14;
+
+  label12:
+      $int = $int + 1;
+      goto label5;
+
+  label13:
+      $MarkerOptions = new MarkerOptions;
+      specialinvoke $MarkerOptions.<MarkerOptions: void <init>()>();
+      $LatLng = new LatLng;
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $ArrayList = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList.get(0);
+      $Double = (Double) $Object;
+      $d0 = virtualinvoke $Double.doubleValue();
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $ArrayList = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList.get(1);
+      $Double = (Double) $Object;
+      $d1 = virtualinvoke $Double.doubleValue();
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(LatLng)>($LatLng);
+      $a_Method_a = staticinvoke com.google.android.gms.maps.model.b.a(2130837633);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(com.google.android.gms.maps.model.a)>($a_Method_a);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(float, float)>(0.5F, 0.5F);
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $h_Method_a = virtualinvoke $c.a($MarkerOptions);
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($h_Method_a);
+      $int_1 = $int_1 + 1;
+      goto label8;
+
+  label14:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int);
+      $ArrayList_1 = (ArrayList) $Object;
+      $int_2 = virtualinvoke this.a($ArrayList, $ArrayList_1);
+      if $int_2 != 1 goto label21;
+      $PolygonOptions = new PolygonOptions;
+      specialinvoke $PolygonOptions.<PolygonOptions: void <init>()>();
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList = virtualinvoke this.a($ArrayList);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(Iterable)>($ArrayList);
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $Integer = (Integer) $Object;
+      $int_2 = virtualinvoke $Integer.intValue();
+      if $int_2 != -1 goto label18;
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(int)>(1157562368);
+
+  label15:
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(int)>(-872415232);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions a(float)>(10.0F);
+      $int_2 = $int_1 + 1;
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $int_3 = virtualinvoke $ArrayList.size();
+      if $int_2 >= $int_3 goto label17;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      $int_2 = $int_1 + 1;
+
+  label16:
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $int_3 = virtualinvoke $ArrayList_1.size();
+      if $int_2 < $int_3 goto label19;
+
+  label17:
+      $ArrayList = this.<MainActivity: ArrayList j>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $j = (j) $Object;
+      virtualinvoke $j.a();
+      $ArrayList = this.<MainActivity: ArrayList j>;
+      virtualinvoke $ArrayList.<ArrayList: Object remove(int)>($int_1);
+      $c = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $j = virtualinvoke $c.a($PolygonOptions);
+      $ArrayList = this.<MainActivity: ArrayList j>;
+      virtualinvoke $ArrayList.<ArrayList: void add(int, Object)>($int_1, $j);
+      goto label12;
+
+  label18:
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(int)>(1140883456);
+      goto label15;
+
+  label19:
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int_1);
+      $ArrayList_1 = (ArrayList) $Object;
+      $ArrayList_2 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_2.get($int_2);
+      $ArrayList_2 = (ArrayList) $Object;
+      $int_3 = virtualinvoke this.a($ArrayList_1, $ArrayList_2);
+      if $int_3 != 1 goto label20;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int_2);
+      $ArrayList_1 = (ArrayList) $Object;
+      $z0 = virtualinvoke this.b($ArrayList, $ArrayList_1);
+      if $z0 != 0 goto label20;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int_2);
+      $ArrayList_1 = (ArrayList) $Object;
+      $ArrayList_1 = virtualinvoke this.a($ArrayList_1);
+      virtualinvoke $PolygonOptions.<PolygonOptions: PolygonOptions b(Iterable)>($ArrayList_1);
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int_2);
+      $ArrayList_1 = (ArrayList) $Object;
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($ArrayList_1);
+
+  label20:
+      $int_2 = $int_2 + 1;
+      goto label16;
+
+  label21:
+      $int_1 = $int_1 + -1;
+      goto label11;
+
+  label22:
+      $Exception := @caughtexception;
+      goto label4;
+
+      catch Exception from label1 to label2 with label22;
+      catch Exception from label3 to label4 with label22;
+  }
+
+  @Override
+  public void onDestroy()
+  {
+    Intent $Intent;
+    
+      specialinvoke this.<Activity: void onDestroy()>();
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/hukuhuku/area/TrackerService;");
+      virtualinvoke this.<MainActivity: boolean stopService(Intent)>($Intent);
+  }
+
+  @Override
+  public void onLocationChanged(Location $param0)
+  {
+    Location $Location_Field_z;
+    boolean $z0;
+    LatLng $LatLng;
+    double $d0, $d1;
+    int $int, $int_1, $int_Method_size;
+    ArrayList $ArrayList, $ArrayList_Field_i;
+    String $String;
+    MarkerOptions $MarkerOptions;
+    com.google.android.gms.maps.model.a $a_Method_a;
+    h $h;
+    com.google.android.gms.maps.c $c_Field_t;
+    Object $Object;
+    Integer $Integer;
+    
+      staticinvoke <Log: int d(String, String)>("changed", "isbetterbefore");
+      $Location_Field_z = this.<MainActivity: Location z>;
+      $z0 = virtualinvoke this.a($param0, $Location_Field_z);
+      if $z0 != 0 goto label0;
+      return;
+
+  label0:
+      staticinvoke <Log: int d(String, String)>("changed", "isbetterafter");
+      this.<MainActivity: Location z> = $param0;
+      $LatLng = new LatLng;
+      $d0 = virtualinvoke $param0.getLatitude();
+      $d1 = virtualinvoke $param0.getLongitude();
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      $d0 = $LatLng.<LatLng: double b>;
+      $d1 = $LatLng.<LatLng: double c>;
+      $int = 0;
+      $int_1 = -1;
+
+  label1:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $int_Method_size = virtualinvoke $ArrayList.size();
+      if $int < $int_Method_size goto label4;
+      if $int_1 != -1 goto label7;
+      $int_1 = this.<MainActivity: int A>;
+      if $int_1 != 1 goto label6;
+      $int_1 = this.<MainActivity: int f>;
+      if $int_1 != -1 goto label6;
+      $String = virtualinvoke this.getString(2131492923);
+      virtualinvoke this.a($String, $d0, $d1);
+      this.<MainActivity: int A> = -1;
+      virtualinvoke this.a($param0);
+
+  label2:
+      $MarkerOptions = new MarkerOptions;
+      specialinvoke $MarkerOptions.<MarkerOptions: void <init>()>();
+      $LatLng = new LatLng;
+      $d0 = virtualinvoke $param0.getLatitude();
+      $d1 = virtualinvoke $param0.getLongitude();
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(LatLng)>($LatLng);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(float, float)>(0.5F, 0.5F);
+      $a_Method_a = staticinvoke com.google.android.gms.maps.model.b.a(2130837621);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(com.google.android.gms.maps.model.a)>($a_Method_a);
+      $h = this.<MainActivity: h I>;
+      if $h == null goto label3;
+      $h = this.<MainActivity: h I>;
+      virtualinvoke $h.a();
+
+  label3:
+      $c_Field_t = this.<MainActivity: com.google.android.gms.maps.c t>;
+      $h = virtualinvoke $c_Field_t.a($MarkerOptions);
+      this.<MainActivity: h I> = $h;
+      $int_1 = this.<MainActivity: int J>;
+      if $int_1 != 1 goto label11;
+      virtualinvoke this.a($param0);
+      return;
+
+  label4:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $z0 = virtualinvoke this.a($ArrayList, $LatLng);
+      if $z0 == 0 goto label5;
+      $int_1 = $int;
+
+  label5:
+      $int = $int + 1;
+      goto label1;
+
+  label6:
+      $int_1 = this.<MainActivity: int A>;
+      if $int_1 != -1 goto label2;
+      $int_1 = this.<MainActivity: int f>;
+      if $int_1 != 1 goto label2;
+      $String = virtualinvoke this.getString(2131492922);
+      virtualinvoke this.a($String, $d0, $d1);
+      this.<MainActivity: int A> = 1;
+      goto label2;
+
+  label7:
+      $int = this.<MainActivity: int A>;
+      if $int != 1 goto label9;
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $Integer = (Integer) $Object;
+      $int = virtualinvoke $Integer.intValue();
+      if $int != -1 goto label9;
+      $String = virtualinvoke this.getString(2131492923);
+      virtualinvoke this.a($String, $d0, $d1);
+      this.<MainActivity: int A> = -1;
+      virtualinvoke this.a($param0);
+
+  label8:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $ArrayList = (ArrayList) $Object;
+      this.<MainActivity: ArrayList B> = $ArrayList;
+      goto label2;
+
+  label9:
+      $int = this.<MainActivity: int A>;
+      if $int != -1 goto label10;
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $Integer = (Integer) $Object;
+      $int = virtualinvoke $Integer.intValue();
+      if $int != 1 goto label10;
+      $String = virtualinvoke this.getString(2131492922);
+      virtualinvoke this.a($String, $d0, $d1);
+      this.<MainActivity: int A> = 1;
+      goto label8;
+
+  label10:
+      $ArrayList = this.<MainActivity: ArrayList B>;
+      $ArrayList_Field_i = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_Field_i.get($int_1);
+      if $ArrayList == $Object goto label8;
+      $ArrayList = this.<MainActivity: ArrayList k>;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $Integer = (Integer) $Object;
+      $int = virtualinvoke $Integer.intValue();
+      if $int != -1 goto label8;
+      $String = virtualinvoke this.getString(2131492923);
+      virtualinvoke this.a($String, $d0, $d1);
+      this.<MainActivity: int A> = -1;
+      virtualinvoke this.a($param0);
+      goto label8;
+
+  label11:
+      return;
+  }
+
+  @Override
+  protected void onNewIntent(Intent $param0)
+  {
+    double $d0, $d1;
+    byte $b0;
+    MarkerOptions $MarkerOptions;
+    LatLng $LatLng;
+    com.google.android.gms.maps.c $c_Field_t;
+    
+      specialinvoke this.<Activity: void onNewIntent(Intent)>($param0);
+      $d0 = virtualinvoke $param0.getDoubleExtra("lat", 0.0);
+      $d1 = virtualinvoke $param0.getDoubleExtra("log", 0.0);
+      $b0 = $d0 cmpl 0.0;
+      if $b0 == 0 goto label0;
+      $b0 = $d1 cmpl 0.0;
+      if $b0 == 0 goto label0;
+      $MarkerOptions = new MarkerOptions;
+      specialinvoke $MarkerOptions.<MarkerOptions: void <init>()>();
+      $LatLng = new LatLng;
+      specialinvoke $LatLng.<LatLng: void <init>(double, double)>($d0, $d1);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(LatLng)>($LatLng);
+      virtualinvoke $MarkerOptions.<MarkerOptions: MarkerOptions a(float, float)>(0.5F, 0.5F);
+      $c_Field_t = this.<MainActivity: com.google.android.gms.maps.c t>;
+      virtualinvoke $c_Field_t.<com.google.android.gms.maps.c: h a(MarkerOptions)>($MarkerOptions);
+
+  label0:
+      return;
+  }
+
+  @Override
+  public void onPause()
+  {
+    AdView $AdView_Field_s;
+    Intent $Intent;
+    ServiceConnection $ServiceConnection;
+    ArrayList $ArrayList, $ArrayList_1;
+    int $int, $int_1, $int_Method_size;
+    Past $Past;
+    float $f0;
+    SharedPreferences $SharedPreferences_Field_p;
+    SharedPreferences$Editor $SharedPreferences_Editor;
+    Gson $Gson_Field_a;
+    String $String_Method_toJson;
+    Object $Object;
+    h $h;
+    LatLng $LatLng;
+    double $d0;
+    Double $Double;
+    
+      $AdView_Field_s = this.<MainActivity: AdView s>;
+      virtualinvoke $AdView_Field_s.b();
+      specialinvoke this.<Activity: void onPause()>();
+      $Intent = this.<MainActivity: Intent o>;
+      virtualinvoke this.<MainActivity: ComponentName startService(Intent)>($Intent);
+      $Intent = this.<MainActivity: Intent o>;
+      $ServiceConnection = this.<MainActivity: ServiceConnection M>;
+      virtualinvoke this.<MainActivity: boolean bindService(Intent, ServiceConnection, int)>($Intent, $ServiceConnection, 1);
+      $ServiceConnection = this.<MainActivity: ServiceConnection M>;
+      virtualinvoke this.unbindService($ServiceConnection);
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      virtualinvoke $ArrayList.clear();
+      $int = 0;
+
+  label0:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $int_1 = virtualinvoke $ArrayList.size();
+      if $int < $int_1 goto label1;
+      $Past = new Past;
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $ArrayList_1 = this.<MainActivity: ArrayList k>;
+      $f0 = this.<MainActivity: float w>;
+      specialinvoke $Past.<Past: void <init>(ArrayList, ArrayList, float)>($ArrayList, $ArrayList_1, $f0);
+      $SharedPreferences_Field_p = this.<MainActivity: SharedPreferences p>;
+      $SharedPreferences_Editor = interfaceinvoke $SharedPreferences_Field_p.edit();
+      this.<MainActivity: SharedPreferences$Editor q> = $SharedPreferences_Editor;
+      $SharedPreferences_Editor = this.<MainActivity: SharedPreferences$Editor q>;
+      $Gson_Field_a = this.<MainActivity: Gson a>;
+      $String_Method_toJson = virtualinvoke $Gson_Field_a.<Gson: String toJson(Object)>($Past);
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: SharedPreferences$Editor putString(String, String)>("js", $String_Method_toJson);
+      $SharedPreferences_Editor = this.<MainActivity: SharedPreferences$Editor q>;
+      interfaceinvoke $SharedPreferences_Editor.<SharedPreferences$Editor: boolean commit()>();
+      return;
+
+  label1:
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $ArrayList_1 = new ArrayList;
+      specialinvoke $ArrayList_1.<ArrayList: void <init>()>();
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($ArrayList_1);
+      $int_1 = 0;
+
+  label2:
+      $ArrayList = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $int_Method_size = virtualinvoke $ArrayList.size();
+      if $int_1 < $int_Method_size goto label3;
+      $int = $int + 1;
+      goto label0;
+
+  label3:
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList_1 = new ArrayList;
+      specialinvoke $ArrayList_1.<ArrayList: void <init>()>();
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($ArrayList_1);
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int);
+      $ArrayList_1 = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList_1.get($int_1);
+      $h = (h) $Object;
+      $LatLng = virtualinvoke $h.b();
+      $d0 = $LatLng.<LatLng: double b>;
+      $Double = staticinvoke Double.valueOf($d0);
+      virtualinvoke $ArrayList.<ArrayList: void add(int, Object)>(0, $Double);
+      $ArrayList = this.<MainActivity: ArrayList l>;
+      $Object = virtualinvoke $ArrayList.get($int);
+      $ArrayList = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList.get($int_1);
+      $ArrayList = (ArrayList) $Object;
+      $ArrayList_1 = this.<MainActivity: ArrayList i>;
+      $Object = virtualinvoke $ArrayList_1.get($int);
+      $ArrayList_1 = (ArrayList) $Object;
+      $Object = virtualinvoke $ArrayList_1.get($int_1);
+      $h = (h) $Object;
+      $LatLng = virtualinvoke $h.b();
+      $d0 = $LatLng.<LatLng: double c>;
+      $Double = staticinvoke Double.valueOf($d0);
+      virtualinvoke $ArrayList.<ArrayList: void add(int, Object)>(1, $Double);
+      $int_1 = $int_1 + 1;
+      goto label2;
+  }
+
+  @Override
+  public void onProviderDisabled(String $param0)
+  {
+    
+  }
+
+  @Override
+  public void onProviderEnabled(String $param0)
+  {
+    
+  }
+
+  @Override
+  public void onResume()
+  {
+    AdView $AdView_Field_s;
+    Intent $Intent;
+    SharedPreferences $SharedPreferences;
+    String $String;
+    boolean $z0;
+    Class $Class;
+    
+      specialinvoke this.<Activity: void onResume()>();
+      $AdView_Field_s = this.<MainActivity: AdView s>;
+      virtualinvoke $AdView_Field_s.c();
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lcom/hukuhuku/area/TrackerService;");
+      virtualinvoke this.<MainActivity: boolean stopService(Intent)>($Intent);
+      $SharedPreferences = staticinvoke <PreferenceManager: SharedPreferences getDefaultSharedPreferences(Context)>(this);
+      $String = interfaceinvoke $SharedPreferences.getString("color", "GRN");
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("GRN");
+      if $z0 == 0 goto label0;
+      this.<MainActivity: int f> = 1;
+
+  label0:
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("RED");
+      if $z0 == 0 goto label1;
+      this.<MainActivity: int f> = -1;
+
+  label1:
+      $String = interfaceinvoke $SharedPreferences.getString("myname", "");
+      this.<MainActivity: String E> = $String;
+      $String = interfaceinvoke $SharedPreferences.getString("address", "");
+      this.<MainActivity: String x> = $String;
+      $String = interfaceinvoke $SharedPreferences.getString("move", "walk");
+      this.<MainActivity: String y> = $String;
+      $Class = class "Lcom/hukuhuku/area/MainActivity;";
+      $String = virtualinvoke $Class.getSimpleName();
+      $SharedPreferences = virtualinvoke this.getSharedPreferences($String, 0);
+      $String = interfaceinvoke $SharedPreferences.getString("receiver", "");
+      this.<MainActivity: String D> = $String;
+      $Class = class "Lcom/hukuhuku/area/MainActivity;";
+      $String = virtualinvoke $Class.getSimpleName();
+      $SharedPreferences = virtualinvoke this.getSharedPreferences($String, 0);
+      this.<MainActivity: SharedPreferences K> = $SharedPreferences;
+      $SharedPreferences = this.<MainActivity: SharedPreferences K>;
+      $String = interfaceinvoke $SharedPreferences.getString("receiver", "");
+      this.<MainActivity: String D> = $String;
+      $String = this.<MainActivity: String D>;
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("");
+      if $z0 != 0 goto label2;
+      this.<MainActivity: int J> = 1;
+
+  label2:
+      return;
+  }
+
+  @Override
+  public void onStatusChanged(String $param0, int $param1, Bundle $param2)
+  {
+    
+  }
+
+}
