@@ -1,0 +1,165 @@
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.View$OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import com.ss.my.ads.MyAdsUtiltime;
+import com.umeng.analytics.MobclickAgent;
+import java.lang.Class;
+import java.lang.String;
+import org.void1898.ss.agilebuddy.Splash;
+import org.void1898.ss.agilebuddy.Splash$1;
+@InnerClass(InnerClass="org/void1898/ss/agilebuddy/Splash$1", OuterClass="org/void1898/ss/agilebuddy/Splash", Name="InnerClassTag", AccessFlags=0)
+
+public class org.void1898.ss.agilebuddy.Splash extends Activity implements View$OnClickListener
+{
+  private ServiceConnection mConnection;
+
+  private SharedPreferences mBaseSettings;
+
+  public void <init>()
+  {
+    Splash$1 $Splash_1;
+    
+      specialinvoke this.<Activity: void <init>()>();
+      $Splash_1 = new Splash$1;
+      specialinvoke $Splash_1.<Splash$1: void <init>(Splash)>(this);
+      this.<Splash: ServiceConnection mConnection> = $Splash_1;
+  }
+
+  @Override
+  public void finish()
+  {
+    ServiceConnection $ServiceConnection_Field_mConnection;
+    
+      $ServiceConnection_Field_mConnection = this.<Splash: ServiceConnection mConnection>;
+      virtualinvoke this.unbindService($ServiceConnection_Field_mConnection);
+      specialinvoke this.<Activity: void finish()>();
+  }
+
+  @Override
+  public void onClick(View $param0)
+  {
+    Intent $Intent;
+    int $int_Method_getId;
+    SharedPreferences $SharedPreferences_Field_mBaseSettings;
+    boolean $z0;
+    Uri $Uri_Method_parse;
+    
+      $Intent = null;
+      $int_Method_getId = virtualinvoke $param0.getId();
+      lookupswitch ($int_Method_getId) {
+      case 2131099668: goto label1;
+      case 2131099669: goto label4;
+      case 2131099670: goto label3;
+      case 2131099671: goto label5;
+      case 2131099672: goto label6;
+      default: goto label0;
+      };
+
+  label0:
+      if $Intent == null goto label7;
+      virtualinvoke this.startActivity($Intent);
+      return;
+
+  label1:
+      $SharedPreferences_Field_mBaseSettings = this.<Splash: SharedPreferences mBaseSettings>;
+      $z0 = interfaceinvoke $SharedPreferences_Field_mBaseSettings.<SharedPreferences: boolean getBoolean(String, boolean)>("org.void1898.agilebuddy.showtips", true);
+      if $z0 == 0 goto label2;
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lorg/void1898/ss/agilebuddy/TipsActivity;");
+      goto label0;
+
+  label2:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lorg/void1898/ss/agilebuddy/AgileBuddyActivity;");
+      goto label0;
+
+  label3:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lorg/void1898/ss/agilebuddy/Prefs;");
+      goto label0;
+
+  label4:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lorg/void1898/ss/agilebuddy/GlobalRankingActivity;");
+      goto label0;
+
+  label5:
+      $Intent = new Intent;
+      $Uri_Method_parse = staticinvoke Uri.parse("market://search?q=pub:\u6c99\u56e0\u6c99");
+      specialinvoke $Intent.<Intent: void <init>(String, Uri)>("android.intent.action.VIEW", $Uri_Method_parse);
+      goto label0;
+
+  label6:
+      virtualinvoke this.finish();
+
+  label7:
+      return;
+  }
+
+  @Override
+  public void onCreate(Bundle $param0)
+  {
+    Window $Window;
+    View $View;
+    Button $Button;
+    Intent $Intent;
+    ServiceConnection $ServiceConnection_Field_mConnection;
+    SharedPreferences $SharedPreferences_Method_getDefaultSharedPreferences;
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      virtualinvoke this.<Splash: boolean requestWindowFeature(int)>(1);
+      $Window = virtualinvoke this.getWindow();
+      virtualinvoke $Window.setFlags(128, 128);
+      $Window = virtualinvoke this.getWindow();
+      virtualinvoke $Window.setFlags(1024, 1024);
+      virtualinvoke this.setContentView(2130903044);
+      $View = virtualinvoke this.findViewById(2131099668);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099669);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099671);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099670);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099672);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lorg/void1898/ss/agilebuddy/ScoreUpgrateService;");
+      $ServiceConnection_Field_mConnection = this.<Splash: ServiceConnection mConnection>;
+      virtualinvoke this.<Splash: boolean bindService(Intent, ServiceConnection, int)>($Intent, $ServiceConnection_Field_mConnection, 1);
+      $SharedPreferences_Method_getDefaultSharedPreferences = staticinvoke <PreferenceManager: SharedPreferences getDefaultSharedPreferences(Context)>(this);
+      this.<Splash: SharedPreferences mBaseSettings> = $SharedPreferences_Method_getDefaultSharedPreferences;
+      staticinvoke <MyAdsUtiltime: void isAds(Activity)>(this);
+  }
+
+  @Override
+  public void onPause()
+  {
+    
+      specialinvoke this.<Activity: void onPause()>();
+      staticinvoke <MobclickAgent: void onPause(Context)>(this);
+  }
+
+  @Override
+  public void onResume()
+  {
+    
+      specialinvoke this.<Activity: void onResume()>();
+      staticinvoke <MobclickAgent: void onResume(Context)>(this);
+  }
+
+}
