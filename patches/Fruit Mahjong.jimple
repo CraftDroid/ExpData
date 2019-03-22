@@ -1,0 +1,1016 @@
+import android.content.Context;
+import android.graphics.Point;
+import android.media.MediaPlayer;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import java.lang.Math;
+import java.lang.Object;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import superchly.fruit.sric.android.SoundPlay;
+import superchly.fruit.sric.view.BoardView;
+import superchly.fruit.sric.view.GameView;
+import superchly.fruit.sric.view.GameView$RefreshHandler;
+import superchly.fruit.sric.view.GameView$RefreshTime;
+import superchly.fruit.sric.view.OnStateListener;
+import superchly.fruit.sric.view.OnTimerListener;
+import superchly.fruit.sric.view.OnToolsChangeListener;
+@InnerClass(InnerClass="superchly/fruit/sric/view/GameView$RefreshHandler", OuterClass="superchly/fruit/sric/view/GameView", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="superchly/fruit/sric/view/GameView$RefreshTime", OuterClass="superchly/fruit/sric/view/GameView", Name="InnerClassTag", AccessFlags=0)
+
+public class superchly.fruit.sric.view.GameView extends BoardView
+{
+  public MediaPlayer player;
+
+  private boolean isStop;
+
+  private int Help;
+
+  public static final int ID_SOUND_CHOOSE = 0;
+
+  public static final int ID_SOUND_DISAPEAR = 1;
+
+  public static final int ID_SOUND_ERROR = 8;
+
+  public static final int ID_SOUND_LOSE = 5;
+
+  public static final int ID_SOUND_REFRESH = 6;
+
+  public static final int ID_SOUND_TIP = 7;
+
+  public static final int ID_SOUND_WIN = 4;
+
+  public static final int LOSE = 2;
+
+  public static final int PAUSE = 3;
+
+  public static final int PLAY = 4;
+
+  public static final int QUIT = 5;
+
+  private static final int REFRESH_VIEW = 1;
+
+  public static final int RESUME = 6;
+
+  private int Refresh;
+
+  public static final int WIN = 1;
+
+  private int leftTime;
+
+  private int totalTime;
+
+  @Signature(Value="Ljava/util/List<Landroid/graphics/Point;>;")
+  List p1E;
+
+  @Signature(Value="Ljava/util/List<Landroid/graphics/Point;>;")
+  List p2E;
+
+  @Signature(Value="Ljava/util/List<Landroid/graphics/Point;>;")
+  private List path;
+
+  public static SoundPlay soundPlay;
+
+  private GameView$RefreshHandler refreshHandler;
+
+  private GameView$RefreshTime refreshTime;
+
+  private OnStateListener stateListener;
+
+  private OnTimerListener timerListener;
+
+  private OnToolsChangeListener toolsChangedListener;
+
+  static boolean access$0(GameView $param0)
+  {
+    boolean $z0;
+    
+      $z0 = specialinvoke $param0.win();
+      return $z0;
+  }
+
+  static boolean access$2(GameView $param0)
+  {
+    boolean $z0;
+    
+      $z0 = specialinvoke $param0.die();
+      return $z0;
+  }
+
+  static boolean access$5(GameView $param0)
+  {
+    boolean z0;
+    
+      z0 = $param0.<GameView: boolean isStop>;
+      return z0;
+  }
+
+  private boolean die()
+  {
+    int $int, $int_1, $int_2, $int_3, $int_4, $int_5;
+    int[][] $arrint;
+    int[] $arrint_1;
+    Point $Point, $Point_1;
+    boolean $z0;
+    
+      $int = 1;
+
+  label0:
+      if $int < 11 goto label1;
+      return true;
+
+  label1:
+      $int_1 = 1;
+
+  label2:
+      if $int_1 < 9 goto label3;
+      $int = $int + 1;
+      goto label0;
+
+  label3:
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_1];
+      $int_2 = $arrint_1[$int];
+      if $int_2 == 0 goto label5;
+      $int_2 = $int;
+
+  label4:
+      if $int_2 < 11 goto label6;
+
+  label5:
+      $int_1 = $int_1 + 1;
+      goto label2;
+
+  label6:
+      if $int_2 != $int goto label11;
+      $int_3 = $int_1 + 1;
+
+  label7:
+      if $int_3 < 9 goto label9;
+
+  label8:
+      $int_2 = $int_2 + 1;
+      goto label4;
+
+  label9:
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_3];
+      $int_4 = $arrint_1[$int_2];
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_1];
+      $int_5 = $arrint_1[$int];
+      if $int_4 != $int_5 goto label10;
+      $Point = new Point;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int_1, $int);
+      $Point_1 = new Point;
+      specialinvoke $Point_1.<Point: void <init>(int, int)>($int_3, $int_2);
+      $z0 = specialinvoke this.link($Point, $Point_1);
+      if $z0 == 0 goto label10;
+      return false;
+
+  label10:
+      $int_3 = $int_3 + 1;
+      goto label7;
+
+  label11:
+      $int_3 = 1;
+
+  label12:
+      if $int_3 >= 9 goto label8;
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_3];
+      $int_4 = $arrint_1[$int_2];
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_1];
+      $int_5 = $arrint_1[$int];
+      if $int_4 != $int_5 goto label13;
+      $Point = new Point;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int_1, $int);
+      $Point_1 = new Point;
+      specialinvoke $Point_1.<Point: void <init>(int, int)>($int_3, $int_2);
+      $z0 = specialinvoke this.link($Point, $Point_1);
+      if $z0 == 0 goto label13;
+      return false;
+
+  label13:
+      $int_3 = $int_3 + 1;
+      goto label12;
+  }
+
+  private boolean link(Point $param0, Point $param1)
+  {
+    boolean $z0;
+    List $List;
+    int[][] $arrint;
+    int $int, $int_1;
+    int[] $arrint_1;
+    Point $Point, $Point_1;
+    Iterator $Iterator, $Iterator_1;
+    Object $Object;
+    
+      $z0 = virtualinvoke $param0.<Point: boolean equals(Object)>($param1);
+      if $z0 == 0 goto label0;
+      return false;
+
+  label0:
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.clear();
+      $arrint = this.<GameView: int[][] map>;
+      $int = $param0.<Point: int x>;
+      $arrint_1 = $arrint[$int];
+      $int = $param0.<Point: int y>;
+      $int = $arrint_1[$int];
+      $arrint = this.<GameView: int[][] map>;
+      $int_1 = $param1.<Point: int x>;
+      $arrint_1 = $arrint[$int_1];
+      $int_1 = $param1.<Point: int y>;
+      $int_1 = $arrint_1[$int_1];
+      if $int != $int_1 goto label10;
+      $z0 = specialinvoke this.linkD($param0, $param1);
+      if $z0 == 0 goto label1;
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param0);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param1);
+      return true;
+
+  label1:
+      $Point = new Point;
+      $int = $param0.<Point: int x>;
+      $int_1 = $param1.<Point: int y>;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int, $int_1);
+      $arrint = this.<GameView: int[][] map>;
+      $int = $Point.<Point: int x>;
+      $arrint_1 = $arrint[$int];
+      $int = $Point.<Point: int y>;
+      $int = $arrint_1[$int];
+      if $int != 0 goto label2;
+      $z0 = specialinvoke this.linkD($param0, $Point);
+      if $z0 == 0 goto label2;
+      $z0 = specialinvoke this.linkD($Point, $param1);
+      if $z0 == 0 goto label2;
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param0);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param1);
+      return true;
+
+  label2:
+      $Point = new Point;
+      $int = $param1.<Point: int x>;
+      $int_1 = $param0.<Point: int y>;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int, $int_1);
+      $arrint = this.<GameView: int[][] map>;
+      $int = $Point.<Point: int x>;
+      $arrint_1 = $arrint[$int];
+      $int = $Point.<Point: int y>;
+      $int = $arrint_1[$int];
+      if $int != 0 goto label3;
+      $z0 = specialinvoke this.linkD($param0, $Point);
+      if $z0 == 0 goto label3;
+      $z0 = specialinvoke this.linkD($Point, $param1);
+      if $z0 == 0 goto label3;
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param0);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param1);
+      return true;
+
+  label3:
+      $List = this.<GameView: List p1E>;
+      specialinvoke this.expandX($param0, $List);
+      $List = this.<GameView: List p2E>;
+      specialinvoke this.expandX($param1, $List);
+      $List = this.<GameView: List p1E>;
+      $Iterator = interfaceinvoke $List.iterator();
+
+  label4:
+      $z0 = interfaceinvoke $Iterator.hasNext();
+      if $z0 != 0 goto label6;
+      $List = this.<GameView: List p1E>;
+      specialinvoke this.expandY($param0, $List);
+      $List = this.<GameView: List p2E>;
+      specialinvoke this.expandY($param1, $List);
+      $List = this.<GameView: List p1E>;
+      $Iterator = interfaceinvoke $List.iterator();
+
+  label5:
+      $z0 = interfaceinvoke $Iterator.hasNext();
+      if $z0 != 0 goto label8;
+      return false;
+
+  label6:
+      $Object = interfaceinvoke $Iterator.next();
+      $Point = (Point) $Object;
+      $List = this.<GameView: List p2E>;
+      $Iterator_1 = interfaceinvoke $List.iterator();
+
+  label7:
+      $z0 = interfaceinvoke $Iterator_1.hasNext();
+      if $z0 == 0 goto label4;
+      $Object = interfaceinvoke $Iterator_1.next();
+      $Point_1 = (Point) $Object;
+      $int = $Point.<Point: int x>;
+      $int_1 = $Point_1.<Point: int x>;
+      if $int != $int_1 goto label7;
+      $z0 = specialinvoke this.linkD($Point, $Point_1);
+      if $z0 == 0 goto label7;
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param0);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point_1);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param1);
+      return true;
+
+  label8:
+      $Object = interfaceinvoke $Iterator.next();
+      $Point = (Point) $Object;
+      $List = this.<GameView: List p2E>;
+      $Iterator_1 = interfaceinvoke $List.iterator();
+
+  label9:
+      $z0 = interfaceinvoke $Iterator_1.hasNext();
+      if $z0 == 0 goto label5;
+      $Object = interfaceinvoke $Iterator_1.next();
+      $Point_1 = (Point) $Object;
+      $int = $Point.<Point: int y>;
+      $int_1 = $Point_1.<Point: int y>;
+      if $int != $int_1 goto label9;
+      $z0 = specialinvoke this.linkD($Point, $Point_1);
+      if $z0 == 0 goto label9;
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param0);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point_1);
+      $List = this.<GameView: List path>;
+      interfaceinvoke $List.<List: boolean add(Object)>($param1);
+      return true;
+
+  label10:
+      return false;
+  }
+
+  private boolean linkD(Point $param0, Point $param1)
+  {
+    int $int, $int_1, $int_2;
+    boolean $z0;
+    int[][] $arrint;
+    int[] $arrint_1;
+    
+      $int = $param0.<Point: int x>;
+      $int_1 = $param1.<Point: int x>;
+      if $int != $int_1 goto label4;
+      $int = $param0.<Point: int y>;
+      $int_1 = $param1.<Point: int y>;
+      $int_1 = staticinvoke Math.min($int, $int_1);
+      $int = $param0.<Point: int y>;
+      $int_2 = $param1.<Point: int y>;
+      $int = staticinvoke Math.max($int, $int_2);
+      $z0 = true;
+      $int_1 = $int_1 + 1;
+
+  label0:
+      if $int_1 < $int goto label2;
+
+  label1:
+      if $z0 == 0 goto label4;
+      return true;
+
+  label2:
+      $arrint = this.<GameView: int[][] map>;
+      $int_2 = $param0.<Point: int x>;
+      $arrint_1 = $arrint[$int_2];
+      $int_2 = $arrint_1[$int_1];
+      if $int_2 == 0 goto label3;
+      $z0 = false;
+      goto label1;
+
+  label3:
+      $int_1 = $int_1 + 1;
+      goto label0;
+
+  label4:
+      $int = $param0.<Point: int y>;
+      $int_1 = $param1.<Point: int y>;
+      if $int != $int_1 goto label9;
+      $int = $param0.<Point: int x>;
+      $int_1 = $param1.<Point: int x>;
+      $int_1 = staticinvoke Math.min($int, $int_1);
+      $int = $param0.<Point: int x>;
+      $int_2 = $param1.<Point: int x>;
+      $int = staticinvoke Math.max($int, $int_2);
+      $z0 = true;
+      $int_1 = $int_1 + 1;
+
+  label5:
+      if $int_1 < $int goto label7;
+
+  label6:
+      if $z0 == 0 goto label9;
+      return true;
+
+  label7:
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_1];
+      $int_2 = $param0.<Point: int y>;
+      $int_2 = $arrint_1[$int_2];
+      if $int_2 == 0 goto label8;
+      $z0 = false;
+      goto label6;
+
+  label8:
+      $int_1 = $int_1 + 1;
+      goto label5;
+
+  label9:
+      return false;
+  }
+
+  @Override
+  public boolean onTouchEvent(MotionEvent $param0)
+  {
+    float $f0;
+    int $int, $int_1;
+    Point $Point_Method_screenToindex, $Point;
+    int[][] $arrint_Field_map;
+    int[] $arrint;
+    List $List;
+    Object $Object_Method_get;
+    boolean $z0;
+    Point[] $arrPoint;
+    Object[] $arrObject_Method_toArray;
+    SoundPlay $SoundPlay;
+    GameView$RefreshHandler $GameView_RefreshHandler_Field_refreshHandler;
+    
+      $f0 = virtualinvoke $param0.getX();
+      $int = (int) $f0;
+      $f0 = virtualinvoke $param0.getY();
+      $int_1 = (int) $f0;
+      $Point_Method_screenToindex = virtualinvoke this.screenToindex($int, $int_1);
+      $arrint_Field_map = this.<GameView: int[][] map>;
+      $int = $Point_Method_screenToindex.<Point: int x>;
+      $arrint = $arrint_Field_map[$int];
+      $int = $Point_Method_screenToindex.<Point: int y>;
+      $int = $arrint[$int];
+      if $int <= 0 goto label0;
+      $List = this.<GameView: List selected>;
+      $int = interfaceinvoke $List.size();
+      if $int != 1 goto label2;
+      $List = this.<GameView: List selected>;
+      $Object_Method_get = interfaceinvoke $List.get(0);
+      $Point = (Point) $Object_Method_get;
+      $z0 = specialinvoke this.link($Point, $Point_Method_screenToindex);
+      if $z0 == 0 goto label1;
+      $List = this.<GameView: List selected>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point_Method_screenToindex);
+      $List = this.<GameView: List path>;
+      $arrPoint = {  };
+      $arrObject_Method_toArray = interfaceinvoke $List.<List: Object[] toArray(Object[])>($arrPoint);
+      $arrPoint = (Point[]) $arrObject_Method_toArray;
+      virtualinvoke this.drawLine($arrPoint);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.play(1, 0);
+      $GameView_RefreshHandler_Field_refreshHandler = this.<GameView: GameView$RefreshHandler refreshHandler>;
+      virtualinvoke $GameView_RefreshHandler_Field_refreshHandler.sleep(500);
+
+  label0:
+      $z0 = specialinvoke this.<BoardView: boolean onTouchEvent(MotionEvent)>($param0);
+      return $z0;
+
+  label1:
+      $List = this.<GameView: List selected>;
+      interfaceinvoke $List.clear();
+      $List = this.<GameView: List selected>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point_Method_screenToindex);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.play(0, 0);
+      virtualinvoke this.invalidate();
+      goto label0;
+
+  label2:
+      $List = this.<GameView: List selected>;
+      interfaceinvoke $List.<List: boolean add(Object)>($Point_Method_screenToindex);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.play(0, 0);
+      virtualinvoke this.invalidate();
+      goto label0;
+  }
+
+  private boolean win()
+  {
+    int $int, $int_1, $int_2;
+    int[][] $arrint_Field_map;
+    int[] $arrint;
+    
+      $int = 0;
+
+  label0:
+      if $int < 10 goto label1;
+      return true;
+
+  label1:
+      $int_1 = 0;
+
+  label2:
+      if $int_1 < 12 goto label3;
+      $int = $int + 1;
+      goto label0;
+
+  label3:
+      $arrint_Field_map = this.<GameView: int[][] map>;
+      $arrint = $arrint_Field_map[$int];
+      $int_2 = $arrint[$int_1];
+      if $int_2 == 0 goto label4;
+      return false;
+
+  label4:
+      $int_1 = $int_1 + 1;
+      goto label2;
+  }
+
+  static int access$4(GameView $param0)
+  {
+    int i0;
+    
+      i0 = $param0.<GameView: int leftTime>;
+      return i0;
+  }
+
+  public int getRefreshNum()
+  {
+    int i0;
+    
+      i0 = this.<GameView: int Refresh>;
+      return i0;
+  }
+
+  public int getTipNum()
+  {
+    int i0;
+    
+      i0 = this.<GameView: int Help>;
+      return i0;
+  }
+
+  public int getTotalTime()
+  {
+    int i0;
+    
+      i0 = this.<GameView: int totalTime>;
+      return i0;
+  }
+
+  static OnTimerListener access$6(GameView $param0)
+  {
+    OnTimerListener r1;
+    
+      r1 = $param0.<GameView: OnTimerListener timerListener>;
+      return r1;
+  }
+
+  public void <init>(Context $param0, AttributeSet $param1)
+  {
+    GameView$RefreshHandler $GameView_RefreshHandler;
+    ArrayList $ArrayList;
+    MediaPlayer $MediaPlayer;
+    
+      specialinvoke this.<BoardView: void <init>(Context, AttributeSet)>($param0, $param1);
+      this.<GameView: int Help> = 3;
+      this.<GameView: int Refresh> = 3;
+      this.<GameView: int totalTime> = 180;
+      $GameView_RefreshHandler = new GameView$RefreshHandler;
+      specialinvoke $GameView_RefreshHandler.<GameView$RefreshHandler: void <init>(GameView)>(this);
+      this.<GameView: GameView$RefreshHandler refreshHandler> = $GameView_RefreshHandler;
+      this.<GameView: OnTimerListener timerListener> = null;
+      this.<GameView: OnStateListener stateListener> = null;
+      this.<GameView: OnToolsChangeListener toolsChangedListener> = null;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<GameView: List path> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<GameView: List p1E> = $ArrayList;
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      this.<GameView: List p2E> = $ArrayList;
+      $MediaPlayer = staticinvoke MediaPlayer.create($param0, 2131034113);
+      this.<GameView: MediaPlayer player> = $MediaPlayer;
+      $MediaPlayer = this.<GameView: MediaPlayer player>;
+      virtualinvoke $MediaPlayer.<MediaPlayer: void setLooping(boolean)>(true);
+  }
+
+  static void access$1(GameView $param0, boolean $param1)
+  {
+    
+      $param0.<GameView: boolean isStop> = $param1;
+  }
+
+  static void access$3(GameView $param0)
+  {
+    
+      specialinvoke $param0.change();
+  }
+
+  static void access$7(GameView $param0, int $param1)
+  {
+    
+      $param0.<GameView: int leftTime> = $param1;
+  }
+
+  public void autoClear()
+  {
+    int $int;
+    SoundPlay $SoundPlay;
+    OnToolsChangeListener $OnToolsChangeListener_Field_toolsChangedListener;
+    List $List_Field_path;
+    Point[] $arrPoint;
+    Object[] $arrObject_Method_toArray;
+    GameView$RefreshHandler $GameView_RefreshHandler_Field_refreshHandler;
+    
+      $int = this.<GameView: int Help>;
+      if $int != 0 goto label0;
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.play(8, 0);
+      return;
+
+  label0:
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.play(7, 0);
+      $int = this.<GameView: int Help>;
+      $int = $int - 1;
+      this.<GameView: int Help> = $int;
+      $OnToolsChangeListener_Field_toolsChangedListener = this.<GameView: OnToolsChangeListener toolsChangedListener>;
+      $int = this.<GameView: int Help>;
+      interfaceinvoke $OnToolsChangeListener_Field_toolsChangedListener.onTipChanged($int);
+      $List_Field_path = this.<GameView: List path>;
+      $arrPoint = {  };
+      $arrObject_Method_toArray = interfaceinvoke $List_Field_path.<List: Object[] toArray(Object[])>($arrPoint);
+      $arrPoint = (Point[]) $arrObject_Method_toArray;
+      virtualinvoke this.drawLine($arrPoint);
+      $GameView_RefreshHandler_Field_refreshHandler = this.<GameView: GameView$RefreshHandler refreshHandler>;
+      virtualinvoke $GameView_RefreshHandler_Field_refreshHandler.sleep(500);
+  }
+
+  private void change()
+  {
+    Random $Random;
+    int $int_3, $int_4, $int_1, $int, $int_2, $int_5;
+    boolean $z0;
+    int[][] $arrint;
+    int[] $arrint_1, $arrint_2;
+    
+      $Random = new Random;
+      specialinvoke $Random.<Random: void <init>()>();
+      $int_3 = 1;
+
+  label0:
+      if $int_3 < 9 goto label2;
+      $z0 = specialinvoke this.die();
+      if $z0 == 0 goto label1;
+      specialinvoke this.change();
+
+  label1:
+      virtualinvoke this.invalidate();
+      return;
+
+  label2:
+      $int_4 = 1;
+
+  label3:
+      if $int_4 < 11 goto label4;
+      $int_3 = $int_3 + 1;
+      goto label0;
+
+  label4:
+      $int_1 = virtualinvoke $Random.nextInt(8);
+      $int_1 = $int_1 + 1;
+      $int = virtualinvoke $Random.nextInt(10);
+      $int_2 = $int + 1;
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_3];
+      $int = $arrint_1[$int_4];
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_3];
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_2 = $arrint[$int_1];
+      $int_5 = $arrint_2[$int_2];
+      $arrint_1[$int_4] = $int_5;
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int_1];
+      $arrint_1[$int_2] = $int;
+      $int_4 = $int_4 + 1;
+      goto label3;
+  }
+
+  @Signature(Value="(Landroid/graphics/Point;Ljava/util/List<Landroid/graphics/Point;>;)V")
+  private void expandX(Point $param0, List $param1)
+  {
+    int $int, $int_1;
+    int[][] $arrint;
+    int[] $arrint_1;
+    Point $Point;
+    
+      interfaceinvoke $param1.clear();
+      $int = $param0.<Point: int x>;
+      $int = $int + 1;
+
+  label0:
+      if $int < 10 goto label3;
+
+  label1:
+      $int = $param0.<Point: int x>;
+      $int = $int - 1;
+
+  label2:
+      if $int >= 0 goto label4;
+      return;
+
+  label3:
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int];
+      $int_1 = $param0.<Point: int y>;
+      $int_1 = $arrint_1[$int_1];
+      if $int_1 != 0 goto label1;
+      $Point = new Point;
+      $int_1 = $param0.<Point: int y>;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int, $int_1);
+      interfaceinvoke $param1.<List: boolean add(Object)>($Point);
+      $int = $int + 1;
+      goto label0;
+
+  label4:
+      $arrint = this.<GameView: int[][] map>;
+      $arrint_1 = $arrint[$int];
+      $int_1 = $param0.<Point: int y>;
+      $int_1 = $arrint_1[$int_1];
+      if $int_1 != 0 goto label5;
+      $Point = new Point;
+      $int_1 = $param0.<Point: int y>;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int, $int_1);
+      interfaceinvoke $param1.<List: boolean add(Object)>($Point);
+      $int = $int + -1;
+      goto label2;
+
+  label5:
+      return;
+  }
+
+  @Signature(Value="(Landroid/graphics/Point;Ljava/util/List<Landroid/graphics/Point;>;)V")
+  private void expandY(Point $param0, List $param1)
+  {
+    int $int, $int_1;
+    int[][] $arrint;
+    int[] $arrint_1;
+    Point $Point;
+    
+      interfaceinvoke $param1.clear();
+      $int = $param0.<Point: int y>;
+      $int = $int + 1;
+
+  label0:
+      if $int < 12 goto label3;
+
+  label1:
+      $int = $param0.<Point: int y>;
+      $int = $int - 1;
+
+  label2:
+      if $int >= 0 goto label4;
+      return;
+
+  label3:
+      $arrint = this.<GameView: int[][] map>;
+      $int_1 = $param0.<Point: int x>;
+      $arrint_1 = $arrint[$int_1];
+      $int_1 = $arrint_1[$int];
+      if $int_1 != 0 goto label1;
+      $Point = new Point;
+      $int_1 = $param0.<Point: int x>;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int_1, $int);
+      interfaceinvoke $param1.<List: boolean add(Object)>($Point);
+      $int = $int + 1;
+      goto label0;
+
+  label4:
+      $arrint = this.<GameView: int[][] map>;
+      $int_1 = $param0.<Point: int x>;
+      $arrint_1 = $arrint[$int_1];
+      $int_1 = $arrint_1[$int];
+      if $int_1 != 0 goto label5;
+      $Point = new Point;
+      $int_1 = $param0.<Point: int x>;
+      specialinvoke $Point.<Point: void <init>(int, int)>($int_1, $int);
+      interfaceinvoke $param1.<List: boolean add(Object)>($Point);
+      $int = $int + -1;
+      goto label2;
+
+  label5:
+      return;
+  }
+
+  public void initMap()
+  {
+    int $int, $int_1, $int_2, $int_Field_iconCounts;
+    boolean $z0;
+    int[][] $arrint_Field_map;
+    int[] $arrint;
+    
+      $int = 1;
+      $z0 = false;
+      $int_1 = 1;
+
+  label0:
+      if $int_1 < 9 goto label1;
+      specialinvoke this.change();
+      return;
+
+  label1:
+      $int_2 = 1;
+
+  label2:
+      if $int_2 < 11 goto label3;
+      $int_1 = $int_1 + 1;
+      goto label0;
+
+  label3:
+      $arrint_Field_map = this.<GameView: int[][] map>;
+      $arrint = $arrint_Field_map[$int_1];
+      $arrint[$int_2] = $int;
+      if $z0 != 1 goto label5;
+      $int = $int + 1;
+      $z0 = false;
+      $int_Field_iconCounts = this.<GameView: int iconCounts>;
+      if $int != $int_Field_iconCounts goto label4;
+      $int = 1;
+
+  label4:
+      $int_2 = $int_2 + 1;
+      goto label2;
+
+  label5:
+      $z0 = true;
+      goto label4;
+  }
+
+  public static void initSound(Context $param0)
+  {
+    SoundPlay $SoundPlay;
+    
+      $SoundPlay = new SoundPlay;
+      specialinvoke $SoundPlay.<SoundPlay: void <init>()>();
+      <GameView: SoundPlay soundPlay> = $SoundPlay;
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.initSounds($param0);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.loadSfx($param0, 2131034115, 0);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.loadSfx($param0, 2131034116, 1);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.loadSfx($param0, 2131034120, 4);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.loadSfx($param0, 2131034119, 5);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.loadSfx($param0, 2131034117, 6);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.loadSfx($param0, 2131034118, 7);
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.loadSfx($param0, 2131034112, 8);
+  }
+
+  public void pause()
+  {
+    MediaPlayer $MediaPlayer_Field_player;
+    GameView$RefreshTime $GameView_RefreshTime;
+    
+      $MediaPlayer_Field_player = this.<GameView: MediaPlayer player>;
+      virtualinvoke $MediaPlayer_Field_player.pause();
+      $GameView_RefreshTime = new GameView$RefreshTime;
+      specialinvoke $GameView_RefreshTime.<GameView$RefreshTime: void <init>(GameView)>(this);
+      this.<GameView: GameView$RefreshTime refreshTime> = $GameView_RefreshTime;
+      $GameView_RefreshTime = this.<GameView: GameView$RefreshTime refreshTime>;
+      virtualinvoke $GameView_RefreshTime.stop();
+  }
+
+  public void refreshChange()
+  {
+    int $int;
+    SoundPlay $SoundPlay;
+    OnToolsChangeListener $OnToolsChangeListener_Field_toolsChangedListener;
+    
+      $int = this.<GameView: int Refresh>;
+      if $int != 0 goto label0;
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.play(8, 0);
+      return;
+
+  label0:
+      $SoundPlay = <GameView: SoundPlay soundPlay>;
+      virtualinvoke $SoundPlay.play(6, 0);
+      $int = this.<GameView: int Refresh>;
+      $int = $int - 1;
+      this.<GameView: int Refresh> = $int;
+      $OnToolsChangeListener_Field_toolsChangedListener = this.<GameView: OnToolsChangeListener toolsChangedListener>;
+      $int = this.<GameView: int Refresh>;
+      interfaceinvoke $OnToolsChangeListener_Field_toolsChangedListener.onRefreshChanged($int);
+      specialinvoke this.change();
+  }
+
+  public void resume()
+  {
+    MediaPlayer $MediaPlayer_Field_player;
+    GameView$RefreshTime $GameView_RefreshTime;
+    
+      this.<GameView: boolean isStop> = false;
+      $MediaPlayer_Field_player = this.<GameView: MediaPlayer player>;
+      virtualinvoke $MediaPlayer_Field_player.start();
+      $GameView_RefreshTime = new GameView$RefreshTime;
+      specialinvoke $GameView_RefreshTime.<GameView$RefreshTime: void <init>(GameView)>(this);
+      this.<GameView: GameView$RefreshTime refreshTime> = $GameView_RefreshTime;
+      $GameView_RefreshTime = this.<GameView: GameView$RefreshTime refreshTime>;
+      virtualinvoke $GameView_RefreshTime.resume();
+      virtualinvoke this.invalidate();
+  }
+
+  public void setMode(int $param0)
+  {
+    OnStateListener $OnStateListener_Field_stateListener;
+    
+      $OnStateListener_Field_stateListener = this.<GameView: OnStateListener stateListener>;
+      interfaceinvoke $OnStateListener_Field_stateListener.OnStateChanged($param0);
+  }
+
+  public void setOnStateListener(OnStateListener $param0)
+  {
+    
+      this.<GameView: OnStateListener stateListener> = $param0;
+  }
+
+  public void setOnTimerListener(OnTimerListener $param0)
+  {
+    
+      this.<GameView: OnTimerListener timerListener> = $param0;
+  }
+
+  public void setOnToolsChangedListener(OnToolsChangeListener $param0)
+  {
+    
+      this.<GameView: OnToolsChangeListener toolsChangedListener> = $param0;
+  }
+
+  public void startNextPlay()
+  {
+    int $int;
+    
+      $int = this.<GameView: int totalTime>;
+      $int = $int - 10;
+      this.<GameView: int totalTime> = $int;
+      virtualinvoke this.startPlay();
+  }
+
+  public void startPlay()
+  {
+    OnToolsChangeListener $OnToolsChangeListener;
+    int $int;
+    MediaPlayer $MediaPlayer_Field_player;
+    GameView$RefreshTime $GameView_RefreshTime;
+    
+      this.<GameView: int Help> = 3;
+      this.<GameView: int Refresh> = 3;
+      this.<GameView: boolean isStop> = false;
+      $OnToolsChangeListener = this.<GameView: OnToolsChangeListener toolsChangedListener>;
+      $int = this.<GameView: int Refresh>;
+      interfaceinvoke $OnToolsChangeListener.onRefreshChanged($int);
+      $OnToolsChangeListener = this.<GameView: OnToolsChangeListener toolsChangedListener>;
+      $int = this.<GameView: int Help>;
+      interfaceinvoke $OnToolsChangeListener.onTipChanged($int);
+      $int = this.<GameView: int totalTime>;
+      this.<GameView: int leftTime> = $int;
+      virtualinvoke this.initMap();
+      $MediaPlayer_Field_player = this.<GameView: MediaPlayer player>;
+      virtualinvoke $MediaPlayer_Field_player.start();
+      $GameView_RefreshTime = new GameView$RefreshTime;
+      specialinvoke $GameView_RefreshTime.<GameView$RefreshTime: void <init>(GameView)>(this);
+      this.<GameView: GameView$RefreshTime refreshTime> = $GameView_RefreshTime;
+      $GameView_RefreshTime = this.<GameView: GameView$RefreshTime refreshTime>;
+      virtualinvoke $GameView_RefreshTime.start();
+      virtualinvoke this.invalidate();
+  }
+
+  public void stopTimer()
+  {
+    
+      this.<GameView: boolean isStop> = true;
+  }
+
+}
