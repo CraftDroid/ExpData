@@ -7,6 +7,7 @@ import com.sohu.t.api.utils.APNManager;
 import com.sohu.t.api.utils.APNManager$APN;
 import com.sohu.t.api.utils.APNMatchTools;
 import java.lang.Exception;
+Import java.lang.SecurityException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
@@ -159,15 +160,20 @@ public class com.sohu.t.api.utils.APNManager extends Object
     StringBuilder $StringBuilder;
     short $s2;
     String $String;
+    SecurityException $se;
     
       $Context_Field_context = this.<APNManager: Context context>;
       $ContentResolver_Method_getContentResolver = virtualinvoke $Context_Field_context.getContentResolver();
       $Uri_Field_PREFERRED_APN_URI = <APNManager: Uri PREFERRED_APN_URI>;
       $arrString = { "_id", "name", "apn", "type", "current", "proxy" };
+
+  label64:
       $Cursor_Method_query = virtualinvoke $ContentResolver_Method_getContentResolver.<ContentResolver: Cursor query(Uri, String[], String, String[], String)>($Uri_Field_PREFERRED_APN_URI, $arrString, null, null, null);
       interfaceinvoke $Cursor_Method_query.<Cursor: boolean moveToFirst()>();
       $z0 = interfaceinvoke $Cursor_Method_query.isAfterLast();
       if $z0 == 0 goto label0;
+
+  label3:
       return -1L;
 
   label0:
@@ -193,6 +199,12 @@ public class com.sohu.t.api.utils.APNManager extends Object
       $StringBuilder = virtualinvoke $StringBuilder.append($String);
       virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
       return $long_Method_getLong;
+
+  label2:
+      $se := @caughtexception;
+      goto label3;
+	
+      catch SecurityException from label64 to label64 with label2;
   }
 
   public HttpHost getProxy()
