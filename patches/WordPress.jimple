@@ -1,0 +1,691 @@
+import android.content.Context;
+import com.wordpress.shroid.iraqta7sheh.a;
+import com.wordpress.shroid.iraqta7sheh.k.d;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.Exception;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.StringBuffer;
+import java.lang.StringBuilder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public final class com.wordpress.shroid.iraqta7sheh.k.d extends Object
+{
+  static InputStream a;
+
+  static String c;
+
+  public static String i;
+
+  public static String j;
+
+  public static String k;
+
+  static JSONArray f;
+
+  static JSONArray g;
+
+  static JSONArray h;
+
+  static JSONObject b;
+
+  static JSONObject d;
+
+  static JSONObject e;
+
+  @Signature(Value="(Ljava/lang/String;Landroid/content/Context;)Ljava/util/ArrayList<Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/String;>;>;")
+  public static ArrayList a(String $param0, Context $param1)
+  {
+    ArrayList $ArrayList;
+    String $String, $String_Method_getString, $String_Method_getString_1;
+    boolean $z0;
+    FileInputStream $FileInputStream_Method_openFileInput;
+    StringBuffer $StringBuffer;
+    byte[] $arrbyte;
+    int $int, $int_Method_length;
+    JSONObject $JSONObject;
+    JSONArray $JSONArray;
+    StringBuilder $StringBuilder;
+    FileNotFoundException $FileNotFoundException, $FileNotFoundException_1;
+    IOException $IOException, $IOException_1;
+    JSONException $JSONException, $JSONException_1;
+    FileOutputStream $FileOutputStream_Method_openFileOutput;
+    HashMap $HashMap;
+    
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      $String = <a: String d>;
+      $z0 = virtualinvoke $param0.<String: boolean equals(Object)>($String);
+      if $z0 == 0 goto label24;
+      $param0 = <d: String k>;
+
+  label0:
+      $FileInputStream_Method_openFileInput = virtualinvoke $param1.openFileInput($param0);
+
+  label1:
+      $StringBuffer = new StringBuffer;
+
+  label2:
+      specialinvoke $StringBuffer.<StringBuffer: void <init>(String)>("");
+
+  label3:
+      $arrbyte = newarray (byte)[1024];
+
+  label4:
+      $int = virtualinvoke $FileInputStream_Method_openFileInput.read($arrbyte);
+
+  label5:
+      if $int != -1 goto label18;
+
+  label6:
+      virtualinvoke $FileInputStream_Method_openFileInput.close();
+
+  label7:
+      $JSONObject = new JSONObject;
+
+  label8:
+      $param0 = virtualinvoke $StringBuffer.toString();
+      specialinvoke $JSONObject.<JSONObject: void <init>(String)>($param0);
+
+  label9:
+      <d: JSONObject d> = $JSONObject;
+
+  label10:
+      $JSONObject = <d: JSONObject e>;
+      if $JSONObject == null goto label37;
+      $JSONObject = <d: JSONObject e>;
+
+  label11:
+      $JSONArray = virtualinvoke $JSONObject.getJSONArray("Sections");
+
+  label12:
+      <d: JSONArray h> = $JSONArray;
+      $int = 0;
+
+  label13:
+      $JSONArray = <d: JSONArray h>;
+
+  label14:
+      $int_Method_length = virtualinvoke $JSONArray.length();
+
+  label15:
+      if $int < $int_Method_length goto label31;
+      $StringBuilder = new StringBuilder;
+
+  label16:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("after 7 dataArrayList >>>");
+      $param0 = virtualinvoke $ArrayList.toString();
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
+
+  label17:
+      return $ArrayList;
+
+  label18:
+      $param0 = new String;
+
+  label19:
+      specialinvoke $param0.<String: void <init>(byte[])>($arrbyte);
+      virtualinvoke $StringBuffer.<StringBuffer: StringBuffer append(String)>($param0);
+
+  label20:
+      goto label4;
+
+  label21:
+      $FileNotFoundException := @caughtexception;
+      virtualinvoke $FileNotFoundException.printStackTrace();
+      goto label10;
+
+  label22:
+      $IOException := @caughtexception;
+      virtualinvoke $IOException.printStackTrace();
+      goto label10;
+
+  label23:
+      $JSONException := @caughtexception;
+      virtualinvoke $JSONException.printStackTrace();
+      goto label10;
+
+  label24:
+      $JSONObject = staticinvoke d.a($param0);
+      <d: JSONObject e> = $JSONObject;
+      $param0 = <d: String k>;
+
+  label25:
+      $FileOutputStream_Method_openFileOutput = virtualinvoke $param1.openFileOutput($param0, 0);
+
+  label26:
+      $param0 = <d: String c>;
+
+  label27:
+      $arrbyte = virtualinvoke $param0.getBytes();
+      virtualinvoke $FileOutputStream_Method_openFileOutput.write($arrbyte);
+      virtualinvoke $FileOutputStream_Method_openFileOutput.close();
+
+  label28:
+      goto label10;
+
+  label29:
+      $FileNotFoundException_1 := @caughtexception;
+      virtualinvoke $FileNotFoundException_1.printStackTrace();
+      goto label10;
+
+  label30:
+      $IOException_1 := @caughtexception;
+      virtualinvoke $IOException_1.printStackTrace();
+      goto label10;
+
+  label31:
+      $JSONArray = <d: JSONArray h>;
+
+  label32:
+      $JSONObject = virtualinvoke $JSONArray.getJSONObject($int);
+      $param0 = virtualinvoke $JSONObject.getString("id");
+      $String = virtualinvoke $JSONObject.getString("name");
+      $String_Method_getString = virtualinvoke $JSONObject.getString("baseUrl");
+      $String_Method_getString_1 = virtualinvoke $JSONObject.getString("lastFileId");
+
+  label33:
+      $HashMap = new HashMap;
+
+  label34:
+      specialinvoke $HashMap.<HashMap: void <init>()>();
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("id", $param0);
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("name", $String);
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("baseUrl", $String_Method_getString);
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("lastFileId", $String_Method_getString_1);
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($HashMap);
+
+  label35:
+      $int = $int + 1;
+      goto label13;
+
+  label36:
+      $JSONException_1 := @caughtexception;
+      virtualinvoke $JSONException_1.printStackTrace();
+
+  label37:
+      return $ArrayList;
+
+      catch FileNotFoundException from label0 to label1 with label21;
+      catch FileNotFoundException from label2 to label3 with label21;
+      catch FileNotFoundException from label4 to label5 with label21;
+      catch FileNotFoundException from label6 to label7 with label21;
+      catch FileNotFoundException from label8 to label9 with label21;
+      catch IOException from label0 to label1 with label22;
+      catch IOException from label2 to label3 with label22;
+      catch IOException from label4 to label5 with label22;
+      catch IOException from label6 to label7 with label22;
+      catch IOException from label8 to label9 with label22;
+      catch JSONException from label0 to label1 with label23;
+      catch JSONException from label2 to label3 with label23;
+      catch JSONException from label4 to label5 with label23;
+      catch JSONException from label6 to label7 with label23;
+      catch JSONException from label8 to label9 with label23;
+      catch JSONException from label11 to label12 with label36;
+      catch JSONException from label14 to label15 with label36;
+      catch JSONException from label16 to label17 with label36;
+      catch FileNotFoundException from label19 to label20 with label21;
+      catch IOException from label19 to label20 with label22;
+      catch JSONException from label19 to label20 with label23;
+      catch FileNotFoundException from label25 to label26 with label29;
+      catch FileNotFoundException from label27 to label28 with label29;
+      catch IOException from label25 to label26 with label30;
+      catch IOException from label27 to label28 with label30;
+      catch JSONException from label32 to label33 with label36;
+      catch JSONException from label34 to label35 with label36;
+  }
+
+  @Signature(Value="(Ljava/lang/String;Ljava/lang/Integer;Landroid/content/Context;)Ljava/util/ArrayList<Ljava/util/HashMap<Ljava/lang/String;Ljava/lang/String;>;>;")
+  public static ArrayList a(String $param0, Integer $param1, Context $param2)
+  {
+    ArrayList $ArrayList;
+    String $String, $String_Method_getString, $String_Method_getString_1;
+    boolean $z0;
+    StringBuilder $StringBuilder;
+    FileInputStream $FileInputStream_Method_openFileInput;
+    StringBuffer $StringBuffer;
+    byte[] $arrbyte;
+    int $int, $int_Method_length;
+    JSONObject $JSONObject;
+    JSONArray $JSONArray;
+    FileNotFoundException $FileNotFoundException, $FileNotFoundException_1;
+    IOException $IOException, $IOException_1;
+    JSONException $JSONException, $JSONException_1;
+    FileOutputStream $FileOutputStream_Method_openFileOutput;
+    HashMap $HashMap;
+    
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+      $String = <a: String d>;
+      $z0 = virtualinvoke $param0.<String: boolean equals(Object)>($String);
+      if $z0 == 0 goto label22;
+      $StringBuilder = new StringBuilder;
+      $param0 = <d: String i>;
+
+  label0:
+      $param0 = staticinvoke <String: String valueOf(Object)>($param0);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($param0);
+      $StringBuilder = virtualinvoke $StringBuilder.append("_");
+      $StringBuilder = virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(Object)>($param1);
+      $param0 = virtualinvoke $StringBuilder.toString();
+      $FileInputStream_Method_openFileInput = virtualinvoke $param2.openFileInput($param0);
+
+  label1:
+      $StringBuffer = new StringBuffer;
+
+  label2:
+      specialinvoke $StringBuffer.<StringBuffer: void <init>(String)>("");
+
+  label3:
+      $arrbyte = newarray (byte)[1024];
+
+  label4:
+      $int = virtualinvoke $FileInputStream_Method_openFileInput.read($arrbyte);
+
+  label5:
+      if $int != -1 goto label16;
+
+  label6:
+      virtualinvoke $FileInputStream_Method_openFileInput.close();
+
+  label7:
+      $JSONObject = new JSONObject;
+
+  label8:
+      $param0 = virtualinvoke $StringBuffer.toString();
+      specialinvoke $JSONObject.<JSONObject: void <init>(String)>($param0);
+
+  label9:
+      <d: JSONObject d> = $JSONObject;
+
+  label10:
+      $JSONObject = <d: JSONObject d>;
+      if $JSONObject == null goto label37;
+      $JSONObject = <d: JSONObject d>;
+
+  label11:
+      $JSONArray = virtualinvoke $JSONObject.getJSONArray("photos");
+
+  label12:
+      <d: JSONArray f> = $JSONArray;
+      $int = 0;
+
+  label13:
+      $JSONArray = <d: JSONArray f>;
+
+  label14:
+      $int_Method_length = virtualinvoke $JSONArray.length();
+
+  label15:
+      if $int < $int_Method_length goto label31;
+      return $ArrayList;
+
+  label16:
+      $param0 = new String;
+
+  label17:
+      specialinvoke $param0.<String: void <init>(byte[])>($arrbyte);
+      virtualinvoke $StringBuffer.<StringBuffer: StringBuffer append(String)>($param0);
+
+  label18:
+      goto label4;
+
+  label19:
+      $FileNotFoundException := @caughtexception;
+      virtualinvoke $FileNotFoundException.printStackTrace();
+      goto label10;
+
+  label20:
+      $IOException := @caughtexception;
+      virtualinvoke $IOException.printStackTrace();
+      goto label10;
+
+  label21:
+      $JSONException := @caughtexception;
+      virtualinvoke $JSONException.printStackTrace();
+      goto label10;
+
+  label22:
+      $JSONObject = staticinvoke d.a($param0);
+      <d: JSONObject d> = $JSONObject;
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("jsonObject.length() == ");
+      $JSONObject = <d: JSONObject d>;
+      $int = virtualinvoke $JSONObject.length();
+      $StringBuilder = virtualinvoke $StringBuilder.append($int);
+      virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
+      $JSONObject = <d: JSONObject d>;
+
+  label23:
+      $int = virtualinvoke $JSONObject.length();
+
+  label24:
+      if $int <= 0 goto label10;
+      $StringBuilder = new StringBuilder;
+      $param0 = <d: String i>;
+
+  label25:
+      $param0 = staticinvoke <String: String valueOf(Object)>($param0);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($param0);
+      $StringBuilder = virtualinvoke $StringBuilder.append("_");
+      $StringBuilder = virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(Object)>($param1);
+      $param0 = virtualinvoke $StringBuilder.toString();
+      $FileOutputStream_Method_openFileOutput = virtualinvoke $param2.openFileOutput($param0, 0);
+
+  label26:
+      $param0 = <d: String c>;
+
+  label27:
+      $arrbyte = virtualinvoke $param0.getBytes();
+      virtualinvoke $FileOutputStream_Method_openFileOutput.write($arrbyte);
+      virtualinvoke $FileOutputStream_Method_openFileOutput.close();
+
+  label28:
+      goto label10;
+
+  label29:
+      $FileNotFoundException_1 := @caughtexception;
+      virtualinvoke $FileNotFoundException_1.printStackTrace();
+      goto label10;
+
+  label30:
+      $IOException_1 := @caughtexception;
+      virtualinvoke $IOException_1.printStackTrace();
+      goto label10;
+
+  label31:
+      $JSONArray = <d: JSONArray f>;
+
+  label32:
+      $JSONObject = virtualinvoke $JSONArray.getJSONObject($int);
+      $param0 = virtualinvoke $JSONObject.getString("id");
+      $String = virtualinvoke $JSONObject.getString("link");
+      $String_Method_getString = virtualinvoke $JSONObject.getString("name");
+      $String_Method_getString_1 = virtualinvoke $JSONObject.getString("source");
+
+  label33:
+      $HashMap = new HashMap;
+
+  label34:
+      specialinvoke $HashMap.<HashMap: void <init>()>();
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("id", $param0);
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("link", $String);
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("name", $String_Method_getString);
+      virtualinvoke $HashMap.<HashMap: Object put(Object, Object)>("source", $String_Method_getString_1);
+      virtualinvoke $ArrayList.<ArrayList: boolean add(Object)>($HashMap);
+
+  label35:
+      $int = $int + 1;
+      goto label13;
+
+  label36:
+      $JSONException_1 := @caughtexception;
+      virtualinvoke $JSONException_1.printStackTrace();
+
+  label37:
+      return $ArrayList;
+
+      catch FileNotFoundException from label0 to label1 with label19;
+      catch FileNotFoundException from label2 to label3 with label19;
+      catch FileNotFoundException from label4 to label5 with label19;
+      catch FileNotFoundException from label6 to label7 with label19;
+      catch FileNotFoundException from label8 to label9 with label19;
+      catch IOException from label0 to label1 with label20;
+      catch IOException from label2 to label3 with label20;
+      catch IOException from label4 to label5 with label20;
+      catch IOException from label6 to label7 with label20;
+      catch IOException from label8 to label9 with label20;
+      catch JSONException from label0 to label1 with label21;
+      catch JSONException from label2 to label3 with label21;
+      catch JSONException from label4 to label5 with label21;
+      catch JSONException from label6 to label7 with label21;
+      catch JSONException from label8 to label9 with label21;
+      catch JSONException from label11 to label12 with label36;
+      catch JSONException from label14 to label15 with label36;
+      catch FileNotFoundException from label17 to label18 with label19;
+      catch IOException from label17 to label18 with label20;
+      catch JSONException from label17 to label18 with label21;
+      catch FileNotFoundException from label23 to label24 with label29;
+      catch FileNotFoundException from label25 to label26 with label29;
+      catch FileNotFoundException from label27 to label28 with label29;
+      catch IOException from label23 to label24 with label30;
+      catch IOException from label25 to label26 with label30;
+      catch IOException from label27 to label28 with label30;
+      catch JSONException from label32 to label33 with label36;
+      catch JSONException from label34 to label35 with label36;
+  }
+
+  private static JSONObject a(String $param0)
+  {
+    DefaultHttpClient $DefaultHttpClient;
+    HttpPost $HttpPost;
+    StringBuilder $StringBuilder, $StringBuilder_1;
+    HttpResponse $HttpResponse_Method_execute;
+    HttpEntity $HttpEntity_Method_getEntity;
+    InputStream $InputStream;
+    BufferedReader $BufferedReader;
+    InputStreamReader $InputStreamReader;
+    JSONObject $JSONObject;
+    String $String;
+    int $int_Method_indexOf, $int;
+    Exception $Exception;
+    UnsupportedEncodingException $UnsupportedEncodingException;
+    JSONException $JSONException;
+    ClientProtocolException $ClientProtocolException;
+    IOException $IOException;
+    
+      $DefaultHttpClient = new DefaultHttpClient;
+
+  label0:
+      specialinvoke $DefaultHttpClient.<DefaultHttpClient: void <init>()>();
+
+  label1:
+      $HttpPost = new HttpPost;
+
+  label2:
+      specialinvoke $HttpPost.<HttpPost: void <init>(String)>($param0);
+
+  label3:
+      $StringBuilder = new StringBuilder;
+
+  label4:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>(" stage 4-3 url > ");
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
+      $HttpResponse_Method_execute = virtualinvoke $DefaultHttpClient.<DefaultHttpClient: HttpResponse execute(HttpUriRequest)>($HttpPost);
+      $HttpEntity_Method_getEntity = interfaceinvoke $HttpResponse_Method_execute.getEntity();
+      $InputStream = interfaceinvoke $HttpEntity_Method_getEntity.getContent();
+
+  label5:
+      <d: InputStream a> = $InputStream;
+      $BufferedReader = new BufferedReader;
+      $InputStreamReader = new InputStreamReader;
+      $InputStream = <d: InputStream a>;
+
+  label6:
+      specialinvoke $InputStreamReader.<InputStreamReader: void <init>(InputStream, String)>($InputStream, "utf-8");
+      specialinvoke $BufferedReader.<BufferedReader: void <init>(java.io.Reader, int)>($InputStreamReader, 8);
+
+  label7:
+      $StringBuilder = new StringBuilder;
+
+  label8:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>()>();
+
+  label9:
+      $param0 = virtualinvoke $BufferedReader.readLine();
+
+  label10:
+      if $param0 != null goto label21;
+      $InputStream = <d: InputStream a>;
+
+  label11:
+      virtualinvoke $InputStream.close();
+      $param0 = virtualinvoke $StringBuilder.toString();
+
+  label12:
+      <d: String c> = $param0;
+
+  label13:
+      $JSONObject = new JSONObject;
+      $param0 = <d: String c>;
+      $String = <d: String c>;
+
+  label14:
+      $int_Method_indexOf = virtualinvoke $String.indexOf("{");
+
+  label15:
+      $String = <d: String c>;
+
+  label16:
+      $int = virtualinvoke $String.lastIndexOf("}");
+
+  label17:
+      $int = $int + 1;
+
+  label18:
+      $param0 = virtualinvoke $param0.substring($int_Method_indexOf, $int);
+      specialinvoke $JSONObject.<JSONObject: void <init>(String)>($param0);
+
+  label19:
+      <d: JSONObject b> = $JSONObject;
+
+  label20:
+      $JSONObject = <d: JSONObject b>;
+      return $JSONObject;
+
+  label21:
+      $StringBuilder_1 = new StringBuilder;
+
+  label22:
+      $param0 = staticinvoke <String: String valueOf(Object)>($param0);
+      specialinvoke $StringBuilder_1.<StringBuilder: void <init>(String)>($param0);
+      $StringBuilder_1 = virtualinvoke $StringBuilder_1.append("\n");
+      $param0 = virtualinvoke $StringBuilder_1.toString();
+      virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(String)>($param0);
+
+  label23:
+      goto label9;
+
+  label24:
+      $Exception := @caughtexception;
+      $StringBuilder = new StringBuilder;
+
+  label25:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Error converting result ");
+      $param0 = virtualinvoke $Exception.toString();
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
+
+  label26:
+      goto label13;
+
+  label27:
+      $UnsupportedEncodingException := @caughtexception;
+      virtualinvoke $UnsupportedEncodingException.printStackTrace();
+      goto label20;
+
+  label28:
+      $JSONException := @caughtexception;
+      $StringBuilder = new StringBuilder;
+
+  label29:
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("Error parsing data ");
+      $param0 = virtualinvoke $JSONException.toString();
+      $StringBuilder = virtualinvoke $StringBuilder.append($param0);
+      virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
+
+  label30:
+      goto label20;
+
+  label31:
+      $ClientProtocolException := @caughtexception;
+      virtualinvoke $ClientProtocolException.printStackTrace();
+      goto label20;
+
+  label32:
+      $IOException := @caughtexception;
+      virtualinvoke $IOException.printStackTrace();
+      goto label20;
+
+      catch UnsupportedEncodingException from label0 to label1 with label27;
+      catch UnsupportedEncodingException from label2 to label3 with label27;
+      catch UnsupportedEncodingException from label4 to label5 with label27;
+      catch ClientProtocolException from label0 to label1 with label31;
+      catch ClientProtocolException from label2 to label3 with label31;
+      catch ClientProtocolException from label4 to label5 with label31;
+      catch IOException from label0 to label1 with label32;
+      catch IOException from label2 to label3 with label32;
+      catch IOException from label4 to label5 with label32;
+      catch Exception from label6 to label7 with label24;
+      catch Exception from label8 to label10 with label24;
+      catch Exception from label11 to label12 with label24;
+      catch JSONException from label14 to label15 with label28;
+      catch JSONException from label16 to label17 with label28;
+      catch JSONException from label18 to label19 with label28;
+      catch UnsupportedEncodingException from label14 to label15 with label27;
+      catch UnsupportedEncodingException from label16 to label17 with label27;
+      catch UnsupportedEncodingException from label18 to label19 with label27;
+      catch ClientProtocolException from label14 to label15 with label31;
+      catch ClientProtocolException from label16 to label17 with label31;
+      catch ClientProtocolException from label18 to label19 with label31;
+      catch IOException from label14 to label15 with label32;
+      catch IOException from label16 to label17 with label32;
+      catch IOException from label18 to label19 with label32;
+      catch Exception from label22 to label23 with label24;
+      catch UnsupportedEncodingException from label25 to label26 with label27;
+      catch ClientProtocolException from label25 to label26 with label31;
+      catch IOException from label25 to label26 with label32;
+      catch UnsupportedEncodingException from label29 to label30 with label27;
+      catch ClientProtocolException from label29 to label30 with label31;
+      catch IOException from label29 to label30 with label32;
+  }
+
+  static void <clinit>()
+  {
+    JSONObject $JSONObject;
+    JSONArray $JSONArray;
+    
+      <d: InputStream a> = null;
+      <d: JSONObject b> = null;
+      <d: String c> = "";
+      $JSONObject = new JSONObject;
+      specialinvoke $JSONObject.<JSONObject: void <init>()>();
+      <d: JSONObject d> = $JSONObject;
+      $JSONObject = new JSONObject;
+      specialinvoke $JSONObject.<JSONObject: void <init>()>();
+      <d: JSONObject e> = $JSONObject;
+      $JSONArray = new JSONArray;
+      specialinvoke $JSONArray.<JSONArray: void <init>()>();
+      <d: JSONArray f> = $JSONArray;
+      $JSONArray = new JSONArray;
+      specialinvoke $JSONArray.<JSONArray: void <init>()>();
+      <d: JSONArray g> = $JSONArray;
+      $JSONArray = new JSONArray;
+      specialinvoke $JSONArray.<JSONArray: void <init>()>();
+      <d: JSONArray h> = $JSONArray;
+      <d: String i> = "cash_json";
+      <d: String j> = "cash_video_json";
+      <d: String k> = "cash_data_json";
+  }
+
+}
