@@ -476,10 +476,16 @@ public class com.mhuang.overclocking.cupcake extends Activity
   {
     String $String_Method_readInfo;
     int $int_Method_parseInt;
+    boolean $boolean;
     
       $String_Method_readInfo = virtualinvoke this.readInfo("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
+      $boolean = virtualinvoke $String_Method_readInfo.<String: boolean isEmpty()>();
+      if $boolean != 0 goto label1;
       $int_Method_parseInt = staticinvoke Integer.parseInt($String_Method_readInfo);
       return $int_Method_parseInt;
+  
+  label1:
+      return 0;
   }
 
   public int[] convertStringArray(String[] $param0)
