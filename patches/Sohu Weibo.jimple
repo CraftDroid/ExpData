@@ -1,0 +1,414 @@
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import com.sohu.t.api.utils.APNManager;
+import com.sohu.t.api.utils.APNManager$APN;
+import com.sohu.t.api.utils.APNMatchTools;
+import java.lang.Exception;
+import java.lang.Integer;
+import java.lang.Long;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.StringBuilder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import org.apache.http.HttpHost;
+@InnerClass(InnerClass="com/sohu/t/api/utils/APNManager$APN", OuterClass="com/sohu/t/api/utils/APNManager", Name="InnerClassTag", AccessFlags=9)
+@InnerClass(InnerClass="com/sohu/t/api/utils/APNManager$Carriers", OuterClass="com/sohu/t/api/utils/APNManager", Name="InnerClassTag", AccessFlags=25)
+
+public class com.sohu.t.api.utils.APNManager extends Object
+{
+  private Context context;
+
+  static final Uri PREFERRED_APN_URI;
+
+  static Uri uri;
+
+  private static final String APN = "apn";
+
+  private static final String CURRENT = "current";
+
+  private static final String ID = "_id";
+
+  private static final String NAME = "name";
+
+  private static final String PROXY = "proxy";
+
+  private static final String TYPE = "type";
+
+  private String[] projection;
+
+  @Signature(Value="()Ljava/util/List<Lcom/sohu/t/api/utils/APNManager$APN;>;")
+  public List getAPNList()
+  {
+    Context $Context_Field_context;
+    ContentResolver $ContentResolver_Method_getContentResolver;
+    Uri $Uri_Field_uri;
+    String[] $arrString_Field_projection;
+    Cursor $Cursor_Method_query;
+    ArrayList $ArrayList;
+    boolean $z0;
+    APNManager$APN $APNManager_APN;
+    int $int;
+    String $String;
+    
+      $Context_Field_context = this.<APNManager: Context context>;
+      $ContentResolver_Method_getContentResolver = virtualinvoke $Context_Field_context.getContentResolver();
+      $Uri_Field_uri = <APNManager: Uri uri>;
+      $arrString_Field_projection = this.<APNManager: String[] projection>;
+      $Cursor_Method_query = virtualinvoke $ContentResolver_Method_getContentResolver.<ContentResolver: Cursor query(Uri, String[], String, String[], String)>($Uri_Field_uri, $arrString_Field_projection, null, null, null);
+      $ArrayList = new ArrayList;
+      specialinvoke $ArrayList.<ArrayList: void <init>()>();
+
+  label0:
+      if $Cursor_Method_query == null goto label1;
+      $z0 = interfaceinvoke $Cursor_Method_query.moveToNext();
+      if $z0 != 0 goto label2;
+
+  label1:
+      if $Cursor_Method_query == null goto label3;
+      interfaceinvoke $Cursor_Method_query.close();
+      return $ArrayList;
+
+  label2:
+      $APNManager_APN = new APNManager$APN;
+      specialinvoke $APNManager_APN.<APNManager$APN: void <init>()>();
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("name");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String name> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("_id");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String id> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("apn");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String apn> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("type");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String type> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("mcc");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String mcc> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("mnc");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String mnc> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("current");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String current> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("proxy");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String proxy> = $String;
+      $int = interfaceinvoke $Cursor_Method_query.getColumnIndex("port");
+      $String = interfaceinvoke $Cursor_Method_query.getString($int);
+      $APNManager_APN.<APNManager$APN: String port> = $String;
+      $String = $APNManager_APN.<APNManager$APN: String current>;
+      if $String == null goto label0;
+      $String = $APNManager_APN.<APNManager$APN: String current>;
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>("1");
+      if $z0 == 0 goto label0;
+      interfaceinvoke $ArrayList.<List: boolean add(Object)>($APNManager_APN);
+      goto label0;
+
+  label3:
+      return $ArrayList;
+  }
+
+  @Signature(Value="()Ljava/util/Map<Ljava/lang/String;Ljava/lang/String;>;")
+  public Map getAPNName()
+  {
+    HashMap $HashMap;
+    List $List_Method_getAPNList;
+    Iterator $Iterator_Method_iterator;
+    boolean $z0;
+    Object $Object_Method_next;
+    APNManager$APN $APNManager_APN;
+    String $String_Field_id, $String_Field_name;
+    
+      $HashMap = new HashMap;
+      specialinvoke $HashMap.<HashMap: void <init>()>();
+      $List_Method_getAPNList = virtualinvoke this.getAPNList();
+      $Iterator_Method_iterator = interfaceinvoke $List_Method_getAPNList.iterator();
+
+  label0:
+      $z0 = interfaceinvoke $Iterator_Method_iterator.hasNext();
+      if $z0 != 0 goto label1;
+      return $HashMap;
+
+  label1:
+      $Object_Method_next = interfaceinvoke $Iterator_Method_iterator.next();
+      $APNManager_APN = (APNManager$APN) $Object_Method_next;
+      $String_Field_id = $APNManager_APN.<APNManager$APN: String id>;
+      $String_Field_name = $APNManager_APN.<APNManager$APN: String name>;
+      interfaceinvoke $HashMap.<Map: Object put(Object, Object)>($String_Field_id, $String_Field_name);
+      goto label0;
+  }
+
+  public long getCurrentApnInUse()
+  {
+    Context $Context_Field_context;
+    ContentResolver $ContentResolver_Method_getContentResolver;
+    Uri $Uri_Field_PREFERRED_APN_URI;
+    String[] $arrString;
+    Cursor $Cursor_Method_query;
+    boolean $z0;
+    long $long_Method_getLong, $long_Method_getLong_1;
+    StringBuilder $StringBuilder;
+    short $s2;
+    String $String;
+    
+      $Context_Field_context = this.<APNManager: Context context>;
+      $ContentResolver_Method_getContentResolver = virtualinvoke $Context_Field_context.getContentResolver();
+      $Uri_Field_PREFERRED_APN_URI = <APNManager: Uri PREFERRED_APN_URI>;
+      $arrString = { "_id", "name", "apn", "type", "current", "proxy" };
+      $Cursor_Method_query = virtualinvoke $ContentResolver_Method_getContentResolver.<ContentResolver: Cursor query(Uri, String[], String, String[], String)>($Uri_Field_PREFERRED_APN_URI, $arrString, null, null, null);
+      interfaceinvoke $Cursor_Method_query.<Cursor: boolean moveToFirst()>();
+      $z0 = interfaceinvoke $Cursor_Method_query.isAfterLast();
+      if $z0 == 0 goto label0;
+      return -1L;
+
+  label0:
+      $long_Method_getLong = interfaceinvoke $Cursor_Method_query.getLong(0);
+      $StringBuilder = new StringBuilder;
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>("id=");
+      $long_Method_getLong_1 = interfaceinvoke $Cursor_Method_query.getLong(0);
+      $StringBuilder = virtualinvoke $StringBuilder.append($long_Method_getLong_1);
+      $StringBuilder = virtualinvoke $StringBuilder.append(",name=");
+      $s2 = interfaceinvoke $Cursor_Method_query.getShort(1);
+      $StringBuilder = virtualinvoke $StringBuilder.<StringBuilder: StringBuilder append(int)>($s2);
+      $StringBuilder = virtualinvoke $StringBuilder.append(",apn=");
+      $String = interfaceinvoke $Cursor_Method_query.getString(2);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append(",type=");
+      $String = interfaceinvoke $Cursor_Method_query.getString(3);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append(",current=");
+      $String = interfaceinvoke $Cursor_Method_query.getString(4);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append(",proxy=");
+      $String = interfaceinvoke $Cursor_Method_query.getString(5);
+      $StringBuilder = virtualinvoke $StringBuilder.append($String);
+      virtualinvoke $StringBuilder.<StringBuilder: String toString()>();
+      return $long_Method_getLong;
+  }
+
+  public HttpHost getProxy()
+  {
+    long $long_Method_getCurrentApnInUse;
+    List $List_Method_getAPNList;
+    Iterator $Iterator_Method_iterator;
+    boolean $z0, $z1;
+    Object $Object_Method_next;
+    APNManager$APN $APNManager_APN;
+    String $String, $String_1;
+    int $int;
+    HttpHost $HttpHost;
+    Integer $Integer_Method_valueOf;
+    
+      $long_Method_getCurrentApnInUse = virtualinvoke this.getCurrentApnInUse();
+      $List_Method_getAPNList = virtualinvoke this.getAPNList();
+      $Iterator_Method_iterator = interfaceinvoke $List_Method_getAPNList.iterator();
+
+  label0:
+      $z0 = interfaceinvoke $Iterator_Method_iterator.hasNext();
+      if $z0 != 0 goto label1;
+      return null;
+
+  label1:
+      $Object_Method_next = interfaceinvoke $Iterator_Method_iterator.next();
+      $APNManager_APN = (APNManager$APN) $Object_Method_next;
+      $String = staticinvoke String.valueOf($long_Method_getCurrentApnInUse);
+      $String_1 = $APNManager_APN.<APNManager$APN: String id>;
+      $z0 = virtualinvoke $String.<String: boolean equals(Object)>($String_1);
+      if $z0 == 0 goto label0;
+      $String = $APNManager_APN.<APNManager$APN: String proxy>;
+      if $String == null goto label6;
+      $String = $APNManager_APN.<APNManager$APN: String proxy>;
+      $String = virtualinvoke $String.trim();
+      $int = virtualinvoke $String.length();
+      if $int <= 0 goto label6;
+      $String = $APNManager_APN.<APNManager$APN: String port>;
+      if $String == null goto label4;
+      $z0 = true;
+
+  label2:
+      $String = $APNManager_APN.<APNManager$APN: String port>;
+      $String = virtualinvoke $String.trim();
+      $int = virtualinvoke $String.length();
+      if $int <= 0 goto label5;
+      $z1 = true;
+
+  label3:
+      $z0 = $z0 & $z1;
+      if $z0 == 0 goto label6;
+      $HttpHost = new HttpHost;
+      $String = $APNManager_APN.<APNManager$APN: String proxy>;
+      $String_1 = $APNManager_APN.<APNManager$APN: String port>;
+      $Integer_Method_valueOf = staticinvoke Integer.valueOf($String_1);
+      $int = virtualinvoke $Integer_Method_valueOf.intValue();
+      specialinvoke $HttpHost.<HttpHost: void <init>(String, int)>($String, $int);
+      return $HttpHost;
+
+  label4:
+      $z0 = false;
+      goto label2;
+
+  label5:
+      $z1 = false;
+      goto label3;
+
+  label6:
+      return null;
+  }
+
+  static void <clinit>()
+  {
+    Uri $Uri;
+    
+      $Uri = staticinvoke Uri.parse("content://telephony/carriers");
+      <APNManager: Uri uri> = $Uri;
+      $Uri = staticinvoke Uri.parse("content://telephony/carriers/preferapn");
+      <APNManager: Uri PREFERRED_APN_URI> = $Uri;
+  }
+
+  public void <init>(Context $param0)
+  {
+    String[] $arrString;
+    
+      specialinvoke this.<Object: void <init>()>();
+      $arrString = { "name,_id,apn,type,mcc,mnc,current,proxy,port" };
+      this.<APNManager: String[] projection> = $arrString;
+      this.<APNManager: Context context> = $param0;
+  }
+
+  public void closeAPN()
+  {
+    List $List_Method_getAPNList;
+    Iterator $Iterator_Method_iterator;
+    boolean $z0;
+    Object $Object_Method_next;
+    APNManager$APN $APNManager_APN;
+    ContentValues $ContentValues;
+    StringBuilder $StringBuilder;
+    String $String;
+    Context $Context_Field_context;
+    ContentResolver $ContentResolver_Method_getContentResolver;
+    Uri $Uri_Field_uri;
+    String[] $arrString;
+    
+      $List_Method_getAPNList = virtualinvoke this.getAPNList();
+      $Iterator_Method_iterator = interfaceinvoke $List_Method_getAPNList.iterator();
+
+  label0:
+      $z0 = interfaceinvoke $Iterator_Method_iterator.hasNext();
+      if $z0 != 0 goto label1;
+      return;
+
+  label1:
+      $Object_Method_next = interfaceinvoke $Iterator_Method_iterator.next();
+      $APNManager_APN = (APNManager$APN) $Object_Method_next;
+      $ContentValues = new ContentValues;
+      specialinvoke $ContentValues.<ContentValues: void <init>()>();
+      $StringBuilder = new StringBuilder;
+      $String = $APNManager_APN.<APNManager$APN: String apn>;
+      $String = staticinvoke APNMatchTools.matchAPN($String);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("sohunews");
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $ContentValues.put("apn", $String);
+      $StringBuilder = new StringBuilder;
+      $String = $APNManager_APN.<APNManager$APN: String type>;
+      $String = staticinvoke APNMatchTools.matchAPN($String);
+      $String = staticinvoke <String: String valueOf(Object)>($String);
+      specialinvoke $StringBuilder.<StringBuilder: void <init>(String)>($String);
+      $StringBuilder = virtualinvoke $StringBuilder.append("sohunews");
+      $String = virtualinvoke $StringBuilder.toString();
+      virtualinvoke $ContentValues.put("type", $String);
+      $Context_Field_context = this.<APNManager: Context context>;
+      $ContentResolver_Method_getContentResolver = virtualinvoke $Context_Field_context.getContentResolver();
+      $Uri_Field_uri = <APNManager: Uri uri>;
+      $arrString = newarray (String)[1];
+      $String = $APNManager_APN.<APNManager$APN: String id>;
+      $arrString[0] = $String;
+      virtualinvoke $ContentResolver_Method_getContentResolver.<ContentResolver: int update(Uri, ContentValues, String, String[])>($Uri_Field_uri, $ContentValues, "_id=?", $arrString);
+      goto label0;
+  }
+
+  public void openAPN()
+  {
+    List $List_Method_getAPNList;
+    Iterator $Iterator_Method_iterator;
+    boolean $z0;
+    Object $Object_Method_next;
+    APNManager$APN $APNManager_APN;
+    ContentValues $ContentValues;
+    String $String;
+    Context $Context_Field_context;
+    ContentResolver $ContentResolver_Method_getContentResolver;
+    Uri $Uri_Field_uri;
+    String[] $arrString;
+    
+      $List_Method_getAPNList = virtualinvoke this.getAPNList();
+      $Iterator_Method_iterator = interfaceinvoke $List_Method_getAPNList.iterator();
+
+  label0:
+      $z0 = interfaceinvoke $Iterator_Method_iterator.hasNext();
+      if $z0 != 0 goto label1;
+      return;
+
+  label1:
+      $Object_Method_next = interfaceinvoke $Iterator_Method_iterator.next();
+      $APNManager_APN = (APNManager$APN) $Object_Method_next;
+      $ContentValues = new ContentValues;
+      specialinvoke $ContentValues.<ContentValues: void <init>()>();
+      $String = $APNManager_APN.<APNManager$APN: String apn>;
+      $String = staticinvoke APNMatchTools.matchAPN($String);
+      virtualinvoke $ContentValues.put("apn", $String);
+      $String = $APNManager_APN.<APNManager$APN: String type>;
+      $String = staticinvoke APNMatchTools.matchAPN($String);
+      virtualinvoke $ContentValues.put("type", $String);
+      $Context_Field_context = this.<APNManager: Context context>;
+      $ContentResolver_Method_getContentResolver = virtualinvoke $Context_Field_context.getContentResolver();
+      $Uri_Field_uri = <APNManager: Uri uri>;
+      $arrString = newarray (String)[1];
+      $String = $APNManager_APN.<APNManager$APN: String id>;
+      $arrString[0] = $String;
+      virtualinvoke $ContentResolver_Method_getContentResolver.<ContentResolver: int update(Uri, ContentValues, String, String[])>($Uri_Field_uri, $ContentValues, "_id=?", $arrString);
+      goto label0;
+  }
+
+  public void setCurrentApnInUse(long $param0)
+  {
+    Context $Context_Field_context;
+    ContentResolver $ContentResolver_Method_getContentResolver;
+    ContentValues $ContentValues;
+    Long $Long_Method_valueOf;
+    Uri $Uri_Field_PREFERRED_APN_URI;
+    Exception $Exception;
+    
+      $Context_Field_context = this.<APNManager: Context context>;
+      $ContentResolver_Method_getContentResolver = virtualinvoke $Context_Field_context.getContentResolver();
+      $ContentValues = new ContentValues;
+      specialinvoke $ContentValues.<ContentValues: void <init>()>();
+      $Long_Method_valueOf = staticinvoke Long.valueOf($param0);
+      virtualinvoke $ContentValues.put("apn_id", $Long_Method_valueOf);
+      $Uri_Field_PREFERRED_APN_URI = <APNManager: Uri PREFERRED_APN_URI>;
+
+  label0:
+      virtualinvoke $ContentResolver_Method_getContentResolver.<ContentResolver: int update(Uri, ContentValues, String, String[])>($Uri_Field_PREFERRED_APN_URI, $ContentValues, null, null);
+
+  label1:
+      return;
+
+  label2:
+      $Exception := @caughtexception;
+      virtualinvoke $Exception.printStackTrace();
+
+      catch Exception from label0 to label1 with label2;
+  }
+
+}
