@@ -1,0 +1,35 @@
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
+import com.blogspot.MyAndroidApps4u.uk_lotto.Mark6;
+import com.blogspot.MyAndroidApps4u.uk_lotto.Mark6$2;
+import java.lang.Object;
+import java.lang.String;
+
+@InnerClass(InnerClass="com/blogspot/MyAndroidApps4u/uk_lotto/Mark6$2", OuterClass="com/blogspot/MyAndroidApps4u/uk_lotto/Mark6", Name="InnerClassTag", AccessFlags=0)
+class com.blogspot.MyAndroidApps4u.uk_lotto.Mark6$2 extends Object implements android.view.View$OnClickListener
+{
+  final synthetic Mark6 this$0;
+
+  void <init>(Mark6 $param0)
+  {
+    
+      this.<Mark6$2: Mark6 this$0> = $param0;
+      specialinvoke this.<Object: void <init>()>();
+  }
+
+  @Override
+  public void onClick(View $param0)
+  {
+    Mark6 $Mark6_Field_this$0;
+    Intent $Intent;
+    Uri $Uri_Method_parse;
+    
+      $Mark6_Field_this$0 = this.<Mark6$2: Mark6 this$0>;
+      $Intent = new Intent;
+      $Uri_Method_parse = staticinvoke Uri.parse("market://details?id=com.blogspot.myandroidapps4u.mark6");
+      specialinvoke $Intent.<Intent: void <init>(String, Uri)>("android.intent.action.VIEW", $Uri_Method_parse);
+      virtualinvoke $Mark6_Field_this$0.startActivity($Intent);
+  }
+
+}
