@@ -1,0 +1,597 @@
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog$Builder;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface$OnClickListener;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.hardware.Camera$Parameters;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Vibrator;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder$Callback;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.View$OnClickListener;
+import android.view.Window;
+import android.view.WindowManager$LayoutParams;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar$OnSeekBarChangeListener;
+import com.magdalm.flashlightledenergyball.MainActivity;
+import com.magdalm.flashlightledenergyball.MainActivity$1;
+import com.magdalm.flashlightledenergyball.MainActivity$2;
+import com.magdalm.flashlightledenergyball.MainActivity$3;
+import com.magdalm.flashlightledenergyball.MainActivity$4;
+import com.magdalm.flashlightledenergyball.MainActivity$5;
+import com.magdalm.flashlightledenergyball.MainActivity$a;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.String;
+import java.lang.Void;
+import java.util.List;
+@InnerClass(InnerClass="com/magdalm/flashlightledenergyball/MainActivity$1", OuterClass="com/magdalm/flashlightledenergyball/MainActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/magdalm/flashlightledenergyball/MainActivity$2", OuterClass="com/magdalm/flashlightledenergyball/MainActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/magdalm/flashlightledenergyball/MainActivity$3", OuterClass="com/magdalm/flashlightledenergyball/MainActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/magdalm/flashlightledenergyball/MainActivity$4", OuterClass="com/magdalm/flashlightledenergyball/MainActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/magdalm/flashlightledenergyball/MainActivity$5", OuterClass="com/magdalm/flashlightledenergyball/MainActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="com/magdalm/flashlightledenergyball/MainActivity$a", OuterClass="com/magdalm/flashlightledenergyball/MainActivity", Name="InnerClassTag", AccessFlags=2)
+
+public class com.magdalm.flashlightledenergyball.MainActivity extends Activity
+{
+  private a a;
+
+  private Camera g;
+
+  private Camera$Parameters e;
+
+  private AudioManager m;
+
+  private MediaPlayer c;
+
+  private Vibrator l;
+
+  private SurfaceView f;
+
+  private SeekBar k;
+
+  private boolean h;
+
+  private boolean j;
+
+  private MainActivity$a b;
+
+  private String i;
+
+  private long d;
+
+  static a a(MainActivity $param0)
+  {
+    a r1;
+    
+      r1 = $param0.<MainActivity: a a>;
+      return r1;
+  }
+
+  static Camera b(MainActivity $param0)
+  {
+    Camera r1;
+    
+      r1 = $param0.<MainActivity: Camera g>;
+      return r1;
+  }
+
+  static Vibrator i(MainActivity $param0)
+  {
+    Vibrator r1;
+    
+      r1 = $param0.<MainActivity: Vibrator l>;
+      return r1;
+  }
+
+  static SeekBar g(MainActivity $param0)
+  {
+    SeekBar r1;
+    
+      r1 = $param0.<MainActivity: SeekBar k>;
+      return r1;
+  }
+
+  static boolean a(MainActivity $param0, boolean $param1)
+  {
+    
+      $param0.<MainActivity: boolean j> = $param1;
+      return $param1;
+  }
+
+  static boolean c(MainActivity $param0)
+  {
+    boolean z0;
+    
+      z0 = $param0.<MainActivity: boolean j>;
+      return z0;
+  }
+
+  static MainActivity$a d(MainActivity $param0)
+  {
+    MainActivity$a r1;
+    
+      r1 = $param0.<MainActivity: MainActivity$a b>;
+      return r1;
+  }
+
+  static long a(MainActivity $param0, int $param1)
+  {
+    long l1;
+    
+      lookupswitch ($param1) {
+      case 10: goto label1;
+      case 20: goto label2;
+      case 30: goto label3;
+      case 40: goto label4;
+      case 50: goto label5;
+      case 60: goto label6;
+      case 70: goto label7;
+      case 80: goto label8;
+      case 90: goto label9;
+      case 100: goto label10;
+      default: goto label0;
+      };
+
+  label0:
+      l1 = $param0.<MainActivity: long d>;
+      return l1;
+
+  label1:
+      return 900L;
+
+  label2:
+      return 800L;
+
+  label3:
+      return 700L;
+
+  label4:
+      return 600L;
+
+  label5:
+      return 500L;
+
+  label6:
+      return 400L;
+
+  label7:
+      return 300L;
+
+  label8:
+      return 200L;
+
+  label9:
+      return 100L;
+
+  label10:
+      return 50L;
+  }
+
+  static long a(MainActivity $param0, long $param1)
+  {
+    
+      $param0.<MainActivity: long d> = $param1;
+      return $param1;
+  }
+
+  static long j(MainActivity $param0)
+  {
+    long l0;
+    
+      l0 = $param0.<MainActivity: long d>;
+      return l0;
+  }
+
+  public void <init>()
+  {
+    
+      specialinvoke this.<Activity: void <init>()>();
+      this.<MainActivity: a a> = null;
+      this.<MainActivity: MainActivity$a b> = null;
+      this.<MainActivity: MediaPlayer c> = null;
+      this.<MainActivity: long d> = 0L;
+      this.<MainActivity: Camera$Parameters e> = null;
+      this.<MainActivity: SurfaceView f> = null;
+      this.<MainActivity: Camera g> = null;
+      this.<MainActivity: boolean h> = false;
+      this.<MainActivity: String i> = "";
+      this.<MainActivity: boolean j> = false;
+      this.<MainActivity: SeekBar k> = null;
+      this.<MainActivity: Vibrator l> = null;
+      this.<MainActivity: AudioManager m> = null;
+  }
+
+  public final void a()
+  {
+    Camera $Camera;
+    boolean $z0;
+    Camera$Parameters $Camera_Parameters;
+    String $String_Field_i;
+    
+      $Camera = this.<MainActivity: Camera g>;
+      if $Camera == null goto label0;
+      $z0 = this.<MainActivity: boolean h>;
+      if $z0 != 0 goto label0;
+      $Camera = this.<MainActivity: Camera g>;
+      $Camera_Parameters = virtualinvoke $Camera.getParameters();
+      this.<MainActivity: Camera$Parameters e> = $Camera_Parameters;
+      $Camera_Parameters = this.<MainActivity: Camera$Parameters e>;
+      $String_Field_i = this.<MainActivity: String i>;
+      virtualinvoke $Camera_Parameters.setFlashMode($String_Field_i);
+      $Camera = this.<MainActivity: Camera g>;
+      $Camera_Parameters = this.<MainActivity: Camera$Parameters e>;
+      virtualinvoke $Camera.setParameters($Camera_Parameters);
+      this.<MainActivity: boolean h> = true;
+
+  label0:
+      return;
+  }
+
+  public final void b()
+  {
+    Camera $Camera;
+    boolean $z0;
+    Camera$Parameters $Camera_Parameters;
+    
+      $Camera = this.<MainActivity: Camera g>;
+      if $Camera == null goto label0;
+      $z0 = this.<MainActivity: boolean h>;
+      if $z0 == 0 goto label0;
+      $Camera = this.<MainActivity: Camera g>;
+      $Camera_Parameters = virtualinvoke $Camera.getParameters();
+      this.<MainActivity: Camera$Parameters e> = $Camera_Parameters;
+      $Camera_Parameters = this.<MainActivity: Camera$Parameters e>;
+      virtualinvoke $Camera_Parameters.setFlashMode("off");
+      $Camera = this.<MainActivity: Camera g>;
+      $Camera_Parameters = this.<MainActivity: Camera$Parameters e>;
+      virtualinvoke $Camera.setParameters($Camera_Parameters);
+      this.<MainActivity: boolean h> = false;
+
+  label0:
+      return;
+  }
+
+  static void b(MainActivity $param0, int $param1)
+  {
+    Window $Window;
+    WindowManager$LayoutParams $WindowManager_LayoutParams_Method_getAttributes;
+    float $f0;
+    SeekBar $SeekBar_Field_k;
+    
+      $Window = virtualinvoke $param0.getWindow();
+      $WindowManager_LayoutParams_Method_getAttributes = virtualinvoke $Window.getAttributes();
+      $f0 = (float) $param1;
+      $f0 = $f0 / 100.0F;
+      $WindowManager_LayoutParams_Method_getAttributes.<WindowManager$LayoutParams: float screenBrightness> = $f0;
+      $Window = virtualinvoke $param0.getWindow();
+      virtualinvoke $Window.setAttributes($WindowManager_LayoutParams_Method_getAttributes);
+      $SeekBar_Field_k = $param0.<MainActivity: SeekBar k>;
+      virtualinvoke $SeekBar_Field_k.setProgress($param1);
+  }
+
+  private void c()
+  {
+    c $c;
+    Context $Context_Method_getApplicationContext;
+    boolean $z0;
+    b $b;
+    FragmentManager $FragmentManager_Method_getFragmentManager;
+    
+      $c = new c;
+      $Context_Method_getApplicationContext = virtualinvoke this.getApplicationContext();
+      specialinvoke $c.<c: void <init>(Context)>($Context_Method_getApplicationContext);
+      $z0 = virtualinvoke $c.a();
+      if $z0 != 0 goto label0;
+      $b = new b;
+      specialinvoke $b.<b: void <init>()>();
+      $FragmentManager_Method_getFragmentManager = virtualinvoke this.getFragmentManager();
+      virtualinvoke $b.show($FragmentManager_Method_getFragmentManager, "");
+
+  label0:
+      return;
+  }
+
+  private void d()
+  {
+    MainActivity$a $MainActivity_a;
+    
+      $MainActivity_a = this.<MainActivity: MainActivity$a b>;
+      if $MainActivity_a == null goto label0;
+      $MainActivity_a = this.<MainActivity: MainActivity$a b>;
+      virtualinvoke $MainActivity_a.<MainActivity$a: boolean cancel(boolean)>(true);
+      this.<MainActivity: MainActivity$a b> = null;
+
+  label0:
+      return;
+  }
+
+  static void e(MainActivity $param0)
+  {
+    MainActivity$a $MainActivity_a;
+    Void[] $arrVoid;
+    
+      $MainActivity_a = $param0.<MainActivity: MainActivity$a b>;
+      if $MainActivity_a != null goto label0;
+      $MainActivity_a = new MainActivity$a;
+      specialinvoke $MainActivity_a.<MainActivity$a: void <init>(MainActivity, byte)>($param0, 0);
+      $param0.<MainActivity: MainActivity$a b> = $MainActivity_a;
+      $MainActivity_a = $param0.<MainActivity: MainActivity$a b>;
+      $arrVoid = {  };
+      virtualinvoke $MainActivity_a.<MainActivity$a: AsyncTask execute(Object[])>($arrVoid);
+
+  label0:
+      return;
+  }
+
+  static void f(MainActivity $param0)
+  {
+    
+      specialinvoke $param0.d();
+  }
+
+  static void h(MainActivity $param0)
+  {
+    MediaPlayer $MediaPlayer;
+    Context $Context_Method_getApplicationContext;
+    AudioManager $AudioManager_Field_m;
+    int $int_Method_getStreamVolume;
+    float $f0;
+    
+      $MediaPlayer = $param0.<MainActivity: MediaPlayer c>;
+      if $MediaPlayer == null goto label0;
+      $MediaPlayer = $param0.<MainActivity: MediaPlayer c>;
+      virtualinvoke $MediaPlayer.release();
+      $param0.<MainActivity: MediaPlayer c> = null;
+
+  label0:
+      $MediaPlayer = $param0.<MainActivity: MediaPlayer c>;
+      if $MediaPlayer != null goto label1;
+      $Context_Method_getApplicationContext = virtualinvoke $param0.getApplicationContext();
+      $MediaPlayer = staticinvoke MediaPlayer.create($Context_Method_getApplicationContext, 2131099648);
+      $param0.<MainActivity: MediaPlayer c> = $MediaPlayer;
+      $MediaPlayer = $param0.<MainActivity: MediaPlayer c>;
+      $AudioManager_Field_m = $param0.<MainActivity: AudioManager m>;
+      $int_Method_getStreamVolume = virtualinvoke $AudioManager_Field_m.getStreamVolume(3);
+      $f0 = (float) $int_Method_getStreamVolume;
+      virtualinvoke $MediaPlayer.setVolume(3.0F, $f0);
+      $MediaPlayer = $param0.<MainActivity: MediaPlayer c>;
+      virtualinvoke $MediaPlayer.start();
+
+  label1:
+      return;
+  }
+
+  @Override
+  public void onBackPressed()
+  {
+    boolean $z0;
+    Camera $Camera;
+    a $a_Field_a;
+    
+      $z0 = this.<MainActivity: boolean h>;
+      if $z0 == 0 goto label0;
+      virtualinvoke this.b();
+
+  label0:
+      $Camera = this.<MainActivity: Camera g>;
+      if $Camera == null goto label1;
+      specialinvoke this.d();
+      $Camera = this.<MainActivity: Camera g>;
+      virtualinvoke $Camera.release();
+      this.<MainActivity: Camera g> = null;
+
+  label1:
+      specialinvoke this.c();
+      $a_Field_a = this.<MainActivity: a a>;
+      virtualinvoke $a_Field_a.a();
+  }
+
+  @Override
+  protected void onCreate(Bundle $param0)
+  {
+    a $a;
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      $a = new a;
+      specialinvoke $a.<a: void <init>(Activity)>(this);
+      this.<MainActivity: a a> = $a;
+      specialinvoke this.c();
+      virtualinvoke this.setContentView(2130903064);
+      virtualinvoke this.setVolumeControlStream(3);
+  }
+
+  @Override
+  public void onStart()
+  {
+    View $View;
+    LinearLayout $LinearLayout;
+    MainActivity$1 $MainActivity_1;
+    PackageManager $PackageManager_Method_getPackageManager;
+    boolean $z0;
+    Object $Object;
+    Vibrator $Vibrator;
+    SeekBar $SeekBar;
+    AudioManager $AudioManager;
+    SurfaceView $SurfaceView;
+    Camera $Camera;
+    Camera$Parameters $Camera_Parameters;
+    SurfaceHolder $SurfaceHolder_Method_getHolder;
+    MainActivity$2 $MainActivity_2;
+    List $List_Method_getSupportedFlashModes;
+    MainActivity$3 $MainActivity_3;
+    ImageView $ImageView;
+    MainActivity$5 $MainActivity_5;
+    com.google.analytics.tracking.android.l $l_Method_a;
+    AlertDialog$Builder $AlertDialog_Builder;
+    Context $Context_Method_getApplicationContext;
+    MainActivity$4 $MainActivity_4;
+    Exception $Exception;
+    
+      specialinvoke this.<Activity: void onStart()>();
+      $View = virtualinvoke this.findViewById(2131296316);
+      $LinearLayout = (LinearLayout) $View;
+      $MainActivity_1 = new MainActivity$1;
+      specialinvoke $MainActivity_1.<MainActivity$1: void <init>(MainActivity)>(this);
+      virtualinvoke $LinearLayout.<LinearLayout: void setOnClickListener(View$OnClickListener)>($MainActivity_1);
+      $PackageManager_Method_getPackageManager = virtualinvoke this.getPackageManager();
+      $z0 = virtualinvoke $PackageManager_Method_getPackageManager.hasSystemFeature("android.hardware.camera.flash");
+      if $z0 == 0 goto label11;
+      $z0 = true;
+
+  label0:
+      if $z0 == 0 goto label10;
+      $Object = virtualinvoke this.getSystemService("vibrator");
+      $Vibrator = (Vibrator) $Object;
+      this.<MainActivity: Vibrator l> = $Vibrator;
+      $View = virtualinvoke this.findViewById(2131296319);
+      $SeekBar = (SeekBar) $View;
+      this.<MainActivity: SeekBar k> = $SeekBar;
+      $Object = virtualinvoke this.getSystemService("audio");
+      $AudioManager = (AudioManager) $Object;
+      this.<MainActivity: AudioManager m> = $AudioManager;
+      $View = virtualinvoke this.findViewById(2131296317);
+      $SurfaceView = (SurfaceView) $View;
+      this.<MainActivity: SurfaceView f> = $SurfaceView;
+
+  label1:
+      $Camera = this.<MainActivity: Camera g>;
+
+  label2:
+      if $Camera != null goto label9;
+
+  label3:
+      $Camera = staticinvoke Camera.open();
+      this.<MainActivity: Camera g> = $Camera;
+      $Camera = this.<MainActivity: Camera g>;
+      $Camera_Parameters = virtualinvoke $Camera.getParameters();
+      this.<MainActivity: Camera$Parameters e> = $Camera_Parameters;
+      $SurfaceView = this.<MainActivity: SurfaceView f>;
+      $SurfaceHolder_Method_getHolder = virtualinvoke $SurfaceView.getHolder();
+
+  label4:
+      $MainActivity_2 = new MainActivity$2;
+
+  label5:
+      specialinvoke $MainActivity_2.<MainActivity$2: void <init>(MainActivity)>(this);
+      interfaceinvoke $SurfaceHolder_Method_getHolder.<SurfaceHolder: void addCallback(SurfaceHolder$Callback)>($MainActivity_2);
+      $Camera_Parameters = this.<MainActivity: Camera$Parameters e>;
+      $List_Method_getSupportedFlashModes = virtualinvoke $Camera_Parameters.getSupportedFlashModes();
+      $z0 = interfaceinvoke $List_Method_getSupportedFlashModes.<List: boolean contains(Object)>("torch");
+
+  label6:
+      if $z0 == 0 goto label12;
+
+  label7:
+      this.<MainActivity: String i> = "torch";
+
+  label8:
+      $Camera = this.<MainActivity: Camera g>;
+      virtualinvoke $Camera.startPreview();
+
+  label9:
+      $SeekBar = this.<MainActivity: SeekBar k>;
+      $MainActivity_3 = new MainActivity$3;
+      specialinvoke $MainActivity_3.<MainActivity$3: void <init>(MainActivity)>(this);
+      virtualinvoke $SeekBar.<SeekBar: void setOnSeekBarChangeListener(SeekBar$OnSeekBarChangeListener)>($MainActivity_3);
+      $View = virtualinvoke this.findViewById(2131296318);
+      $ImageView = (ImageView) $View;
+      $MainActivity_5 = new MainActivity$5;
+      specialinvoke $MainActivity_5.<MainActivity$5: void <init>(MainActivity)>(this);
+      virtualinvoke $ImageView.<ImageView: void setOnClickListener(View$OnClickListener)>($MainActivity_5);
+
+  label10:
+      $l_Method_a = staticinvoke <com.google.analytics.tracking.android.l: com.google.analytics.tracking.android.l a(Context)>(this);
+      virtualinvoke $l_Method_a.<com.google.analytics.tracking.android.l: void a(Activity)>(this);
+      return;
+
+  label11:
+      $AlertDialog_Builder = new AlertDialog$Builder;
+      $Context_Method_getApplicationContext = virtualinvoke this.getApplicationContext();
+      specialinvoke $AlertDialog_Builder.<AlertDialog$Builder: void <init>(Context)>($Context_Method_getApplicationContext);
+      $AlertDialog_Builder = virtualinvoke $AlertDialog_Builder.setTitle(2131492887);
+      $AlertDialog_Builder = virtualinvoke $AlertDialog_Builder.setIcon(17301569);
+      $AlertDialog_Builder = virtualinvoke $AlertDialog_Builder.setMessage(2131492882);
+      $MainActivity_4 = new MainActivity$4;
+      specialinvoke $MainActivity_4.<MainActivity$4: void <init>(MainActivity)>(this);
+      $AlertDialog_Builder = virtualinvoke $AlertDialog_Builder.<AlertDialog$Builder: AlertDialog$Builder setPositiveButton(int, DialogInterface$OnClickListener)>(2131492895, $MainActivity_4);
+      virtualinvoke $AlertDialog_Builder.<AlertDialog$Builder: AlertDialog show()>();
+      $z0 = false;
+      goto label0;
+
+  label12:
+      $z0 = interfaceinvoke $List_Method_getSupportedFlashModes.<List: boolean contains(Object)>("on");
+
+  label13:
+      if $z0 == 0 goto label17;
+
+  label14:
+      this.<MainActivity: String i> = "on";
+
+  label15:
+      goto label8;
+
+  label16:
+      $Exception := @caughtexception;
+      virtualinvoke $Exception.printStackTrace();
+      goto label9;
+
+  label17:
+      $z0 = interfaceinvoke $List_Method_getSupportedFlashModes.<List: boolean contains(Object)>("auto");
+
+  label18:
+      if $z0 == 0 goto label21;
+
+  label19:
+      this.<MainActivity: String i> = "auto";
+
+  label20:
+      goto label8;
+
+  label21:
+      this.<MainActivity: String i> = "off";
+
+  label22:
+      goto label8;
+
+      catch Exception from label1 to label2 with label16;
+      catch Exception from label3 to label4 with label16;
+      catch Exception from label5 to label6 with label16;
+      catch Exception from label7 to label9 with label16;
+      catch Exception from label12 to label13 with label16;
+      catch Exception from label14 to label15 with label16;
+      catch Exception from label17 to label18 with label16;
+      catch Exception from label19 to label20 with label16;
+      catch Exception from label21 to label22 with label16;
+  }
+
+  @Override
+  public void onStop()
+  {
+    boolean $z0;
+    com.google.analytics.tracking.android.l $l_Method_a;
+    
+      specialinvoke this.<Activity: void onStop()>();
+      $z0 = this.<MainActivity: boolean h>;
+      if $z0 == 0 goto label0;
+      virtualinvoke this.b();
+      $z0 = this.<MainActivity: boolean h>;
+      if $z0 != 0 goto label0;
+      virtualinvoke this.a();
+
+  label0:
+      $l_Method_a = staticinvoke <com.google.analytics.tracking.android.l: com.google.analytics.tracking.android.l a(Context)>(this);
+      virtualinvoke $l_Method_a.a();
+  }
+
+}
