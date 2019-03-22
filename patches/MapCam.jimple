@@ -434,6 +434,7 @@ public class eu.bischofs.mapcam.MapCamActivity extends eu.bischofs.android.commo
       $Intent = new Intent;
       specialinvoke $Intent.<Intent: void <init>(String)>("com.android.vending.billing.InAppBillingService.BIND");
       $ServiceConnection_Field_p = this.<MapCamActivity: ServiceConnection p>;
+      virtualinvoke $Intent.<Intent: Intent setPackage(String)>("com.android.vending");
       virtualinvoke this.<MapCamActivity: boolean bindService(Intent, ServiceConnection, int)>($Intent, $ServiceConnection_Field_p, 1);
   }
 
