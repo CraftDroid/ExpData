@@ -561,9 +561,14 @@ public final class com.wordpress.shroid.iraqta7sheh.k.d extends Object
 
   label17:
       $int = $int + 1;
+      if $int_Method_indexOf == -1 goto label40;
+      if $int == -1 goto label40;
 
   label18:
       $param0 = virtualinvoke $param0.substring($int_Method_indexOf, $int);
+      
+  label40:
+      $param0 = "";
       specialinvoke $JSONObject.<JSONObject: void <init>(String)>($param0);
 
   label19:
