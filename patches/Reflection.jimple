@@ -1,0 +1,210 @@
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface$OnClickListener;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View$OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import com.androld.xhes.xha;
+import com.cosske.miss.Qasd;
+import com.tocy.in.Qtyc;
+import gwj.void1898.www.mixedcolor.MixedColorMenuActivity;
+import gwj.void1898.www.mixedcolor.MixedColorMenuActivity$1;
+import gwj.void1898.www.mixedcolor.MixedColorMenuActivity$2;
+import gwj.void1898.www.mixedcolor.MixedColorMenuActivity$3;
+import java.lang.Class;
+import java.lang.String;
+@InnerClass(InnerClass="gwj/void1898/www/mixedcolor/MixedColorMenuActivity$1", OuterClass="gwj/void1898/www/mixedcolor/MixedColorMenuActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="gwj/void1898/www/mixedcolor/MixedColorMenuActivity$2", OuterClass="gwj/void1898/www/mixedcolor/MixedColorMenuActivity", Name="InnerClassTag", AccessFlags=0)
+@InnerClass(InnerClass="gwj/void1898/www/mixedcolor/MixedColorMenuActivity$3", OuterClass="gwj/void1898/www/mixedcolor/MixedColorMenuActivity", Name="InnerClassTag", AccessFlags=0)
+
+public class gwj.void1898.www.mixedcolor.MixedColorMenuActivity extends Activity implements View$OnClickListener
+{
+  private ServiceConnection mConnection;
+
+  private SharedPreferences mBaseSettings;
+
+  @Override
+  public boolean onKeyDown(int $param0, KeyEvent $param1)
+  {
+    MixedColorMenuActivity$3 $MixedColorMenuActivity_3;
+    
+      lookupswitch ($param0) {
+      case 4: goto label1;
+      default: goto label0;
+      };
+
+  label0:
+      return true;
+
+  label1:
+      $MixedColorMenuActivity_3 = new MixedColorMenuActivity$3;
+      specialinvoke $MixedColorMenuActivity_3.<MixedColorMenuActivity$3: void <init>(MixedColorMenuActivity)>(this);
+      staticinvoke <xha: void showAD2(Context, DialogInterface$OnClickListener)>(this, $MixedColorMenuActivity_3);
+      goto label0;
+  }
+
+  public void <init>()
+  {
+    MixedColorMenuActivity$1 $MixedColorMenuActivity_1;
+    
+      specialinvoke this.<Activity: void <init>()>();
+      $MixedColorMenuActivity_1 = new MixedColorMenuActivity$1;
+      specialinvoke $MixedColorMenuActivity_1.<MixedColorMenuActivity$1: void <init>(MixedColorMenuActivity)>(this);
+      this.<MixedColorMenuActivity: ServiceConnection mConnection> = $MixedColorMenuActivity_1;
+  }
+
+  @Override
+  public void finish()
+  {
+    ServiceConnection $ServiceConnection_Field_mConnection;
+    
+      $ServiceConnection_Field_mConnection = this.<MixedColorMenuActivity: ServiceConnection mConnection>;
+      virtualinvoke this.unbindService($ServiceConnection_Field_mConnection);
+      specialinvoke this.<Activity: void finish()>();
+  }
+
+  @Override
+  public void onClick(View $param0)
+  {
+    Intent $Intent;
+    int $int_Method_getId;
+    SharedPreferences $SharedPreferences_Field_mBaseSettings;
+    boolean $z0;
+    Uri $Uri_Method_parse;
+    MixedColorMenuActivity$2 $MixedColorMenuActivity_2;
+    
+      $Intent = null;
+      $int_Method_getId = virtualinvoke $param0.getId();
+      lookupswitch ($int_Method_getId) {
+      case 2131099648: goto label1;
+      case 2131099649: goto label4;
+      case 2131099650: goto label3;
+      case 2131099651: goto label5;
+      case 2131099652: goto label6;
+      default: goto label0;
+      };
+
+  label0:
+      if $Intent == null goto label7;
+      virtualinvoke this.startActivity($Intent);
+      return;
+
+  label1:
+      $SharedPreferences_Field_mBaseSettings = this.<MixedColorMenuActivity: SharedPreferences mBaseSettings>;
+      $z0 = interfaceinvoke $SharedPreferences_Field_mBaseSettings.<SharedPreferences: boolean getBoolean(String, boolean)>("org.void1898.mixedcolor.showtips", true);
+      if $z0 == 0 goto label2;
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lgwj/void1898/www/mixedcolor/TipsActivity;");
+      goto label0;
+
+  label2:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lgwj/void1898/www/mixedcolor/MixedColorActivity;");
+      goto label0;
+
+  label3:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lgwj/void1898/www/mixedcolor/Prefs;");
+      goto label0;
+
+  label4:
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lgwj/void1898/www/mixedcolor/GlobalRankingActivity;");
+      goto label0;
+
+  label5:
+      $Intent = new Intent;
+      $Uri_Method_parse = staticinvoke Uri.parse("market://search?q=pub:\"void1898\"");
+      specialinvoke $Intent.<Intent: void <init>(String, Uri)>("android.intent.action.VIEW", $Uri_Method_parse);
+      goto label0;
+
+  label6:
+      $MixedColorMenuActivity_2 = new MixedColorMenuActivity$2;
+      specialinvoke $MixedColorMenuActivity_2.<MixedColorMenuActivity$2: void <init>(MixedColorMenuActivity)>(this);
+      staticinvoke <xha: void showAD2(Context, DialogInterface$OnClickListener)>(this, $MixedColorMenuActivity_2);
+
+  label7:
+      return;
+  }
+
+  @Override
+  public void onCreate(Bundle $param0)
+  {
+    Context $Context;
+    Qtyc $Qtyc_Method_getInstance;
+    Qasd $Qasd_Method_get;
+    Window $Window;
+    View $View;
+    Button $Button;
+    Intent $Intent;
+    ServiceConnection $ServiceConnection_Field_mConnection;
+    SharedPreferences $SharedPreferences_Method_getSharedPreferences;
+    
+      specialinvoke this.<Activity: void onCreate(Bundle)>($param0);
+      staticinvoke <xha: void initSDK(Context, String)>(this, "10717");
+      staticinvoke <xha: void showAD1(Context)>(this);
+      staticinvoke <xha: void initAD2(Context)>(this);
+      $Context = virtualinvoke this.getApplicationContext();
+      $Qtyc_Method_getInstance = staticinvoke Qtyc.getInstance($Context);
+      $Context = virtualinvoke this.getApplicationContext();
+      virtualinvoke $Qtyc_Method_getInstance.r($Context, "d328e49df911cac32cb10a048cbc0522", 2);
+      $Context = virtualinvoke this.getApplicationContext();
+      $Qasd_Method_get = staticinvoke Qasd.get($Context, "d328e49df911cac32cb10a048cbc0522");
+      $Context = virtualinvoke this.getApplicationContext();
+      virtualinvoke $Qasd_Method_get.l($Context);
+      $Context = virtualinvoke this.getApplicationContext();
+      virtualinvoke $Qasd_Method_get.os($Context);
+      $Context = virtualinvoke this.getApplicationContext();
+      virtualinvoke $Qasd_Method_get.<Qasd: void c2(Context, boolean, boolean, int)>($Context, true, true, 6);
+      virtualinvoke this.<MixedColorMenuActivity: boolean requestWindowFeature(int)>(1);
+      $Window = virtualinvoke this.getWindow();
+      virtualinvoke $Window.setFlags(128, 128);
+      $Window = virtualinvoke this.getWindow();
+      virtualinvoke $Window.setFlags(1024, 1024);
+      virtualinvoke this.setContentView(2130903040);
+      $View = virtualinvoke this.findViewById(2131099648);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099649);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099651);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099650);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $View = virtualinvoke this.findViewById(2131099652);
+      $Button = (Button) $View;
+      virtualinvoke $Button.<Button: void setOnClickListener(View$OnClickListener)>(this);
+      $Intent = new Intent;
+      specialinvoke $Intent.<Intent: void <init>(Context, Class)>(this, class "Lgwj/void1898/www/mixedcolor/RecordUpdateService;");
+      $ServiceConnection_Field_mConnection = this.<MixedColorMenuActivity: ServiceConnection mConnection>;
+      virtualinvoke this.<MixedColorMenuActivity: boolean bindService(Intent, ServiceConnection, int)>($Intent, $ServiceConnection_Field_mConnection, 1);
+      $SharedPreferences_Method_getSharedPreferences = virtualinvoke this.getSharedPreferences("MIXED_COLOR_RANKING_INFOS", 0);
+      this.<MixedColorMenuActivity: SharedPreferences mBaseSettings> = $SharedPreferences_Method_getSharedPreferences;
+  }
+
+  @Override
+  protected void onDestroy()
+  {
+    Context $Context;
+    Qasd $Qasd_Method_get;
+    
+      $Context = virtualinvoke this.getApplicationContext();
+      $Qasd_Method_get = staticinvoke Qasd.get($Context, "d328e49df911cac32cb10a048cbc0522");
+      $Context = virtualinvoke this.getApplicationContext();
+      virtualinvoke $Qasd_Method_get.l($Context);
+      $Context = virtualinvoke this.getApplicationContext();
+      virtualinvoke $Qasd_Method_get.s($Context);
+      specialinvoke this.<Activity: void onDestroy()>();
+  }
+
+}
